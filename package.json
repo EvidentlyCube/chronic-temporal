@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "node_modules/.bin/mocha -r ts-node/register -r test.common/hookJsdom.js test.*/**/*.test.*",
-    "serve": "webpack-dev-server --port 9002 --open --entry src/Bootstrap.ts",
-    "build-sprites": "node -e \"require('grunt').tasks(['default'])\"",
-    "build-sprites-debug": "node %NODE_DEBUG_OPTION% -e \"require('grunt').tasks(['default'])\""
+    "serve": "webpack-dev-server --port 9002 --open --entry src/Bootstrap.ts"
   },
   "author": "",
   "license": "CC BY-NC 4.0",
