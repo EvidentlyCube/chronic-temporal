@@ -1,0 +1,53 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Chronic Temporal</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			overflow: hidden;
+		}
+		#errors:empty{
+			display: none;
+		}
+		#errors{
+			background: #880000;
+			position: absolute;
+			top: 5px;
+			left: 5px;
+			padding: 10px;
+			color: white;
+			border: 1px solid #FF8888;
+			font-family: "Courier New", monospace;
+		}
+		@font-face {
+			font-family: 'volter_goldfish';
+			src: url('src/assets/fonts/volter/volter__28goldfish_29-webfont.woff2') format('woff2'),
+			url('src/assets/fonts/volter/volter__28goldfish_29-webfont.woff') format('woff');
+			font-weight: normal;
+			font-style: normal;
+		}
+	</style>
+	<script>
+		window.onerror = function(message, source, lineno, colno, error){
+			console.log(arguments);
+			var $errors = document.getElementById('errors');
+			var $error = document.createElement('li');
+			$error.textContent = message;
+
+			$errors.appendChild($error);
+		}
+	</script>
+</head>
+
+<body>
+<div id="game"></div>
+<ul id="errors"></ul>
+</body>
+
+</html>

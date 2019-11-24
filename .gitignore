@@ -1,0 +1,5 @@
+node_modules
+TransNeuronica.iml
+dist
+.cache
+.idea
