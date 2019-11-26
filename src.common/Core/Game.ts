@@ -3,7 +3,6 @@ import {AssetLoader} from "../Managers/AssetLoader";
 import {TextureFactory} from "../Managers/TextureFactory";
 import {IScene, SceneManager} from "../Managers/SceneManager";
 import {Constructor} from "../GenericInterfaces";
-import {PostProcessManager} from "../Managers/PostProcessManager";
 import {GameContainerLayer, IGameContainer} from "./IGameContainer";
 import {RawInput} from "./RawInput";
 
@@ -31,7 +30,6 @@ export class Game {
 	public readonly assetLoader: AssetLoader;
 	public readonly textureFactory: TextureFactory;
 	public readonly sceneManager: SceneManager;
-	public readonly postProcessManager: PostProcessManager;
 
 	public constructor(config: GameConfiguration) {
 		if (config.pixiConfig.sharedTicker === undefined) {
@@ -47,7 +45,6 @@ export class Game {
 		this.assetLoader = new AssetLoader();
 		this.textureFactory = this.assetLoader.textureFactory;
 		this.sceneManager = new SceneManager(this);
-		this.postProcessManager = new PostProcessManager();
 
 		config.document.getElementById('game')!.appendChild(this.pixi.view);
 	}
@@ -78,7 +75,6 @@ export class Game {
 	private update(): void {
 		const delta = this.pixi.ticker.elapsedMS;
 		this.sceneManager.update(delta);
-		this.postProcessManager.update(delta);
 		this.gameContainer.update(delta);
 		this.rawInput.update();
 	}

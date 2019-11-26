@@ -2,7 +2,7 @@
 
 import Constants from "./Core/Constants";
 import {Game} from "../src.common/Core/Game";
-import {TestScene} from "./Scenes/Test/TestScene";
+import {InitializerScene} from "./Scenes/InitializerScene";
 
 import * as InitialTileset from './assets/textures/tileset.png';
 import {ContainerUpscaleMode, ScalingGameContainer} from "../src.common/Core/ScalingGameContainer";
@@ -22,7 +22,7 @@ const game = new Game({
 		Constants.VirtualWidth,
 		Constants.VirtualHeight,
 		PIXI.SCALE_MODES.NEAREST,
-		ContainerUpscaleMode.FullScale
+		ContainerUpscaleMode.NoScale
 	),
 	onQueueAssets: (game: Game) =>
 	{
@@ -39,7 +39,7 @@ const game = new Game({
 	onStartGame: (game: Game) =>
 	{
 	},
-	initialScene: TestScene,
+	initialScene: InitializerScene,
 });
 
 game.start();

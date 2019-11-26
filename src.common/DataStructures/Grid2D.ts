@@ -2,7 +2,7 @@ export class Grid2D<T>
 {
 	private _width: number;
 	private _height: number;
-	private _squares: T[][] | null[][];
+	private _squares: (T|undefined)[][];
 
 	constructor(width: number, height: number)
 	{
@@ -13,12 +13,12 @@ export class Grid2D<T>
 		for(let x = 0; x < this._width; x++) {
 			this._squares[x] = [];
 			for(let y = 0; y < this._height; y++) {
-				this._squares[x][y] = null;
+				this._squares[x][y] = undefined;
 			}
 		}
 	}
 
-	public set(x: number, y: number, value: T | null)
+	public set(x: number, y: number, value: T | undefined)
 	{
 		if (!this.isValid(x, y)) {
 			return;
@@ -39,23 +39,23 @@ export class Grid2D<T>
 		}
 
 		const square = this._squares[x][y];
-		if (square !== null) {
+		if (square !== undefined) {
 			return square;
 
 		} else {
-			throw new Error("Requested grid square was null.");
+			throw new Error("Requested grid square was undefined.");
 		}
 	}
 
-	public getOrNullByPoint(point: PIXI.PointLike): T | null
+	public getOrundefinedByPoint(point: PIXI.PointLike): T | undefined
 	{
-		return this.getOrNull(point.x, point.y);
+		return this.getOrundefined(point.x, point.y);
 	}
 
-	public getOrNull(x: number, y: number): T | null
+	public getOrundefined(x: number, y: number): T | undefined
 	{
 		if (!this.isValid(x, y)) {
-			return null;
+			return undefined;
 		}
 
 		return this._squares[x][y];
