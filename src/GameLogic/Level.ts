@@ -1,5 +1,6 @@
 import {Grid2D} from "../../src.common/DataStructures/Grid2D";
 import {Entity} from "./Entity";
+import {EntityType} from "./Enums";
 
 export interface LevelConfig {
 	width: number;
@@ -28,5 +29,9 @@ export class Level {
 
 		this.tilesFloor = new Grid2D<boolean>(this.width, this.height);
 		this.entities = [];
+	}
+
+	public getEntitiesOfType(type: EntityType): Entity[] {
+		return this.entities.filter(entity => entity.type === type);
 	}
 }
