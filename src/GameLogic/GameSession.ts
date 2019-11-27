@@ -1,10 +1,12 @@
 import {Level} from "./Level";
 import {TurnRunner} from "./TurnRunner";
 import {EventStore} from "./EventStore";
+import {PlayerAction} from "./Enums";
+import {Protagonist} from "./Entities/Protagonist";
 
 export class GameSession {
 	// @todo we need to somehow store the existing temporal recordings
-	public level: Level|undefined;
+	public level: Level | undefined;
 	public turnRunner: TurnRunner;
 	public eventStore: EventStore;
 
@@ -14,13 +16,26 @@ export class GameSession {
 	}
 
 	public loadLevel(level: Level): void {
-		// @todo If a level is loaded destroy it
+		if (this.level) {
+			// @todo If a level is loaded destroy it
+		}
+
+		this.level = level;
+
+		const player = new Protagonist(true);
+		player.x = level.playerStartX;
+		player.y = level.playerStartY;
+		this.level.entities.push(player);
+
 		// @todo Put the temporal recordings in the room
 	}
 
-	// @todo we'll need some kind of enum here instead
-	public update(playerInput: any): void {
+	public runTurn(playerInput: PlayerAction): void {
+		if (!this.level) {
+			throw new Error("Tried to runTurn on a session that does not have a level attached");
+		}
+
 		// @todo figure out if we pass the input to TurnRunner and it knows which entity is the protagonist or we set the next move on the protagonist here, then just run the turn
-		this.turnRunner.update(playerInput);
+		this.turnRunner.runTurn(playerInput, this.level);
 	}
 }

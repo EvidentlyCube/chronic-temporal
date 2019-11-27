@@ -1,6 +1,7 @@
+import {EntityType} from "./Enums";
 
 export interface Entity {
-	readonly type: any;
+	readonly type: EntityType;
 	x: number;
 	y: number;
 
