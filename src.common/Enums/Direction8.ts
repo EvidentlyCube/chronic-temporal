@@ -1,5 +1,4 @@
-export interface Direction8
-{
+export interface Direction8 {
 	readonly id: number;
 	readonly name: string;
 	readonly x: number;
@@ -9,8 +8,7 @@ export interface Direction8
 	readonly opposite: Direction8;
 }
 
-class Direction8Impl implements Direction8
-{
+class Direction8Impl implements Direction8 {
 	public id: number;
 	public name: string;
 	public x: number;
@@ -19,8 +17,7 @@ class Direction8Impl implements Direction8
 	public nextCCW: Direction8;
 	public opposite: Direction8;
 
-	public constructor(id: number, name: string)
-	{
+	public constructor(id: number, name: string) {
 		this.id = id;
 		this.name = name;
 		this.x = 0;
@@ -31,63 +28,83 @@ class Direction8Impl implements Direction8
 	}
 }
 
-export namespace Directions8
-{
-	export const UpLeft: Direction8Impl = new Direction8Impl(1, "upleft");
-	export const Up: Direction8Impl = new Direction8Impl(2, "up");
-	export const UpRight: Direction8Impl = new Direction8Impl(3, "upright");
-	export const Left: Direction8Impl = new Direction8Impl(4, "left");
-	export const None: Direction8Impl = new Direction8Impl(5, "none");
-	export const Right: Direction8Impl = new Direction8Impl(6, "right");
-	export const DownLeft: Direction8Impl = new Direction8Impl(7, "downleft");
-	export const Down: Direction8Impl = new Direction8Impl(8, "down");
-	export const DownRight: Direction8Impl = new Direction8Impl(9, "downright");
+export namespace Direction8 {
+	export const UpLeft: Direction8 = new Direction8Impl(1, "upleft");
+	export const Up: Direction8 = new Direction8Impl(2, "up");
+	export const UpRight: Direction8 = new Direction8Impl(3, "upright");
+	export const Left: Direction8 = new Direction8Impl(4, "left");
+	export const None: Direction8 = new Direction8Impl(5, "none");
+	export const Right: Direction8 = new Direction8Impl(6, "right");
+	export const DownLeft: Direction8 = new Direction8Impl(7, "downleft");
+	export const Down: Direction8 = new Direction8Impl(8, "down");
+	export const DownRight: Direction8 = new Direction8Impl(9, "downright");
 
-	Left.x = -1;
-	Left.nextCW = UpLeft;
-	Left.nextCCW = DownLeft;
-	Left.opposite = Right;
+	export const all: ReadonlyArray<Direction8> = [
+		UpLeft, Up, UpRight,
+		Left, None, Right,
+		DownLeft, Down, DownRight,
+	];
 
-	Right.x = 1;
-	Right.nextCW = DownRight;
-	Right.nextCCW = UpRight;
-	Right.opposite = Left;
+	export const allDirectional: ReadonlyArray<Direction8> = [
+		UpLeft, Up, UpRight,
+		Left, Right,
+		DownLeft, Down, DownRight,
+	];
 
-	Up.y = -1;
-	Up.nextCW = UpRight;
-	Up.nextCCW = UpLeft;
-	Up.opposite = Down;
+	export const allDiagonal: ReadonlyArray<Direction8> = [
+		UpLeft, UpRight,
+		DownLeft, DownRight,
+	];
 
-	Down.y = 1;
-	Down.nextCW = DownLeft;
-	Down.nextCCW = DownRight;
-	Down.opposite = Up;
+	export const allOrthogonal: ReadonlyArray<Direction8> = [
+		Up, Left, Right, Down,
+	];
 
-	UpLeft.x = -1;
-	UpLeft.y = -1;
-	UpLeft.nextCW = Up;
-	UpLeft.nextCCW = Left;
-	UpLeft.opposite = DownRight;
+	(Left as Direction8Impl).x = -1;
+	(Left as Direction8Impl).nextCW = UpLeft;
+	(Left as Direction8Impl).nextCCW = DownLeft;
+	(Left as Direction8Impl).opposite = Right;
 
-	UpRight.x = 1;
-	UpRight.y = -1;
-	UpRight.nextCW = Right;
-	UpRight.nextCCW = Up;
-	UpRight.opposite = DownLeft;
+	(Right as Direction8Impl).x = 1;
+	(Right as Direction8Impl).nextCW = DownRight;
+	(Right as Direction8Impl).nextCCW = UpRight;
+	(Right as Direction8Impl).opposite = Left;
 
-	DownRight.x = 1;
-	DownRight.y = 1;
-	DownRight.nextCW = Down;
-	DownRight.nextCCW = Right;
-	DownRight.opposite = UpLeft;
+	(Up as Direction8Impl).y = -1;
+	(Up as Direction8Impl).nextCW = UpRight;
+	(Up as Direction8Impl).nextCCW = UpLeft;
+	(Up as Direction8Impl).opposite = Down;
 
-	DownLeft.x = -1;
-	DownLeft.y = 1;
-	DownLeft.nextCW = Left;
-	DownLeft.nextCCW = Down;
-	DownLeft.opposite = UpLeft;
+	(Down as Direction8Impl).y = 1;
+	(Down as Direction8Impl).nextCW = DownLeft;
+	(Down as Direction8Impl).nextCCW = DownRight;
+	(Down as Direction8Impl).opposite = Up;
 
-	None.nextCW = None;
-	None.nextCCW = None;
-	None.opposite = None;
+	(UpLeft as Direction8Impl).x = -1;
+	(UpLeft as Direction8Impl).y = -1;
+	(UpLeft as Direction8Impl).nextCW = Up;
+	(UpLeft as Direction8Impl).nextCCW = Left;
+	(UpLeft as Direction8Impl).opposite = DownRight;
+
+	(UpRight as Direction8Impl).x = 1;
+	(UpRight as Direction8Impl).y = -1;
+	(UpRight as Direction8Impl).nextCW = Right;
+	(UpRight as Direction8Impl).nextCCW = Up;
+	(UpRight as Direction8Impl).opposite = DownLeft;
+
+	(DownRight as Direction8Impl).x = 1;
+	(DownRight as Direction8Impl).y = 1;
+	(DownRight as Direction8Impl).nextCW = Down;
+	(DownRight as Direction8Impl).nextCCW = Right;
+	(DownRight as Direction8Impl).opposite = UpLeft;
+
+	(DownLeft as Direction8Impl).x = -1;
+	(DownLeft as Direction8Impl).y = 1;
+	(DownLeft as Direction8Impl).nextCW = Left;
+	(DownLeft as Direction8Impl).nextCCW = Down;
+	(DownLeft as Direction8Impl).opposite = UpLeft;
+
+	(None as Direction8Impl).nextCW = None;
+	(None as Direction8Impl).nextCCW = None;
+	(None as Direction8Impl).opposite = None;
 }
