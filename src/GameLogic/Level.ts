@@ -1,7 +1,7 @@
-import {Grid2D} from "../../src.common/DataStructures/Grid2D";
-import {Entity} from "./Entity";
-import {EntityType} from "./Enums";
-import {Protagonist} from "./Entities/Protagonist";
+import {Grid2D} from '../../src.common/DataStructures/Grid2D';
+import {Entity} from './Entity';
+import {EntityType} from './Enums';
+import {Protagonist} from './Entities/Protagonist';
 
 export interface LevelConfig {
 	width: number;
@@ -13,12 +13,16 @@ export interface LevelConfig {
 
 export class Level {
 	public width: number;
+
 	public height: number;
 
 	public playerStartX: number;
+
 	public playerStartY: number;
 
-	public tilesFloor: Grid2D<boolean>; // Most likely will need an enum for floor types
+	public tilesFloor: Grid2D<boolean>;
+
+	// Most likely will need an enum for floor types
 	public entities: Entity[];
 
 	constructor(config: LevelConfig) {

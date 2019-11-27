@@ -1,4 +1,4 @@
-import * as seedrandom from "seedrandom";
+import * as seedrandom from 'seedrandom';
 
 const VirtualWidth = 640;
 const VirtualHeight = 360;
@@ -17,10 +17,8 @@ export default {
 	TileHeight,
 	DisplayRatio,
 	Random: {
-		double: function (from: number, to: number)
-		{
-			if (from > to)
-			{
+		double: function(from: number, to: number) {
+			if (from > to) {
 				const temp = from;
 				from = to;
 				to = temp;
@@ -28,13 +26,11 @@ export default {
 
 			const delta = to - from;
 
-			return from + (delta * Random.double()) % delta;
+			return from + delta * Random.double() % delta;
 		},
 
-		int32: function (from: number, to: number)
-		{
-			if (from > to)
-			{
+		int32: function(from: number, to: number) {
+			if (from > to) {
 				const temp = from;
 				from = to;
 				to = temp;
@@ -42,10 +38,9 @@ export default {
 
 			const delta = to - from;
 
-			return Math.floor(from + (delta * Random.double()) % delta);
+			return Math.floor(from + delta * Random.double() % delta);
 		},
-		bool: function (chance: number)
-		{
+		bool: function(chance: number) {
 			return Random.double() < chance;
 		},
 	},

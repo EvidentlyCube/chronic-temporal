@@ -1,15 +1,18 @@
-import {Level} from "./Level";
-import {TurnRunner} from "./TurnRunner";
-import {EventStore} from "./EventStore";
-import {PlayerAction} from "./Enums";
-import {Protagonist} from "./Entities/Protagonist";
+import {Level} from './Level';
+import {TurnRunner} from './TurnRunner';
+import {EventStore} from './EventStore';
+import {PlayerAction} from './Enums';
+import {Protagonist} from './Entities/Protagonist';
 import {ActionRecorder} from './ActionRecorder';
 
 export class GameSession {
 	// @todo we need to somehow store the existing temporal recordings
 	public level: Level | undefined;
+
 	public turnRunner: TurnRunner;
+
 	public eventStore: EventStore;
+
 	public actionRecorder: ActionRecorder;
 
 	constructor() {
@@ -35,13 +38,17 @@ export class GameSession {
 
 	public runTurn(playerInput: PlayerAction): void {
 		if (!this.level) {
-			throw new Error("Tried to runTurn on a session that does not have a level attached");
+			throw new Error('Tried to runTurn on a session that does not have a level attached');
 		}
 
 		if (this.level.getPlayer()) {
 			this.actionRecorder.record(playerInput);
 		}
-		// @todo figure out if we pass the input to TurnRunner and it knows which entity is the protagonist or we set the next move on the protagonist here, then just run the turn
+
+		/*
+			@todo figure out if we pass the input to TurnRunner and it knows which entity is the protagonist or we set the
+				  next move on the protagonist here, then just run the turn
+		 */
 		this.turnRunner.runTurn(playerInput, this.level);
 	}
 }

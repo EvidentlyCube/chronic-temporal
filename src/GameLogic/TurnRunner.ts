@@ -1,15 +1,15 @@
-import {GameSession} from "./GameSession";
-import {PlayerAction} from "./Enums";
-import {Level} from "./Level";
+import {GameSession} from './GameSession';
+import {PlayerAction} from './Enums';
+import {Level} from './Level';
 
 export class TurnRunner {
-	private _gameSession: GameSession;
+	private readonly _gameSession: GameSession;
 
 	constructor(gameSession: GameSession) {
 		this._gameSession = gameSession;
 	}
 
-	public runTurn(playerInput: PlayerAction, level: Level) {
+	public runTurn(playerInput: PlayerAction, level: Level): void {
 		const player = level.getPlayer();
 
 		if (player) {

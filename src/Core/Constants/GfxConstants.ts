@@ -1,3 +1,3 @@
 export enum GfxConstants {
-	InitialTileset = "InitialTileset"
+	InitialTileset = 'InitialTileset'
 }

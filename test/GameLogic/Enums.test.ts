@@ -1,7 +1,7 @@
 import 'mocha';
 import {assert} from 'chai';
-import {Direction8} from "../../src.common/Enums/Direction8";
-import {PlayerAction, PlayerActionUtils} from "../../src/GameLogic/Enums";
+import {Direction8} from '../../src.common/Enums/Direction8';
+import {PlayerAction, PlayerActionUtils} from '../../src/GameLogic/Enums';
 
 describe('GameLogic.Enums', () => {
 	const actionDirectionPairs: [Direction8, PlayerAction][] = [

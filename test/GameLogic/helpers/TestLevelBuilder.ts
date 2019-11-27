@@ -1,7 +1,7 @@
-import {Level, LevelConfig} from "../../../src/GameLogic/Level";
+import {Level, LevelConfig} from '../../../src/GameLogic/Level';
 
 export class TestLevelBuilder {
-	public static newLevel(playerStartX = 10, playerStartY = 10, width: number = 20, height: number = 20): TestLevelBuilder {
+	public static newLevel(playerStartX = 10, playerStartY = 10, width = 20, height = 20): TestLevelBuilder {
 		return new TestLevelBuilder({width, height, playerStartX, playerStartY});
 	}
 

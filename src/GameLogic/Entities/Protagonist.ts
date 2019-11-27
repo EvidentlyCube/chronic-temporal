@@ -1,17 +1,20 @@
-import {Entity} from "../Entity";
-import {EntityType, PlayerAction, PlayerActionUtils} from "../Enums";
-import {ActionSequence} from "../DataStructures/ActionSequence";
+import {Entity} from '../Entity';
+import {EntityType, PlayerActionUtils} from '../Enums';
+import {ActionSequence} from '../DataStructures/ActionSequence';
 
 // @todo I think we should only have a single class for the player entity, to ensure we never treat them differently based on how they move
 export class Protagonist implements Entity {
 	public readonly type: EntityType;
+
 	public x: number;
+
 	public y: number;
 
 	public isPlayerControlled: boolean;
+
 	public movesQueue: ActionSequence;
 
-	constructor(isPlayerControlled: boolean = true) {
+	constructor(isPlayerControlled = true) {
 		this.type = EntityType.Protagonist;
 		this.x = 0;
 		this.y = 0;

@@ -1,8 +1,8 @@
 import 'mocha';
 import {assert} from 'chai';
-import {SessionPlayer} from "../helpers/SessionPlayer";
-import {TestLevelBuilder} from "../helpers/TestLevelBuilder";
-import {PlayerAction, PlayerActionUtils} from "../../../src/GameLogic/Enums";
+import {SessionPlayer} from '../helpers/SessionPlayer';
+import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
+import {PlayerAction, PlayerActionUtils} from '../../../src/GameLogic/Enums';
 
 describe('GameLogic.e2e - basic movement', () => {
 	PlayerActionUtils.all.forEach((action) => {

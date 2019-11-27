@@ -1,20 +1,20 @@
-import {Level} from "../../../src/GameLogic/Level";
-import {TestLevelBuilder} from "./TestLevelBuilder";
-import {GameSession} from "../../../src/GameLogic/GameSession";
-import {PlayerAction} from "../../../src/GameLogic/Enums";
-import {Hashmap} from "../../../src.common/GenericInterfaces";
-import {Protagonist} from "../../../src/GameLogic/Entities/Protagonist";
+import {Level} from '../../../src/GameLogic/Level';
+import {TestLevelBuilder} from './TestLevelBuilder';
+import {GameSession} from '../../../src/GameLogic/GameSession';
+import {PlayerAction} from '../../../src/GameLogic/Enums';
+import {Hashmap} from '../../../src.common/GenericInterfaces';
+import {Protagonist} from '../../../src/GameLogic/Entities/Protagonist';
 
 const charToActionMap: Hashmap<PlayerAction> = {
-	'7': PlayerAction.MoveUpLeft,
-	'8': PlayerAction.MoveUp,
-	'9': PlayerAction.MoveUpRight,
-	'4': PlayerAction.MoveLeft,
-	'5': PlayerAction.Wait,
-	'6': PlayerAction.MoveRight,
-	'1': PlayerAction.MoveDownLeft,
-	'2': PlayerAction.MoveDown,
-	'3': PlayerAction.MoveDownRight,
+	7: PlayerAction.MoveUpLeft,
+	8: PlayerAction.MoveUp,
+	9: PlayerAction.MoveUpRight,
+	4: PlayerAction.MoveLeft,
+	5: PlayerAction.Wait,
+	6: PlayerAction.MoveRight,
+	1: PlayerAction.MoveDownLeft,
+	2: PlayerAction.MoveDown,
+	3: PlayerAction.MoveDownRight,
 };
 
 function convertStringOfMovesToActions(movesString: string): PlayerAction[] {
@@ -34,7 +34,7 @@ export class SessionPlayer {
 		const player = level.getPlayer();
 
 		if (!player) {
-			throw new Error("No player found in the level!");
+			throw new Error('No player found in the level!');
 		}
 
 		if (typeof moves === 'string') {

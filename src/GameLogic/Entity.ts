@@ -1,4 +1,4 @@
-import {EntityType} from "./Enums";
+import {EntityType} from './Enums';
 
 export interface Entity {
 	readonly type: EntityType;

@@ -1,18 +1,18 @@
 import 'mocha';
 import {assert} from 'chai';
-import {TestLevelBuilder} from "./helpers/TestLevelBuilder";
-import {EntityType} from "../../src/GameLogic/Enums";
-import {Protagonist} from "../../src/GameLogic/Entities/Protagonist";
+import {TestLevelBuilder} from './helpers/TestLevelBuilder';
+import {EntityType} from '../../src/GameLogic/Enums';
+import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
 
 describe('GameLogic.Level', () => {
 	describe('getEntitiesOfType', () => {
-		it("Return empty collection when no entity found", () => {
+		it('Return empty collection when no entity found', () => {
 			const level = TestLevelBuilder.newLevel().toLevel();
 
 			assert.isEmpty(level.getEntitiesOfType(EntityType.Protagonist));
 		});
 
-		it("Return empty collection when no matching entity found", () => {
+		it('Return empty collection when no matching entity found', () => {
 			const level = TestLevelBuilder.newLevel().toLevel();
 
 			level.entities.push({type: 21} as any); // @todo replace this dummy value with another entity once we have any other entity
@@ -21,7 +21,7 @@ describe('GameLogic.Level', () => {
 			assert.isEmpty(level.getEntitiesOfType(EntityType.Protagonist));
 		});
 
-		it("Return all matching entities (one match)", () => {
+		it('Return all matching entities (one match)', () => {
 			const level = TestLevelBuilder.newLevel().toLevel();
 			const protagonist = new Protagonist();
 
@@ -32,7 +32,7 @@ describe('GameLogic.Level', () => {
 			assert.deepEqual(level.getEntitiesOfType(EntityType.Protagonist), [protagonist]);
 		});
 
-		it("Return all matching entities (many match)", () => {
+		it('Return all matching entities (many match)', () => {
 			const level = TestLevelBuilder.newLevel().toLevel();
 			const protagonist1 = new Protagonist();
 			const protagonist2 = new Protagonist();
@@ -49,13 +49,13 @@ describe('GameLogic.Level', () => {
 	});
 
 	describe('getFirstEntityOfType', () => {
-		it("Return undefined when no entity in level", () => {
+		it('Return undefined when no entity in level', () => {
 			const level = TestLevelBuilder.newLevel().toLevel();
 
 			assert.equal(level.getFirstEntityOfType(EntityType.Protagonist), undefined);
 		});
 
-		it("Return undefined when no matching entity in level", () => {
+		it('Return undefined when no matching entity in level', () => {
 			const level = TestLevelBuilder.newLevel().toLevel();
 
 			level.entities.push({type: 21} as any);
@@ -63,7 +63,7 @@ describe('GameLogic.Level', () => {
 			assert.equal(level.getFirstEntityOfType(EntityType.Protagonist), undefined);
 		});
 
-		it("Return first entity (only valid entity)", () => {
+		it('Return first entity (only valid entity)', () => {
 			const level = TestLevelBuilder.newLevel().toLevel();
 			const protagonist = new Protagonist();
 
@@ -72,7 +72,7 @@ describe('GameLogic.Level', () => {
 			assert.equal(level.getFirstEntityOfType(EntityType.Protagonist), protagonist);
 		});
 
-		it("Return first entity (wrong entity first)", () => {
+		it('Return first entity (wrong entity first)', () => {
 			const level = TestLevelBuilder.newLevel().toLevel();
 			const protagonist = new Protagonist();
 
@@ -82,7 +82,7 @@ describe('GameLogic.Level', () => {
 			assert.equal(level.getFirstEntityOfType(EntityType.Protagonist), protagonist);
 		});
 
-		it("Return first entity (multiple valid entities order 1-2)", () => {
+		it('Return first entity (multiple valid entities order 1-2)', () => {
 			const level = TestLevelBuilder.newLevel().toLevel();
 			const protagonist1 = new Protagonist();
 			const protagonist2 = new Protagonist();
@@ -95,7 +95,7 @@ describe('GameLogic.Level', () => {
 			assert.equal(level.getFirstEntityOfType(EntityType.Protagonist), protagonist1);
 		});
 
-		it("Return first entity (multiple valid entities order 2-1)", () => {
+		it('Return first entity (multiple valid entities order 2-1)', () => {
 			const level = TestLevelBuilder.newLevel().toLevel();
 			const protagonist1 = new Protagonist();
 			const protagonist2 = new Protagonist();

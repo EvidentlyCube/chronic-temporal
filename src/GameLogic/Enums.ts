@@ -1,5 +1,5 @@
-import {Direction8} from "../../src.common/Enums/Direction8";
-import {Hashmap} from "../../src.common/GenericInterfaces";
+import {Direction8} from '../../src.common/Enums/Direction8';
+import {Hashmap} from '../../src.common/GenericInterfaces';
 
 export enum PlayerAction {
 	MoveUpLeft = 0,
@@ -52,7 +52,7 @@ const playerActionAll = [
 ];
 
 export class PlayerActionUtils {
-	public static get all(): ReadonlyArray<PlayerAction> {
+	public static get all(): readonly PlayerAction[] {
 		return playerActionAll;
 	}
 
