@@ -14,7 +14,7 @@ export class ActionSequence {
     }
     
     public getNext(): PlayerAction {
-        if (this._step == this._actionSequence.length - 1) {
+        if (this._step >= this._actionSequence.length) {
             return undefined;
         }
         let output = this._actionSequence[this._step];
