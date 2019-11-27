@@ -34,4 +34,8 @@ export class Level {
 	public getEntitiesOfType(type: EntityType): Entity[] {
 		return this.entities.filter(entity => entity.type === type);
 	}
+
+	public getFirstEntityOfType(type: EntityType): Entity|undefined {
+		return this.entities.find(entity => entity.type === type);
+	}
 }
