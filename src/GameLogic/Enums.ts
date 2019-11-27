@@ -13,6 +13,10 @@ export enum PlayerAction {
 	MoveDownRight = 8
 }
 
+export enum EntityType {
+	Protagonist = 0
+}
+
 const directionToActionMap: Hashmap<PlayerAction> = {};
 directionToActionMap[Direction8.UpLeft.id] = PlayerAction.MoveUpLeft;
 directionToActionMap[Direction8.Up.id] = PlayerAction.MoveUp;
