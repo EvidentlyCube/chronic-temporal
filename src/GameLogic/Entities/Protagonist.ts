@@ -22,6 +22,7 @@ export class Protagonist implements Entity {
 		const action = this.movesQueue.pop();
 
 		if (action === undefined) {
+			// @todo figure out what should happen when there are no moves left
 			return;
 		}
 

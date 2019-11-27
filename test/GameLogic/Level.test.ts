@@ -15,7 +15,7 @@ describe('GameLogic.Level', () => {
 		it("Return empty collection when no matching entity found", () => {
 			const level = TestLevelBuilder.newLevel().toLevel();
 
-			level.entities.push({type: 21} as any);
+			level.entities.push({type: 21} as any); // @todo replace this dummy value with another entity once we have any other entity
 			level.entities.push({type: 17} as any);
 
 			assert.isEmpty(level.getEntitiesOfType(EntityType.Protagonist));

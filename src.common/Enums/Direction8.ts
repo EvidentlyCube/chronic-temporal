@@ -39,24 +39,24 @@ export namespace Direction8 {
 	export const Down: Direction8 = new Direction8Impl(8, "down");
 	export const DownRight: Direction8 = new Direction8Impl(9, "downright");
 
-	export const all: ReadonlyArray<Direction8> = [
+	export const all: readonly Direction8[] = [
 		UpLeft, Up, UpRight,
 		Left, None, Right,
 		DownLeft, Down, DownRight,
 	];
 
-	export const allDirectional: ReadonlyArray<Direction8> = [
+	export const allDirectional: readonly Direction8[] = [
 		UpLeft, Up, UpRight,
 		Left, Right,
 		DownLeft, Down, DownRight,
 	];
 
-	export const allDiagonal: ReadonlyArray<Direction8> = [
+	export const allDiagonal: readonly Direction8[] = [
 		UpLeft, UpRight,
 		DownLeft, DownRight,
 	];
 
-	export const allOrthogonal: ReadonlyArray<Direction8> = [
+	export const allOrthogonal: readonly Direction8[] = [
 		Up, Left, Right, Down,
 	];
 
