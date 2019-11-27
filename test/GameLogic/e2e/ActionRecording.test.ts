@@ -20,7 +20,7 @@ describe('GameLogic.e2e - action recording', () => {
             TestLevelBuilder.newLevel(),
             actions
         );
-        const result = session.actionRecorder.end().copyActions();
+        const result = session.actionRecorder.end().actions;
 
         //Assert
         assert.deepEqual(result, actions);

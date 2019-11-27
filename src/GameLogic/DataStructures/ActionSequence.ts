@@ -19,5 +19,7 @@ export class ActionSequence {
         return this._actionSequence[this._step++];
     }
 
-    public copyActions = () : PlayerAction [] => Array.from(this._actionSequence);
+    public get actions(): readonly PlayerAction [] {
+        return this._actionSequence;
+    }
 }
