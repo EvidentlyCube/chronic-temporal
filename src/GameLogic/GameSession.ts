@@ -15,6 +15,7 @@ export class GameSession {
 	constructor() {
 		this.turnRunner = new TurnRunner(this);
 		this.eventStore = new EventStore(this);
+		this.actionRecorder = new ActionRecorder();
 	}
 
 	public loadLevel(level: Level): void {
@@ -37,7 +38,9 @@ export class GameSession {
 			throw new Error("Tried to runTurn on a session that does not have a level attached");
 		}
 
-		this.actionRecorder.record(playerInput);
+		if (this.level.getPlayer()) {
+			this.actionRecorder.record(playerInput);
+		}
 		// @todo figure out if we pass the input to TurnRunner and it knows which entity is the protagonist or we set the next move on the protagonist here, then just run the turn
 		this.turnRunner.runTurn(playerInput, this.level);
 	}

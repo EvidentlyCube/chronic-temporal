@@ -16,7 +16,7 @@ export class Protagonist implements Entity {
 		this.x = 0;
 		this.y = 0;
 		this.isPlayerControlled = isPlayerControlled;
-		this.movesQueue = new ActionSequence;
+		this.movesQueue = new ActionSequence();
 	}
 
 	public update(): void {
