@@ -1,4 +1,6 @@
 import {GameSession} from "./GameSession";
+import {PlayerAction} from "./Enums";
+import {Level} from "./Level";
 
 export class TurnRunner {
 	private _gameSession: GameSession;
@@ -7,7 +9,13 @@ export class TurnRunner {
 		this._gameSession = gameSession;
 	}
 
-	public update(playerInput: any) {
-		// @todo run the turn
+	public runTurn(playerInput: PlayerAction, level: Level) {
+		const player = level.getPlayer();
+
+		if (player) {
+			player.movesQueue.push(playerInput);
+		}
+
+		level.entities.forEach(entity => entity.update());
 	}
 }

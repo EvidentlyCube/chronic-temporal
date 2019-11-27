@@ -39,7 +39,23 @@ actionToDirectionMap[PlayerAction.MoveDownLeft] = Direction8.DownLeft;
 actionToDirectionMap[PlayerAction.MoveDown] = Direction8.Down;
 actionToDirectionMap[PlayerAction.MoveDownRight] = Direction8.DownRight;
 
+const playerActionAll = [
+	PlayerAction.MoveUpLeft,
+	PlayerAction.MoveUp,
+	PlayerAction.MoveUpRight,
+	PlayerAction.MoveLeft,
+	PlayerAction.Wait,
+	PlayerAction.MoveRight,
+	PlayerAction.MoveDownLeft,
+	PlayerAction.MoveDown,
+	PlayerAction.MoveDownRight,
+];
+
 export class PlayerActionUtils {
+	public static get all(): ReadonlyArray<PlayerAction> {
+		return playerActionAll;
+	}
+
 	public static directionToAction(direction: Direction8): PlayerAction {
 		const action = directionToActionMap[direction.id];
 

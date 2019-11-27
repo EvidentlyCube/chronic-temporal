@@ -1,6 +1,7 @@
 import {Grid2D} from "../../src.common/DataStructures/Grid2D";
 import {Entity} from "./Entity";
 import {EntityType} from "./Enums";
+import {Protagonist} from "./Entities/Protagonist";
 
 export interface LevelConfig {
 	width: number;
@@ -35,7 +36,12 @@ export class Level {
 		return this.entities.filter(entity => entity.type === type);
 	}
 
-	public getFirstEntityOfType(type: EntityType): Entity|undefined {
+	public getFirstEntityOfType(type: EntityType): Entity | undefined {
 		return this.entities.find(entity => entity.type === type);
+	}
+
+	public getPlayer(): Protagonist | undefined {
+		// @todo Once we have projections this will have to be updated to return the correct player
+		return this.getFirstEntityOfType(EntityType.Protagonist) as Protagonist;
 	}
 }
