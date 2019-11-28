@@ -1,4 +1,5 @@
 import {Grid2D} from '../../src.common/DataStructures/Grid2D';
+import {Entities} from './DataStructures/Entities';
 import {Entity} from './Entity';
 import {EntityType, FloorType} from './Enums';
 import {Protagonist} from './Entities/Protagonist';
@@ -23,7 +24,7 @@ export class Level {
 	public tilesFloor: Grid2D<FloorType>;
 
 	// Most likely will need an enum for floor types
-	public entities: Entity[];
+	public entities: Entities;
 
 	constructor(config: LevelConfig) {
 		this.width = config.width;
@@ -33,19 +34,6 @@ export class Level {
 		this.playerStartY = config.playerStartY;
 
 		this.tilesFloor = new Grid2D<FloorType>(this.width, this.height, FloorType.FloorTile);
-		this.entities = [];
-	}
-
-	public getEntitiesOfType(type: EntityType): Entity[] {
-		return this.entities.filter(entity => entity.type === type);
-	}
-
-	public getFirstEntityOfType(type: EntityType): Entity | undefined {
-		return this.entities.find(entity => entity.type === type);
-	}
-
-	public getPlayer(): Protagonist | undefined {
-		// @todo Once we have projections this will have to be updated to return the correct player
-		return this.getFirstEntityOfType(EntityType.Protagonist) as Protagonist;
+		this.entities = new Entities();
 	}
 }

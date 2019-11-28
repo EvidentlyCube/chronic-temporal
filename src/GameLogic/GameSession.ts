@@ -41,7 +41,7 @@ export class GameSession {
 			throw new Error('Tried to runTurn on a session that does not have a level attached');
 		}
 
-		if (this.level.getPlayer()) {
+		if (this.level.entities.getPlayer()) {
 			this.actionRecorder.record(playerInput);
 		}
 
