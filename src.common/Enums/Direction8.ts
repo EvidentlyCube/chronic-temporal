@@ -1,4 +1,4 @@
-export class Direction8 implements Direction8 {
+export class Direction8 {
 	public static readonly UpLeft: Readonly<Direction8> = new Direction8(1, "upleft");
 	public static readonly Up: Readonly<Direction8> = new Direction8(2, "up");
 	public static readonly UpRight: Readonly<Direction8> = new Direction8(3, "upright");
