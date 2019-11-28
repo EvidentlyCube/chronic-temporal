@@ -1,14 +1,35 @@
-export interface Direction8 {
-	readonly id: number;
-	readonly name: string;
-	readonly x: number;
-	readonly y: number;
-	readonly nextCW: Direction8;
-	readonly nextCCW: Direction8;
-	readonly opposite: Direction8;
-}
+export class Direction8 implements Direction8 {
+	public static readonly UpLeft: Readonly<Direction8> = new Direction8(1, "upleft");
+	public static readonly Up: Readonly<Direction8> = new Direction8(2, "up");
+	public static readonly UpRight: Readonly<Direction8> = new Direction8(3, "upright");
+	public static readonly Left: Readonly<Direction8> = new Direction8(4, "left");
+	public static readonly None: Readonly<Direction8> = new Direction8(5, "none");
+	public static readonly Right: Readonly<Direction8> = new Direction8(6, "right");
+	public static readonly DownLeft: Readonly<Direction8> = new Direction8(7, "downleft");
+	public static readonly Down: Readonly<Direction8> = new Direction8(8, "down");
+	public static readonly DownRight: Readonly<Direction8> = new Direction8(9, "downright");
 
-class Direction8Impl implements Direction8 {
+	public static readonly all: readonly Direction8[] = [
+		Direction8.UpLeft, Direction8.Up, Direction8.UpRight,
+		Direction8.Left, Direction8.None, Direction8.Right,
+		Direction8.DownLeft, Direction8.Down, Direction8.DownRight,
+	];
+
+	public static readonly allDirectional: readonly Direction8[] = [
+		Direction8.UpLeft, Direction8.Up, Direction8.UpRight,
+		Direction8.Left, Direction8.Right,
+		Direction8.DownLeft, Direction8.Down, Direction8.DownRight,
+	];
+
+	public static readonly allDiagonal: readonly Direction8[] = [
+		Direction8.UpLeft, Direction8.UpRight,
+		Direction8.DownLeft, Direction8.DownRight,
+	];
+
+	public static readonly allOrthogonal: readonly Direction8[] = [
+		Direction8.Up, Direction8.Left, Direction8.Right, Direction8.Down,
+	];
+
 	public id: number;
 	public name: string;
 	public x: number;
@@ -28,83 +49,50 @@ class Direction8Impl implements Direction8 {
 	}
 }
 
-export namespace Direction8 {
-	export const UpLeft: Direction8 = new Direction8Impl(1, "upleft");
-	export const Up: Direction8 = new Direction8Impl(2, "up");
-	export const UpRight: Direction8 = new Direction8Impl(3, "upright");
-	export const Left: Direction8 = new Direction8Impl(4, "left");
-	export const None: Direction8 = new Direction8Impl(5, "none");
-	export const Right: Direction8 = new Direction8Impl(6, "right");
-	export const DownLeft: Direction8 = new Direction8Impl(7, "downleft");
-	export const Down: Direction8 = new Direction8Impl(8, "down");
-	export const DownRight: Direction8 = new Direction8Impl(9, "downright");
+(Direction8.Left as Direction8).x = -1;
+(Direction8.Left as Direction8).nextCW = Direction8.UpLeft;
+(Direction8.Left as Direction8).nextCCW = Direction8.DownLeft;
+(Direction8.Left as Direction8).opposite = Direction8.Right;
 
-	export const all: readonly Direction8[] = [
-		UpLeft, Up, UpRight,
-		Left, None, Right,
-		DownLeft, Down, DownRight,
-	];
+(Direction8.Right as Direction8).x = 1;
+(Direction8.Right as Direction8).nextCW = Direction8.DownRight;
+(Direction8.Right as Direction8).nextCCW = Direction8.UpRight;
+(Direction8.Right as Direction8).opposite = Direction8.Left;
 
-	export const allDirectional: readonly Direction8[] = [
-		UpLeft, Up, UpRight,
-		Left, Right,
-		DownLeft, Down, DownRight,
-	];
+(Direction8.Up as Direction8).y = -1;
+(Direction8.Up as Direction8).nextCW = Direction8.UpRight;
+(Direction8.Up as Direction8).nextCCW = Direction8.UpLeft;
+(Direction8.Up as Direction8).opposite = Direction8.Down;
 
-	export const allDiagonal: readonly Direction8[] = [
-		UpLeft, UpRight,
-		DownLeft, DownRight,
-	];
+(Direction8.Down as Direction8).y = 1;
+(Direction8.Down as Direction8).nextCW = Direction8.DownLeft;
+(Direction8.Down as Direction8).nextCCW = Direction8.DownRight;
+(Direction8.Down as Direction8).opposite = Direction8.Up;
 
-	export const allOrthogonal: readonly Direction8[] = [
-		Up, Left, Right, Down,
-	];
+(Direction8.UpLeft as Direction8).x = -1;
+(Direction8.UpLeft as Direction8).y = -1;
+(Direction8.UpLeft as Direction8).nextCW = Direction8.Up;
+(Direction8.UpLeft as Direction8).nextCCW = Direction8.Left;
+(Direction8.UpLeft as Direction8).opposite = Direction8.DownRight;
 
-	(Left as Direction8Impl).x = -1;
-	(Left as Direction8Impl).nextCW = UpLeft;
-	(Left as Direction8Impl).nextCCW = DownLeft;
-	(Left as Direction8Impl).opposite = Right;
+(Direction8.UpRight as Direction8).x = 1;
+(Direction8.UpRight as Direction8).y = -1;
+(Direction8.UpRight as Direction8).nextCW = Direction8.Right;
+(Direction8.UpRight as Direction8).nextCCW = Direction8.Up;
+(Direction8.UpRight as Direction8).opposite = Direction8.DownLeft;
 
-	(Right as Direction8Impl).x = 1;
-	(Right as Direction8Impl).nextCW = DownRight;
-	(Right as Direction8Impl).nextCCW = UpRight;
-	(Right as Direction8Impl).opposite = Left;
+(Direction8.DownRight as Direction8).x = 1;
+(Direction8.DownRight as Direction8).y = 1;
+(Direction8.DownRight as Direction8).nextCW = Direction8.Down;
+(Direction8.DownRight as Direction8).nextCCW = Direction8.Right;
+(Direction8.DownRight as Direction8).opposite = Direction8.UpLeft;
 
-	(Up as Direction8Impl).y = -1;
-	(Up as Direction8Impl).nextCW = UpRight;
-	(Up as Direction8Impl).nextCCW = UpLeft;
-	(Up as Direction8Impl).opposite = Down;
+(Direction8.DownLeft as Direction8).x = -1;
+(Direction8.DownLeft as Direction8).y = 1;
+(Direction8.DownLeft as Direction8).nextCW = Direction8.Left;
+(Direction8.DownLeft as Direction8).nextCCW = Direction8.Down;
+(Direction8.DownLeft as Direction8).opposite = Direction8.UpLeft;
 
-	(Down as Direction8Impl).y = 1;
-	(Down as Direction8Impl).nextCW = DownLeft;
-	(Down as Direction8Impl).nextCCW = DownRight;
-	(Down as Direction8Impl).opposite = Up;
-
-	(UpLeft as Direction8Impl).x = -1;
-	(UpLeft as Direction8Impl).y = -1;
-	(UpLeft as Direction8Impl).nextCW = Up;
-	(UpLeft as Direction8Impl).nextCCW = Left;
-	(UpLeft as Direction8Impl).opposite = DownRight;
-
-	(UpRight as Direction8Impl).x = 1;
-	(UpRight as Direction8Impl).y = -1;
-	(UpRight as Direction8Impl).nextCW = Right;
-	(UpRight as Direction8Impl).nextCCW = Up;
-	(UpRight as Direction8Impl).opposite = DownLeft;
-
-	(DownRight as Direction8Impl).x = 1;
-	(DownRight as Direction8Impl).y = 1;
-	(DownRight as Direction8Impl).nextCW = Down;
-	(DownRight as Direction8Impl).nextCCW = Right;
-	(DownRight as Direction8Impl).opposite = UpLeft;
-
-	(DownLeft as Direction8Impl).x = -1;
-	(DownLeft as Direction8Impl).y = 1;
-	(DownLeft as Direction8Impl).nextCW = Left;
-	(DownLeft as Direction8Impl).nextCCW = Down;
-	(DownLeft as Direction8Impl).opposite = UpLeft;
-
-	(None as Direction8Impl).nextCW = None;
-	(None as Direction8Impl).nextCCW = None;
-	(None as Direction8Impl).opposite = None;
-}
+(Direction8.None as Direction8).nextCW = Direction8.None;
+(Direction8.None as Direction8).nextCCW = Direction8.None;
+(Direction8.None as Direction8).opposite = Direction8.None;
