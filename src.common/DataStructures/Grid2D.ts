@@ -1,11 +1,9 @@
-export class Grid2D<T>
-{
+export class Grid2D<T> {
 	private _width: number;
 	private _height: number;
-	private _squares: (T|undefined)[][];
+	private _squares: T[][];
 
-	constructor(width: number, height: number)
-	{
+	constructor(width: number, height: number, defaultValue: T) {
 		this._width = width;
 		this._height = height;
 
@@ -13,13 +11,12 @@ export class Grid2D<T>
 		for(let x = 0; x < this._width; x++) {
 			this._squares[x] = [];
 			for(let y = 0; y < this._height; y++) {
-				this._squares[x][y] = undefined;
+				this._squares[x][y] = defaultValue;
 			}
 		}
 	}
 
-	public set(x: number, y: number, value: T | undefined)
-	{
+	public set(x: number, y: number, value: T) {
 		if (!this.isValid(x, y)) {
 			return;
 		}
@@ -27,13 +24,7 @@ export class Grid2D<T>
 		this._squares[x][y] = value;
 	}
 
-	public getByPoint(point: PIXI.PointLike): T
-	{
-		return this.get(point.x, point.y);
-	}
-
-	public get(x: number, y: number): T
-	{
+	public get(x: number, y: number): T {
 		if (!this.isValid(x, y)) {
 			throw new Error("Trying to get a tile outside the level area.");
 		}
@@ -47,28 +38,24 @@ export class Grid2D<T>
 		}
 	}
 
-	public getOrundefinedByPoint(point: PIXI.PointLike): T | undefined
-	{
-		return this.getOrundefined(point.x, point.y);
-	}
-
-	public getOrundefined(x: number, y: number): T | undefined
-	{
-		if (!this.isValid(x, y)) {
-			return undefined;
-		}
-
-		return this._squares[x][y];
-	}
-
-	public isValidByPoint(point: PIXI.PointLike): boolean
-	{
-		return this.isValid(point.x, point.y);
-	}
-
-	public isValid(x: number, y: number): boolean
-	{
+	public isValid(x: number, y: number): boolean {
 		return x >= 0 && y >= 0 && x < this._width && y < this._height;
+	}
+
+	public setAll(value: T): void {
+		for(let x = 0; x < this._width; x++) {
+			for(let y = 0; y < this._height; y++) {
+				this._squares[x][y] = value;
+			}
+		}
+	}
+
+	public setAllByCallback(callback: { (x: number, y: number): T }): void {
+		for(let x = 0; x < this._width; x++) {
+			for(let y = 0; y < this._height; y++) {
+				this._squares[x][y] = callback(x, y);
+			}
+		}
 	}
 
 	public forEach(callback: (item: T) => void) {

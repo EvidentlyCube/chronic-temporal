@@ -17,6 +17,11 @@ export enum EntityType {
 	Protagonist = 0
 }
 
+export enum FloorType {
+	FloorTile = 0,
+	Wall = 1
+}
+
 const directionToActionMap: Hashmap<PlayerAction> = {};
 directionToActionMap[Direction8.UpLeft.id] = PlayerAction.MoveUpLeft;
 directionToActionMap[Direction8.Up.id] = PlayerAction.MoveUp;
@@ -51,9 +56,24 @@ const playerActionAll = [
 	PlayerAction.MoveDownRight,
 ];
 
+const playerActionMoves = [
+	PlayerAction.MoveUpLeft,
+	PlayerAction.MoveUp,
+	PlayerAction.MoveUpRight,
+	PlayerAction.MoveLeft,
+	PlayerAction.MoveRight,
+	PlayerAction.MoveDownLeft,
+	PlayerAction.MoveDown,
+	PlayerAction.MoveDownRight,
+];
+
 export class PlayerActionUtils {
 	public static get all(): readonly PlayerAction[] {
 		return playerActionAll;
+	}
+
+	public static get moves(): readonly PlayerAction[] {
+		return playerActionMoves;
 	}
 
 	public static directionToAction(direction: Direction8): PlayerAction {

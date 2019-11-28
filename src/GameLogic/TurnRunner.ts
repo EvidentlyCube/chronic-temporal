@@ -16,6 +16,6 @@ export class TurnRunner {
 			player.movesQueue.push(playerInput);
 		}
 
-		level.entities.forEach(entity => entity.update());
+		level.entities.forEach(entity => entity.update(level));
 	}
 }
