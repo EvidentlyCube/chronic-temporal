@@ -1,6 +1,6 @@
 import {Grid2D} from '../../src.common/DataStructures/Grid2D';
 import {Entity} from './Entity';
-import {EntityType} from './Enums';
+import {EntityType, FloorType} from './Enums';
 import {Protagonist} from './Entities/Protagonist';
 
 export interface LevelConfig {
@@ -20,7 +20,7 @@ export class Level {
 
 	public playerStartY: number;
 
-	public tilesFloor: Grid2D<boolean>;
+	public tilesFloor: Grid2D<FloorType>;
 
 	// Most likely will need an enum for floor types
 	public entities: Entity[];
@@ -32,7 +32,7 @@ export class Level {
 		this.playerStartX = config.playerStartX;
 		this.playerStartY = config.playerStartY;
 
-		this.tilesFloor = new Grid2D<boolean>(this.width, this.height);
+		this.tilesFloor = new Grid2D<FloorType>(this.width, this.height, FloorType.FloorTile);
 		this.entities = [];
 	}
 

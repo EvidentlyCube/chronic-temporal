@@ -28,4 +28,27 @@ describe('GameLogic.e2e - basic movement', () => {
 			assert.equal(player.y, 10 + moveDirection.y * 2);
 		});
 	});
+
+	const roomEdgeMoves: [number, number, PlayerAction][] = [
+		[0,  0, PlayerAction.MoveUpLeft],
+		[10, 0, PlayerAction.MoveUp],
+		[19, 0, PlayerAction.MoveUpRight],
+		[0,  10, PlayerAction.MoveLeft],
+		[19,  10, PlayerAction.MoveRight],
+		[0,  19, PlayerAction.MoveDownLeft],
+		[10, 19, PlayerAction.MoveDown],
+		[19, 19, PlayerAction.MoveDownRight],
+	];
+
+	roomEdgeMoves.forEach(([x, y, action]) => {
+		it(`Player should stay in place when trying to move ${PlayerAction[action]} out of bounds`, () => {
+			const [, , player] = SessionPlayer.play(
+				TestLevelBuilder.newLevel(x, y),
+				[action],
+			);
+
+			assert.equal(player.x, x);
+			assert.equal(player.y, y);
+		});
+	});
 });
