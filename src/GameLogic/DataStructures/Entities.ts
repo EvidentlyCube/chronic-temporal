@@ -23,17 +23,11 @@ export class Entities {
 
 	public getPlayer(): Protagonist | undefined {
 		const protagonists = this.getEntitiesOfType(EntityType.Protagonist) as Protagonist[];
-		let result = undefined;
-		for (let i = 0; i < protagonists.length; i++) {
-			if (protagonists[i].isPlayerControlled) {
-				if (!result) {
-					result = protagonists[i];
-				} else {
-					throw new Error('More than one player-controlled Protagonist was found.');
-				}
-			}
+		const result = protagonists.filter(x => x.isPlayerControlled);
+		if (result.length > 1) {
+			throw new Error('More than one player-controlled Protagonist was found.');
 		}
-		return result;
+		return result.pop();
 	}
 
 	public get entities(): readonly Entity[] {
