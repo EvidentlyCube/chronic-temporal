@@ -12,7 +12,7 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 		PlayerAction.MoveUp,
 	];
 
-	it('push should add the actions in the correct order.', () => {
+	it('addEntity should add the actions in the correct order.', () => {
 		//Arrange
 		const actionSequence = new ActionSequence();
 

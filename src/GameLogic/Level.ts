@@ -1,8 +1,6 @@
 import {Grid2D} from '../../src.common/DataStructures/Grid2D';
 import {Entities} from './DataStructures/Entities';
-import {Entity} from './Entity';
-import {EntityType, FloorType} from './Enums';
-import {Protagonist} from './Entities/Protagonist';
+import {FloorType} from './Enums';
 
 export interface LevelConfig {
 	width: number;

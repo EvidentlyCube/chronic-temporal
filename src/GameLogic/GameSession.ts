@@ -31,7 +31,7 @@ export class GameSession {
 		const player = new Protagonist(true);
 		player.x = level.playerStartX;
 		player.y = level.playerStartY;
-		this.level.entities.push(player);
+		this.level.entities.addEntity(player);
 
 		// @todo Put the temporal recordings in the room
 	}

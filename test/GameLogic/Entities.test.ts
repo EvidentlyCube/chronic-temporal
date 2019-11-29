@@ -6,15 +6,15 @@ import {Entities} from '../../src/GameLogic/DataStructures/Entities';
 
 describe('GameLogic.DataStructures.Entities', () => {
 	describe('push', () => {
-		it('push adds new entities', () => {
+		it('addEntity adds new entities', () => {
 			//Arrange
 			const entities = new Entities();
 			const protagonist1 = new Protagonist();
 			const protagonist2 = new Protagonist();
-	
+
 			//Act
-			entities.push(protagonist1);
-			entities.push(protagonist2);
+			entities.addEntity(protagonist1);
+			entities.addEntity(protagonist2);
 
 			//Assert
 			assert.deepEqual(entities.entities, [protagonist1, protagonist2]);
@@ -35,8 +35,8 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const entities = new Entities();
 
 			//Act
-			entities.push({type: 21} as any); // @todo replace this dummy value with another entity once we have any other entity
-			entities.push({type: 17} as any);
+			entities.addEntity({type: 21} as any); // @todo replace this dummy value with another entity once we have any other entity
+			entities.addEntity({type: 17} as any);
 
 			//Assert
 			assert.isEmpty(entities.getEntitiesOfType(EntityType.Protagonist));
@@ -48,9 +48,9 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const protagonist = new Protagonist();
 
 			//Act
-			entities.push({type: 21} as any);
-			entities.push(protagonist);
-			entities.push({type: 17} as any);
+			entities.addEntity({type: 21} as any);
+			entities.addEntity(protagonist);
+			entities.addEntity({type: 17} as any);
 
 			//Assert
 			assert.deepEqual(entities.getEntitiesOfType(EntityType.Protagonist), [protagonist]);
@@ -64,11 +64,11 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const protagonist3 = new Protagonist();
 
 			//Act
-			entities.push({type: 21} as any);
-			entities.push(protagonist1);
-			entities.push(protagonist2);
-			entities.push(protagonist3);
-			entities.push({type: 17} as any);
+			entities.addEntity({type: 21} as any);
+			entities.addEntity(protagonist1);
+			entities.addEntity(protagonist2);
+			entities.addEntity(protagonist3);
+			entities.addEntity({type: 17} as any);
 
 			//Assert
 			assert.deepEqual(entities.getEntitiesOfType(EntityType.Protagonist), [protagonist1, protagonist2, protagonist3]);
@@ -89,7 +89,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const entities = new Entities();
 
 			//Act
-			entities.push({type: 21} as any);
+			entities.addEntity({type: 21} as any);
 
 			//Assert
 			assert.equal(entities.getFirstEntityOfType(EntityType.Protagonist), undefined);
@@ -101,7 +101,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const protagonist = new Protagonist();
 
 			//Act
-			entities.push(protagonist);
+			entities.addEntity(protagonist);
 
 			//Assert
 			assert.equal(entities.getFirstEntityOfType(EntityType.Protagonist), protagonist);
@@ -113,8 +113,8 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const protagonist = new Protagonist();
 
 			//Act
-			entities.push({type: 21} as any);
-			entities.push(protagonist);
+			entities.addEntity({type: 21} as any);
+			entities.addEntity(protagonist);
 
 			//Assert
 			assert.equal(entities.getFirstEntityOfType(EntityType.Protagonist), protagonist);
@@ -127,10 +127,10 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const protagonist2 = new Protagonist();
 
 			//Act
-			entities.push({type: 21} as any);
-			entities.push(protagonist1);
-			entities.push(protagonist2);
-			entities.push({type: 17} as any);
+			entities.addEntity({type: 21} as any);
+			entities.addEntity(protagonist1);
+			entities.addEntity(protagonist2);
+			entities.addEntity({type: 17} as any);
 
 			//Assert
 			assert.equal(entities.getFirstEntityOfType(EntityType.Protagonist), protagonist1);
@@ -143,10 +143,10 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const protagonist2 = new Protagonist();
 
 			//Act
-			entities.push({type: 21} as any);
-			entities.push(protagonist2);
-			entities.push(protagonist1);
-			entities.push({type: 17} as any);
+			entities.addEntity({type: 21} as any);
+			entities.addEntity(protagonist2);
+			entities.addEntity(protagonist1);
+			entities.addEntity({type: 17} as any);
 
 			//Assert
 			assert.equal(entities.getFirstEntityOfType(EntityType.Protagonist), protagonist2);

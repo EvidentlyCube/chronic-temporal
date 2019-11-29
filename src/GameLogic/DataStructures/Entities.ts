@@ -2,15 +2,14 @@ import {EntityType} from '../Enums';
 import {Entity} from '../Entity';
 import {Protagonist} from '../Entities/Protagonist';
 
-
 export class Entities {
-	private _entities: Entity[];
+	private readonly _entities: Entity[];
 
 	constructor(entities: Entity[] = []) {
 		this._entities = Array.from(entities);
 	}
 
-	public push(entity: Entity): void {
+	public addEntity(entity: Entity): void {
 		this._entities.push(entity);
 	}
 
