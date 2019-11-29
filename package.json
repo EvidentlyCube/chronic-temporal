@@ -11,7 +11,7 @@
     "serve": "webpack-dev-server --port 9002 --open --entry src/Bootstrap.ts"
   },
   "pre-commit": [
-    "lintfix",
+    "lint",
     "test"
   ],
   "author": "",
