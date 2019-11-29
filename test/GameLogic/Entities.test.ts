@@ -152,4 +152,48 @@ describe('GameLogic.DataStructures.Entities', () => {
 			assert.equal(entities.getFirstEntityOfType(EntityType.Protagonist), protagonist2);
 		});
 	});
+
+	describe('getPlayer', () => {
+		it('Returns undefined if no player-controlled Protagonist exists', () => {
+			//Arrange
+			const entities = new Entities();
+			const protagonist1 = new Protagonist(false);
+			const protagonist2 = new Protagonist(false);
+
+			//Act
+			entities.addEntity(protagonist1);
+			entities.addEntity(protagonist2);
+
+			//Assert
+			assert.equal(entities.getPlayer(), undefined);
+		});
+
+		it('Returns the entity if exactly one player-controlled Protagonist exists', () => {
+			//Arrange
+			const entities = new Entities();
+			const protagonist1 = new Protagonist(false);
+			const protagonist2 = new Protagonist(true);
+
+			//Act
+			entities.addEntity(protagonist1);
+			entities.addEntity(protagonist2);
+
+			//Assert
+			assert.equal(entities.getPlayer(), protagonist2);
+		});
+
+		it('Throws an error if more than one player-controlled Protagonist exists', () => {
+			//Arrange
+			const entities = new Entities();
+			const protagonist1 = new Protagonist(true);
+			const protagonist2 = new Protagonist(true);
+
+			//Act
+			entities.addEntity(protagonist1);
+			entities.addEntity(protagonist2);
+
+			//Assert
+			assert.throws(() => entities.getPlayer(), 'More than one player-controlled Protagonist was found.');
+		});
+	});
 });
