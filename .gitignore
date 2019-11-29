@@ -3,3 +3,4 @@ Chronic Temporal.iml
 dist
 .cache
 .idea
+.git/hooks
