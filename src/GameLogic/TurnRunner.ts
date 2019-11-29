@@ -10,12 +10,12 @@ export class TurnRunner {
 	}
 
 	public runTurn(playerInput: PlayerAction, level: Level): void {
-		const player = level.getPlayer();
+		const player = level.entities.getPlayer();
 
 		if (player) {
 			player.movesQueue.push(playerInput);
 		}
 
-		level.entities.forEach(entity => entity.update(level));
+		level.entities.entities.forEach(entity => entity.update(level));
 	}
 }

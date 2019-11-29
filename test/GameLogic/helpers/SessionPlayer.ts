@@ -31,7 +31,7 @@ export class SessionPlayer {
 
 		session.loadLevel(level);
 
-		const player = level.getPlayer();
+		const player = level.entities.getPlayer();
 
 		if (!player) {
 			throw new Error('No player found in the level!');
