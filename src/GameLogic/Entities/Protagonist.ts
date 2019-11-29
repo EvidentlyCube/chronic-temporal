@@ -16,12 +16,16 @@ export class Protagonist implements Entity {
 
 	public movesQueue: ActionSequence;
 
-	constructor(isPlayerControlled = true) {
+	constructor(isPlayerControlled = true, movesQueue: ActionSequence = new ActionSequence()) {
 		this.type = EntityType.Protagonist;
 		this.x = 0;
 		this.y = 0;
 		this.isPlayerControlled = isPlayerControlled;
-		this.movesQueue = new ActionSequence();
+		if (isPlayerControlled) {
+			this.movesQueue = new ActionSequence();
+		} else {
+			this.movesQueue = movesQueue;
+		}
 	}
 
 	public update(level: Level): void {

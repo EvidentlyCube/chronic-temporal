@@ -4,9 +4,9 @@ import {EventStore} from './EventStore';
 import {PlayerAction} from './Enums';
 import {Protagonist} from './Entities/Protagonist';
 import {ActionRecorder} from './ActionRecorder';
+import {ActionSequence} from './DataStructures/ActionSequence';
 
 export class GameSession {
-	// @todo we need to somehow store the existing temporal recordings
 	public level: Level | undefined;
 
 	public turnRunner: TurnRunner;
@@ -15,10 +15,13 @@ export class GameSession {
 
 	public actionRecorder: ActionRecorder;
 
+	public recordings: ActionSequence[];
+
 	constructor() {
 		this.turnRunner = new TurnRunner(this);
 		this.eventStore = new EventStore(this);
 		this.actionRecorder = new ActionRecorder();
+		this.recordings = [];
 	}
 
 	public loadLevel(level: Level): void {
@@ -28,12 +31,8 @@ export class GameSession {
 
 		this.level = level;
 
-		const player = new Protagonist(true);
-		player.x = level.playerStartX;
-		player.y = level.playerStartY;
-		this.level.entities.addEntity(player);
-
-		// @todo Put the temporal recordings in the room
+		this._addProtagonist(true);
+		this.recordings.forEach(recording => this._addProtagonist(false, recording));
 	}
 
 	public runTurn(playerInput: PlayerAction): void {
@@ -50,5 +49,15 @@ export class GameSession {
 				  next move on the protagonist here, then just run the turn
 		 */
 		this.turnRunner.runTurn(playerInput, this.level);
+	}
+
+	private _addProtagonist(isPlayerControlled: boolean, movesQueue: ActionSequence = new ActionSequence()): void {
+		if (!this.level) {
+			throw new Error('Tried to add a protagonist on a session that does not have a level attached');
+		}
+		const protagonist = new Protagonist(isPlayerControlled, movesQueue);
+		protagonist.x = this.level.playerStartX;
+		protagonist.y = this.level.playerStartY;
+		this.level.entities.addEntity(protagonist);
 	}
 }

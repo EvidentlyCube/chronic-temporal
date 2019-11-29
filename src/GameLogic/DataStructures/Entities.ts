@@ -22,8 +22,12 @@ export class Entities {
 	}
 
 	public getPlayer(): Protagonist | undefined {
-		// @todo Once we have projections this will have to be updated to return the correct player
-		return this.getFirstEntityOfType(EntityType.Protagonist) as Protagonist;
+		const protagonists = this.getEntitiesOfType(EntityType.Protagonist) as Protagonist[];
+		const result = protagonists.filter(x => x.isPlayerControlled);
+		if (result.length > 1) {
+			throw new Error('More than one player-controlled Protagonist was found.');
+		}
+		return result.pop();
 	}
 
 	public get entities(): readonly Entity[] {
