@@ -1,25 +1,31 @@
 import * as PIXI from 'pixi.js';
-import {GameContainerLayer, IGameContainer} from "./IGameContainer";
-import {Game} from "./Game";
+import {GameContainerLayer, IGameContainer} from './IGameContainer';
+import {Game} from './Game';
 
 export enum ContainerUpscaleMode
-{
+	{
 	NoScale = 0,
 	SnapScale = 1,
 	FullScale = 2
 }
 
-export class ScalingGameContainer implements IGameContainer
-{
+export class ScalingGameContainer implements IGameContainer {
 	private _upscaleMode: ContainerUpscaleMode;
+
 	private _lastWindowWidth: number;
+
 	private _lastWindowHeight: number;
 
 	private readonly _game: Game;
+
 	private readonly _layers: PIXI.Container[];
+
 	private readonly _renderedGame: PIXI.Sprite;
+
 	private readonly _mask: PIXI.Graphics;
+
 	private readonly _baseWidth: number;
+
 	private readonly _baseHeight: number;
 
 	private readonly _renderTexture: PIXI.RenderTexture;
@@ -35,8 +41,13 @@ export class ScalingGameContainer implements IGameContainer
 		}
 	}
 
-	constructor(game: Game, baseWidth: number, baseHeight: number, scaleMode: number = PIXI.SCALE_MODES.NEAREST, upscaleMode: ContainerUpscaleMode = ContainerUpscaleMode.SnapScale)
-	{
+	constructor(
+		game: Game,
+		baseWidth: number,
+		baseHeight: number,
+		scaleMode: number = PIXI.SCALE_MODES.NEAREST,
+		upscaleMode: ContainerUpscaleMode = ContainerUpscaleMode.SnapScale
+	) {
 		this._game = game;
 
 		this._mask = new PIXI.Graphics();
@@ -65,26 +76,20 @@ export class ScalingGameContainer implements IGameContainer
 		this._layers.forEach(layer => this._game.pixi.stage.addChild(layer));
 
 		// Update visibility after render but before input is parsed
-		game.pixi.ticker.add(() =>
-		{
+		game.pixi.ticker.add(() => {
 			this._layers[GameContainerLayer.Normal].visible = true;
 		}, this, PIXI.UPDATE_PRIORITY.LOW - 1);
 	}
 
-	public addChild(child: PIXI.DisplayObject, layer: GameContainerLayer): void
-	{
+	public addChild(child: PIXI.DisplayObject, layer: GameContainerLayer): void {
 		this._layers[layer].addChild(child);
 	}
 
-	public removeChild(child: PIXI.DisplayObject): void
-	{
+	public removeChild(child: PIXI.DisplayObject): void {
 		this._layers.filter(x => x === child.parent).forEach(x => x.removeChild(child));
 	}
 
-	public update(timePassed: number)
-	{
-		this._layers[GameContainerLayer.Normal].filters = this._game.postProcessManager.shaders;
-
+	public update(): void {
 		this._layers[GameContainerLayer.Normal].x = 0;
 		this._layers[GameContainerLayer.Normal].y = 0;
 		this._layers[GameContainerLayer.Normal].scale.x = 1;
@@ -100,8 +105,7 @@ export class ScalingGameContainer implements IGameContainer
 		this._layers[GameContainerLayer.Normal].scale.y = this._renderedGame.scale.y;
 	}
 
-	public setWindowDimensions(windowWidth: number, windowHeight: number): void
-	{
+	public setWindowDimensions(windowWidth: number, windowHeight: number): void {
 		this._lastWindowWidth = windowWidth;
 		this._lastWindowHeight = windowHeight;
 
@@ -133,8 +137,7 @@ export class ScalingGameContainer implements IGameContainer
 		this._game.rawInput.gameScaleY = scaleY;
 	}
 
-	private getDimensionsForScaleMode(windowWidth: number, windowHeight: number, upscaleMode: ContainerUpscaleMode): [number, number]
-	{
+	private getDimensionsForScaleMode(windowWidth: number, windowHeight: number, upscaleMode: ContainerUpscaleMode): [number, number] {
 		const displayRatio = this._baseWidth / this._baseHeight;
 
 		switch (upscaleMode) {
