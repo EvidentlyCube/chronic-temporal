@@ -1,18 +1,20 @@
-import {Constructor} from "../GenericInterfaces";
-import {Game} from "../Core/Game";
+import {Constructor} from '../GenericInterfaces';
+import {Game} from '../Core/Game';
 
-export interface IScene {
-	 update(passedTime: number): void;
-	 onStarted(): void;
-	 onEnded(): void;
+export interface Scene {
+	update(passedTime: number): void;
+
+	onStarted(): void;
+
+	onEnded(): void;
 }
 
 export class SceneManager {
 	private readonly _game: Game;
-	private _currentScene?: IScene;
 
-	public constructor(game: Game)
-	{
+	private _currentScene?: Scene;
+
+	constructor(game: Game) {
 		this._game = game;
 	}
 
@@ -20,11 +22,15 @@ export class SceneManager {
 		this._currentScene && this._currentScene.update(passedTime);
 	}
 
-	public changeScene(newScene: Constructor<IScene>): void
-	{
+	public changeScene(newScene: Constructor<Scene> | Scene): void {
 		this._currentScene && this._currentScene.onEnded();
 
-		this._currentScene = new newScene(this._game);
+		if (typeof newScene === 'function') {
+			this._currentScene = new newScene(this._game);
+		} else {
+			this._currentScene = newScene;
+		}
+
 		this._currentScene.onStarted();
 	}
 }

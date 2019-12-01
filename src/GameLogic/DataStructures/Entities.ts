@@ -33,4 +33,8 @@ export class Entities {
 	public get entities(): readonly Entity[] {
 		return this._entities;
 	}
+
+	public get length(): number {
+		return this._entities.length;
+	}
 }

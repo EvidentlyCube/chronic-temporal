@@ -21,7 +21,6 @@ export class Level {
 
 	public tilesFloor: Grid2D<FloorType>;
 
-	// Most likely will need an enum for floor types
 	public entities: Entities;
 
 	constructor(config: LevelConfig) {

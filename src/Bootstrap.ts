@@ -22,7 +22,7 @@ const game = new Game({
 		Constants.VirtualWidth,
 		Constants.VirtualHeight,
 		PIXI.SCALE_MODES.NEAREST,
-		ContainerUpscaleMode.NoScale,
+		ContainerUpscaleMode.FullScale,
 	),
 	onQueueAssets: (game: Game) => {
 		game.assetLoader.loadTexture(GfxConstants.InitialTileset, InitialTileset);

@@ -13,7 +13,6 @@ module.exports = {
 		'@typescript-eslint/explicit-member-accessibility': ['error', {accessibility: 'explicit', overrides: {constructors: 'no-public'}}],
 		'@typescript-eslint/interface-name-prefix': ['error', { prefixWithI: "never" }],
 		'@typescript-eslint/member-delimiter-style': ['error' ],
-		'@typescript-eslint/member-naming': ['error', {private: "^_"} ],
 		'@typescript-eslint/no-extra-non-null-assertion': ['error'],
 		'@typescript-eslint/no-misused-new': ['error'],
 		'@typescript-eslint/no-parameter-properties': ['error'],
@@ -25,6 +24,7 @@ module.exports = {
 		'@typescript-eslint/prefer-string-starts-ends-with': ['error'],
 		'@typescript-eslint/restrict-plus-operands': ['error', {checkCompoundAssignments: true}],
 		'@typescript-eslint/triple-slash-reference': ['off'],
+		'@typescript-eslint/no-explicit-any': ['off'],
 		'@typescript-eslint/type-annotation-spacing': ['warn'],
 
 		// ESLint Style rules
