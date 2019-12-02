@@ -49,6 +49,10 @@ export class GameScene implements Scene {
 			this._session.runTurn(PlayerAction.MoveDown);
 		} else if (this._game.rawInput.isKeyPressed('3')) {
 			this._session.runTurn(PlayerAction.MoveDownRight);
+		} else if (this._game.rawInput.isKeyPressed('r')) {
+			const player = this._session.level.entities.getPlayer();
+			player && this._session.registerRecording(player.movesQueue.copy());
+			this._session.resetLevel();
 		}
 
 		this._sessionRenderer.update();

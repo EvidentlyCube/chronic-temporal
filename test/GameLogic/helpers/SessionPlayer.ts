@@ -23,13 +23,11 @@ function convertStringOfMovesToActions(movesString: string): PlayerAction[] {
 
 export class SessionPlayer {
 	public static play(
-		level: Level | TestLevelBuilder,
+		levelOrBuilder: Level | TestLevelBuilder,
 		moves: PlayerAction | PlayerAction[] | string,
 	): [GameSession, Level, Protagonist] {
-		level = level instanceof TestLevelBuilder ? level.toLevel() : level;
-		const session = new GameSession();
-
-		session.loadLevel(level);
+		const level = levelOrBuilder instanceof TestLevelBuilder ? levelOrBuilder.toLevel() : levelOrBuilder;
+		const session = new GameSession(() => level);
 
 		const player = level.entities.getPlayer();
 
