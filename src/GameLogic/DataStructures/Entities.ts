@@ -13,8 +13,8 @@ export class Entities {
 		this._entities.push(entity);
 	}
 
-	public getEntitiesOfType(type: EntityType): Entity[] {
-		return this._entities.filter(entity => entity.type === type);
+	public getEntitiesOfType<T extends Entity = Entity>(type: EntityType): T[] {
+		return this._entities.filter(entity => entity.type === type) as T[];
 	}
 
 	public getFirstEntityOfType(type: EntityType): Entity | undefined {

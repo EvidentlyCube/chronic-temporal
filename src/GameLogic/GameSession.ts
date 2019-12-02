@@ -6,8 +6,12 @@ import {Protagonist} from './Entities/Protagonist';
 import {ActionRecorder} from './ActionRecorder';
 import {ActionSequence} from './DataStructures/ActionSequence';
 
+export interface GameSessionConfig {
+	recordings?: ActionSequence[];
+}
+
 export class GameSession {
-	public level: Level | undefined;
+	public level!: Level;
 
 	public turnRunner: TurnRunner;
 
@@ -15,24 +19,35 @@ export class GameSession {
 
 	public actionRecorder: ActionRecorder;
 
-	public recordings: ActionSequence[];
+	private readonly _recordings: ActionSequence[];
 
-	constructor() {
+	private readonly _levelFactory: () => Level;
+
+	constructor(levelFactory: () => Level, config: GameSessionConfig = {}) {
+		this._levelFactory =  levelFactory;
+
 		this.turnRunner = new TurnRunner(this);
 		this.eventStore = new EventStore(this);
 		this.actionRecorder = new ActionRecorder();
-		this.recordings = [];
+		this._recordings = Array.from(config.recordings ?? []);
+
+		this.resetLevel();
 	}
 
-	public loadLevel(level: Level): void {
+	public registerRecording(actionSequence: ActionSequence): void {
+		this._recordings.push(actionSequence);
+	}
+
+	public resetLevel(): void {
 		if (this.level) {
 			// @todo If a level is loaded destroy it
 		}
 
-		this.level = level;
+		this.level = this._levelFactory();
+		this._recordings.forEach(recording => recording.reset());
 
 		this._addProtagonist(true);
-		this.recordings.forEach(recording => this._addProtagonist(false, recording));
+		this._recordings.forEach(recording => this._addProtagonist(false, recording));
 	}
 
 	public runTurn(playerInput: PlayerAction): void {

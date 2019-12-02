@@ -12,7 +12,7 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 		PlayerAction.MoveUp,
 	];
 
-	it('addEntity should add the actions in the correct order.', () => {
+	it('push() should add the actions in the correct order.', () => {
 		//Arrange
 		const actionSequence = new ActionSequence();
 
@@ -24,7 +24,7 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 		assert.deepEqual(actionSequence.actions, actionList);
 	});
 
-	it('getNext should return the correct actions in the correct order.', () => {
+	it('getNext() should return the correct actions in the correct order.', () => {
 		//Arrange
 		const actionSequence = new ActionSequence(actionList);
 		const result: (PlayerAction | undefined)[] = [];
@@ -37,7 +37,7 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 		assert.deepEqual(result, actionList);
 	});
 
-	it('getNext should return undefined when it has reached the end of the sequence', () => {
+	it('getNext() should return undefined when it has reached the end of the sequence', () => {
 		//Arrange
 		const actionSequence = new ActionSequence(actionList);
 
@@ -48,5 +48,33 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 
 		//Assert
 		assert.equal(actionSequence.getNext(), undefined);
+	});
+
+	it('copy() should create copy of the move sequence', () => {
+		const base = new ActionSequence(actionList);
+		const copy = base.copy();
+
+		assert.notStrictEqual(base, copy);
+		assert.deepEqual(base.actions, copy.actions);
+	});
+
+	it('get position should return current position in the sequence', () => {
+		const sequence = new ActionSequence(actionList);
+
+		for (let i = 0; i < actionList.length; i++) {
+			assert.equal(sequence.position, i);
+			sequence.getNext();
+		}
+	});
+
+	it('reset should reset the position to the beginning', () => {
+		const sequence = new ActionSequence(actionList);
+		sequence.getNext();
+		sequence.getNext();
+		sequence.getNext();
+
+		sequence.reset();
+
+		assert.equal(sequence.position, 0);
 	});
 });

@@ -4,6 +4,8 @@ import {TextureFactory} from '../../../src.common/Managers/TextureFactory';
 import {Level} from '../../GameLogic/Level';
 import {FloorType} from '../../GameLogic/Enums';
 import {GfxConstants} from '../../Core/Constants/GfxConstants';
+import Constants from '../../Core/Constants';
+import {Protagonist} from '../../GameLogic/Entities/Protagonist';
 
 export class LevelRenderer extends PIXI.Sprite {
 	public floorTiles: Grid2D<PIXI.Sprite | undefined>;
@@ -53,8 +55,8 @@ export class LevelRenderer extends PIXI.Sprite {
 				if (!sprite.parent) {
 					this.floorTiles.set(x, y, sprite);
 					this.floorLayer.addChild(sprite);
-					sprite.x = x * 16; // @todo magic number
-					sprite.y = y * 16; // @todo magic number
+					sprite.x = x * Constants.TileWidth; // @todo magic number
+					sprite.y = y * Constants.TileHeight; // @todo magic number
 				}
 			}
 		}
@@ -70,13 +72,15 @@ export class LevelRenderer extends PIXI.Sprite {
 				this.entityLayer.addChild(sprite);
 			}
 
-			sprite.x = entity.x * 16; // @todo magic number
-			sprite.y = entity.y * 16; // @todo magic number
+			sprite.x = entity.x * Constants.TileWidth;
+			sprite.y = entity.y * Constants.TileHeight;
+			sprite.tint = (entity as Protagonist).isPlayerControlled // @todo super temporary
+				? 0xFFFFFF
+				: 0xCCCCFF;
 		});
 
 		while (level.entities.length > this.entities.length) {
-			const sprite = this.entities.pop();
-			sprite?.destroy();
+			this.entities.pop()?.destroy();
 		}
 	}
 }
