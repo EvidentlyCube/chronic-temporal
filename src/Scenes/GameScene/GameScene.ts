@@ -31,25 +31,25 @@ export class GameScene implements Scene {
 	}
 
 	public update(): void {
-		if (this._game.rawInput.isKeyPressed('7')) {
+		if (this._game.keyboard.isKeyPressed('7')) {
 			this._session.runTurn(PlayerAction.MoveUpLeft);
-		} else if (this._game.rawInput.isKeyPressed('8')) {
+		} else if (this._game.keyboard.isKeyPressed('8')) {
 			this._session.runTurn(PlayerAction.MoveUp);
-		} else if (this._game.rawInput.isKeyPressed('9')) {
+		} else if (this._game.keyboard.isKeyPressed('9')) {
 			this._session.runTurn(PlayerAction.MoveUpRight);
-		} else if (this._game.rawInput.isKeyPressed('4')) {
+		} else if (this._game.keyboard.isKeyPressed('4')) {
 			this._session.runTurn(PlayerAction.MoveLeft);
-		} else if (this._game.rawInput.isKeyPressed('5')) {
+		} else if (this._game.keyboard.isKeyPressed('5')) {
 			this._session.runTurn(PlayerAction.Wait);
-		} else if (this._game.rawInput.isKeyPressed('6')) {
+		} else if (this._game.keyboard.isKeyPressed('6')) {
 			this._session.runTurn(PlayerAction.MoveRight);
-		} else if (this._game.rawInput.isKeyPressed('1')) {
+		} else if (this._game.keyboard.isKeyPressed('1')) {
 			this._session.runTurn(PlayerAction.MoveDownLeft);
-		} else if (this._game.rawInput.isKeyPressed('2')) {
+		} else if (this._game.keyboard.isKeyPressed('2')) {
 			this._session.runTurn(PlayerAction.MoveDown);
-		} else if (this._game.rawInput.isKeyPressed('3')) {
+		} else if (this._game.keyboard.isKeyPressed('3')) {
 			this._session.runTurn(PlayerAction.MoveDownRight);
-		} else if (this._game.rawInput.isKeyPressed('r')) {
+		} else if (this._game.keyboard.isKeyPressed('r')) {
 			const player = this._session.level.entities.getPlayer();
 			player && this._session.registerRecording(player.movesQueue.copy());
 			this._session.resetLevel();

@@ -131,10 +131,10 @@ export class ScalingGameContainer implements IGameContainer {
 		this._mask.beginFill(0, 1);
 		this._mask.drawRect(x, y, targetWidth, targetHeight);
 
-		this._game.rawInput.gameOffsetX = x;
-		this._game.rawInput.gameOffsetY = y;
-		this._game.rawInput.gameScaleX = scaleX;
-		this._game.rawInput.gameScaleY = scaleY;
+		this._game.mouse.scaleProperties.offsetX = x;
+		this._game.mouse.scaleProperties.offsetY = y;
+		this._game.mouse.scaleProperties.scaleX = scaleX;
+		this._game.mouse.scaleProperties.scaleY = scaleY;
 	}
 
 	private getDimensionsForScaleMode(windowWidth: number, windowHeight: number, upscaleMode: ContainerUpscaleMode): [number, number] {

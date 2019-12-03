@@ -27,6 +27,7 @@
   "dependencies": {
     "@types/pixi.js": "^4.7.5",
     "@types/seedrandom": "^2.4.27",
+    "evidently-input": "^1.0.1",
     "pixi.js": "^4.8.5",
     "pngjs": "^0.4.0",
     "seedrandom": "^3.0.1"

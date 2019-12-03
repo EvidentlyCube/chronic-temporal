@@ -4,7 +4,8 @@ import {TextureFactory} from '../Managers/TextureFactory';
 import {Scene, SceneManager} from '../Managers/SceneManager';
 import {Constructor} from '../GenericInterfaces';
 import {GameContainerLayer, IGameContainer} from './IGameContainer';
-import {RawInput} from './RawInput';
+import {MouseInput} from 'evidently-input/dist/MouseInput';
+import {KeyboardInput} from 'evidently-input/dist/KeyboardInput';
 
 export interface GameConfiguration {
 	pixiConfig: PIXI.ApplicationOptions;
@@ -27,7 +28,9 @@ export class Game {
 
 	public readonly document: Document;
 
-	public readonly rawInput: RawInput;
+	public readonly mouse: MouseInput;
+
+	public readonly keyboard: KeyboardInput;
 
 	public readonly gameContainer: IGameContainer;
 
@@ -46,7 +49,8 @@ export class Game {
 
 		this.pixi = new PIXI.Application(config.pixiConfig);
 		this.document = config.document;
-		this.rawInput = new RawInput(this.document);
+		this.mouse = new MouseInput();
+		this.keyboard = new KeyboardInput();
 		this.gameContainer = config.containerFactory(this);
 		this.assetLoader = new AssetLoader();
 		this.textureFactory = this.assetLoader.textureFactory;
@@ -59,6 +63,8 @@ export class Game {
 		}
 
 		gameElement.appendChild(this.pixi.view);
+		this.mouse.registerListeners(this.document);
+		this.keyboard.registerListeners(this.document);
 	}
 
 	public start(): void {
@@ -88,7 +94,8 @@ export class Game {
 		const delta = this.pixi.ticker.elapsedMS;
 		this.sceneManager.update(delta);
 		this.gameContainer.update(delta);
-		this.rawInput.update();
+		this.mouse.update();
+		this.keyboard.update();
 	}
 
 	private setupLoadingScreen(game: Game): any {
