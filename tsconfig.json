@@ -18,7 +18,8 @@
 		"strictNullChecks": true,
 		"strictPropertyInitialization": true,
 		"strict": true,
-		"baseUrl": "./"
+		"baseUrl": "./",
+		"resolveJsonModule": true
 	},
 	"include": ["./src", "./test"],
 	"files": [
