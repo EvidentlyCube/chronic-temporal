@@ -50,12 +50,13 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 		assert.equal(actionSequence.getNext(), undefined);
 	});
 
-	it('copy() should create copy of the move sequence', () => {
-		const base = new ActionSequence(actionList);
+	it('copy() should create copy of the move sequence and set its position', () => {
+		const base = new ActionSequence(actionList, 1);
 		const copy = base.copy();
 
 		assert.notStrictEqual(base, copy);
 		assert.deepEqual(base.actions, copy.actions);
+		assert.equal(base.position, copy.position);
 	});
 
 	it('get position should return current position in the sequence', () => {

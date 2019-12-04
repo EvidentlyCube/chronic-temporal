@@ -13,8 +13,9 @@ export class ActionSequence {
 		return this._actionSequence;
 	}
 
-	constructor(actionSequence: PlayerAction[] = []) {
+	constructor(actionSequence: PlayerAction[] = [], position = 0) {
 		this._actionSequence = Array.from(actionSequence);
+		this._position = position;
 	}
 
 	public push(action: PlayerAction): void {
@@ -29,7 +30,7 @@ export class ActionSequence {
 	}
 
 	public copy(): ActionSequence {
-		return new ActionSequence(this._actionSequence);
+		return new ActionSequence(this._actionSequence, this._position);
 	}
 
 	public reset(): void {

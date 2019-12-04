@@ -1,8 +1,9 @@
 import 'mocha';
 import {assert} from 'chai';
 import {Level, LevelConfig} from '../../src/GameLogic/Level';
-import {FloorType} from '../../src/GameLogic/Enums';
+import {FloorType, PlayerAction} from '../../src/GameLogic/Enums';
 import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
+import {ActionSequence} from '../../src/GameLogic/DataStructures/ActionSequence';
 import * as levelJson from './helpers/level.json';
 
 describe('GameLogic.Level', () => {
@@ -17,6 +18,7 @@ describe('GameLogic.Level', () => {
 		const level = new Level(levelConfig);
 		level.tilesFloor.set(5, 5, FloorType.Wall);
 		level.entities.addEntity(new Protagonist());
+		level.entities.addEntity(new Protagonist(false, new ActionSequence([PlayerAction.MoveUpLeft], 1)));
 		return level;
 	}
 
@@ -38,6 +40,18 @@ describe('GameLogic.Level', () => {
 			assert.notStrictEqual(level.tilesFloor, levelClone.tilesFloor, 'tilesFloor is a reference to the original object');
 			assert.deepEqual(level.entities, levelClone.entities);
 			assert.notStrictEqual(level.entities, levelClone.entities, 'entities is a reference to the original object');
+		});
+
+		it('Returns copies of each entity.', () => {
+			const level = createTestLevel(levelConfig);
+			const levelClone = level.clone();
+
+			assert.equal(level.entities.length, levelClone.entities.length);
+			for (let i = 0; i < level.entities.length; i++) {
+				assert.deepEqual(level.entities.entities[i], levelClone.entities.entities[i]);
+				const message = 'Entity ' + i.toString() + ' is a reference to the original object';
+				assert.notStrictEqual(level.entities.entities[i], levelClone.entities.entities[i], message);
+			}
 		});
 	});
 });

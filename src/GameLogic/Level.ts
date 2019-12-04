@@ -1,6 +1,7 @@
 import {Grid2D} from '../../src.common/DataStructures/Grid2D';
 import {Entities} from './DataStructures/Entities';
 import {FloorType} from './Enums';
+import {Entity} from './Entity';
 
 export interface LevelConfig {
 	width: number;
@@ -42,7 +43,9 @@ export class Level {
 			playerStartY: this.playerStartY,
 		});
 		clonedLevel.tilesFloor.setAllByCallback((x, y) => this.tilesFloor.get(x, y));
-		clonedLevel.entities = new Entities(Array.from(this.entities.entities));
+		const clonedEntities: Entity[] = [];
+		this.entities.entities.forEach(entity => clonedEntities.push(entity.clone()));
+		clonedLevel.entities = new Entities(clonedEntities);
 
 		return clonedLevel;
 	}
