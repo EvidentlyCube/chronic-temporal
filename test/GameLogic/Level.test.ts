@@ -34,6 +34,10 @@ describe('GameLogic.Level', () => {
 
 			assert.deepEqual(level, levelClone);
 			assert.notStrictEqual(level, levelClone);
+			assert.deepEqual(level.tilesFloor, levelClone.tilesFloor);
+			assert.notStrictEqual(level.tilesFloor, levelClone.tilesFloor, 'tilesFloor is a reference to the original object');
+			assert.deepEqual(level.entities, levelClone.entities);
+			assert.notStrictEqual(level.entities, levelClone.entities, 'entities is a reference to the original object');
 		});
 	});
 });

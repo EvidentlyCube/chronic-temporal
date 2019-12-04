@@ -41,8 +41,8 @@ export class Level {
 			playerStartX: this.playerStartX,
 			playerStartY: this.playerStartY,
 		});
-		clonedLevel.tilesFloor = this.tilesFloor;
-		clonedLevel.entities = this.entities;
+		clonedLevel.tilesFloor.setAllByCallback((x, y) => this.tilesFloor.get(x, y));
+		clonedLevel.entities = new Entities(Array.from(this.entities.entities));
 
 		return clonedLevel;
 	}
