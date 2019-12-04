@@ -33,4 +33,17 @@ export class Level {
 		this.tilesFloor = new Grid2D<FloorType>(this.width, this.height, FloorType.FloorTile);
 		this.entities = new Entities();
 	}
+
+	public clone(): Level {
+		const clonedLevel = new Level({
+			width: this.width,
+			height: this.height,
+			playerStartX: this.playerStartX,
+			playerStartY: this.playerStartY,
+		});
+		clonedLevel.tilesFloor = this.tilesFloor;
+		clonedLevel.entities = this.entities;
+
+		return clonedLevel;
+	}
 }
