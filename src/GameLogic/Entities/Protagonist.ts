@@ -44,6 +44,13 @@ export class Protagonist implements Entity {
 		}
 	}
 
+	public clone(): Protagonist {
+		const clone = new Protagonist(this.isPlayerControlled, this.movesQueue.copy());
+		clone.x = this.x;
+		clone.y = this.y;
+		return clone;
+	}
+
 	public isMoveAllowed(level: Level, direction: Direction8): boolean {
 		const newX = this.x + direction.x;
 		const newY = this.y + direction.y;

@@ -7,4 +7,6 @@ export interface Entity {
 	y: number;
 
 	update(level: Level): void;
+
+	clone(): Entity;
 }
