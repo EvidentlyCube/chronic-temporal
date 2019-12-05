@@ -49,7 +49,7 @@ describe('GameLogic.Level', () => {
 			assert.equal(level.entities.length, levelClone.entities.length);
 			for (let i = 0; i < level.entities.length; i++) {
 				assert.deepEqual(level.entities.entities[i], levelClone.entities.entities[i]);
-				const message = 'Entity ' + i.toString() + ' is a reference to the original object';
+				const message = 'Entity ${i} is a reference to the original object';
 				assert.notStrictEqual(level.entities.entities[i], levelClone.entities.entities[i], message);
 			}
 		});
