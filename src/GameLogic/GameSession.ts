@@ -38,6 +38,19 @@ export class GameSession {
 		this._recordings.push(actionSequence);
 	}
 
+	public removeRecording(actionSequence: ActionSequence): void {
+		const index = this._recordings.indexOf(actionSequence);
+		if (index === -1) {
+			throw new Error('Attempted to remove a recording that does not exist');
+		}
+
+		this._recordings.splice(index, 1);
+	}
+
+	public getRecordings(): readonly ActionSequence[] {
+		return this._recordings;
+	}
+
 	public resetLevel(): void {
 		if (this.level) {
 			// @todo If a level is loaded destroy it

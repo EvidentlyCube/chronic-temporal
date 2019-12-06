@@ -79,7 +79,7 @@ export class LevelRenderer extends PIXI.Sprite {
 				: 0xCCCCFF;
 		});
 
-		while (level.entities.length > this.entities.length) {
+		while (level.entities.length < this.entities.length) {
 			this.entities.pop()?.destroy();
 		}
 	}
