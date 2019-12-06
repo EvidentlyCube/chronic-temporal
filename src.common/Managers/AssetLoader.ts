@@ -1,38 +1,45 @@
-import {Hashmap, ObjectKeymap} from "../GenericInterfaces";
-import {GfxManager} from "./GfxManager";
-import {TextureFactory, TilesetTextureConfig} from "./TextureFactory";
-import * as PIXI from "pixi.js";
-import Resource = PIXI.loaders.Resource;
+import {Hashmap, ObjectKeymap} from '../GenericInterfaces';
+import {GfxManager} from './GfxManager';
+import {TextureFactory, TilesetTextureConfig} from './TextureFactory';
+import * as PIXI from 'pixi.js';
+import Resource = PIXI.LoaderResource;
 
 interface PendingTexture {
-	name: string,
+	name: string;
 	imageUrl: string;
 }
 
 interface PendingSheet {
-	name: string,
-	imageUrl: string,
-	sheetJson: ObjectKeymap
+	name: string;
+	imageUrl: string;
+	sheetJson: ObjectKeymap;
 }
 
 interface PendingTileset {
-	name: string,
-	config: TilesetTextureConfig
+	name: string;
+	config: TilesetTextureConfig;
 }
 
-interface PendingFontInTexture {
-	fontDataUrl: string
+interface PendingPixiAutoFont {
+	name: string;
+	fontXmlUrl: string;
 }
 
 export class AssetLoader {
 	private _resources?: Hashmap<Resource>;
-	private _wasStarted: boolean;
+
+	private readonly _wasStarted: boolean;
+
 	private readonly _pendingTextures: PendingTexture[];
+
 	private readonly _pendingSheets: PendingSheet[];
+
 	private readonly _pendingTilesets: PendingTileset[];
-	private readonly _pendingFontInTextures: PendingFontInTexture[];
+
+	private readonly _pendingPixiAutoFonts: PendingPixiAutoFont[];
 
 	public gfxManager: GfxManager;
+
 	public textureFactory: TextureFactory;
 
 	constructor() {
@@ -40,7 +47,7 @@ export class AssetLoader {
 		this._pendingTextures = [];
 		this._pendingSheets = [];
 		this._pendingTilesets = [];
-		this._pendingFontInTextures = [];
+		this._pendingPixiAutoFonts = [];
 		this.gfxManager = new GfxManager();
 		this.textureFactory = new TextureFactory();
 	}
@@ -69,13 +76,13 @@ export class AssetLoader {
 		});
 	}
 
-	public loadFontInTexture(fontDataUrl: string) {
+	public loadPixiAutoFont(name: string, fontXmlUrl: string): void {
 		this.assertNotStarted();
 
-		this._pendingFontInTextures.push({fontDataUrl});
+		this._pendingPixiAutoFonts.push({name, fontXmlUrl});
 	}
 
-	public load(loader: PIXI.loaders.Loader): Promise<any> {
+	public load(loader: PIXI.Loader): Promise<any> {
 		this.assertNotStarted();
 
 		this._pendingTextures.forEach(texture => {
@@ -84,10 +91,13 @@ export class AssetLoader {
 		this._pendingSheets.forEach((sheet) => {
 			loader.add(sheet.name, sheet.imageUrl);
 		});
+		this._pendingPixiAutoFonts.forEach((font) => {
+			loader.add(font.name, font.fontXmlUrl);
+		});
 
 		const promise = new Promise((resolve) => {
-			loader.load((loader: PIXI.loaders.Loader, resources: Hashmap<Resource>) => {
-				this._resources = resources;
+			loader.load((loader, resources) => {
+				this._resources = resources as any;
 				resolve();
 			});
 		});
@@ -96,10 +106,9 @@ export class AssetLoader {
 			.then(() => this.loadTextures())
 			.then(() => this.loadSpritesheets())
 			.then(() => this.loadTilesets());
-
 	}
 
-	private loadTextures() {
+	private loadTextures(): void {
 		if (!this._resources) {
 			throw new Error('');
 		}
@@ -111,7 +120,7 @@ export class AssetLoader {
 		});
 	}
 
-	private loadSpritesheets() {
+	private loadSpritesheets(): Promise<any> {
 		if (!this._resources) {
 			throw new Error('');
 		}
@@ -144,7 +153,7 @@ export class AssetLoader {
 		}));
 	}
 
-	private loadTilesets() {
+	private loadTilesets(): void {
 		this._pendingTilesets.forEach(tilesetConfig => {
 			this.textureFactory.registerTileset(tilesetConfig.name, tilesetConfig.config);
 		});
@@ -152,7 +161,7 @@ export class AssetLoader {
 
 	private assertNotStarted(): void {
 		if (this._wasStarted) {
-			throw new Error("Asset loader was already started");
+			throw new Error('Asset loader was already started');
 		}
 	}
 }

@@ -4,7 +4,7 @@ import {FloorType, PlayerAction, PlayerActionUtils} from '../../../../src/GameLo
 import {SessionPlayer} from '../../helpers/SessionPlayer';
 import {TestLevelBuilder} from '../../helpers/TestLevelBuilder';
 
-describe('GameLogic.e2e - basic movement', () => {
+describe('GameLogic.e2e - Wall floor', () => {
 	PlayerActionUtils.moves.forEach((action) => {
 		it(`Player should not move ${PlayerAction[action]} into a wall`, () => {
 			const moveDirection = PlayerActionUtils.actionToDirection(action);

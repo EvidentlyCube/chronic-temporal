@@ -1,3 +1,5 @@
+/// <reference path="../../pixi-monkey-patch.d.ts"/>
+
 import * as PIXI from 'pixi.js';
 import {AssetLoader} from '../Managers/AssetLoader';
 import {TextureFactory} from '../Managers/TextureFactory';

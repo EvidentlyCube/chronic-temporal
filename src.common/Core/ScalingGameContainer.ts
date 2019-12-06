@@ -51,7 +51,7 @@ export class ScalingGameContainer implements IGameContainer {
 		this._game = game;
 
 		this._mask = new PIXI.Graphics();
-		this._renderTexture = PIXI.RenderTexture.create(baseWidth, baseHeight, scaleMode);
+		this._renderTexture = PIXI.RenderTexture.create({width: baseWidth, height: baseHeight, scaleMode});
 		this._lastWindowWidth = baseWidth;
 		this._lastWindowHeight = baseHeight;
 		this._upscaleMode = upscaleMode;

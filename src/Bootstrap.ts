@@ -1,5 +1,7 @@
-/// <reference path="index.d.ts"/>
+/// <reference path="../pixi-monkey-patch.d.ts"/>
+/// <reference path="./index.d.ts"/>
 
+import * as PIXI from 'pixi.js';
 import Constants from './Core/Constants';
 import {Game} from '../src.common/Core/Game';
 import {InitializerScene} from './Scenes/InitializerScene';
