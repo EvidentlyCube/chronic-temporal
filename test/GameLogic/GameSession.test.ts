@@ -118,12 +118,6 @@ describe('GameLogic.GameSession', () => {
 			assert.lengthOf(session.getRecordings(), 0);
 		});
 
-		it('Should return empty recordings when none added', () => {
-			const session = new GameSession(() => new Level(levelConfig));
-
-			assert.lengthOf(session.getRecordings(), 0);
-		});
-
 		it('Should return recordings added in constructor', () => {
 			const actionSequences = [
 				new ActionSequence(),

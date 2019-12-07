@@ -19,12 +19,15 @@ export class GameScene implements Scene {
 
 	private readonly _viewManager: GameViewManager;
 
+	private readonly _sessionController: SessionController;
+
 	constructor(game: Game, session: GameSession) {
 		this._game = game;
 		this._session = session;
 		this._input = new PlayerInputManager(game.keyboard, game.mouse);
 		this._viewManager = new GameViewManager();
 		this._sessionRenderer = new SessionRenderer(this._session, game.textureFactory);
+		this._sessionController = new SessionController(this, this._session);
 		this._layer = game.createLayer();
 
 		this._layer.addChild(this._sessionRenderer);
@@ -40,9 +43,7 @@ export class GameScene implements Scene {
 	}
 
 	public update(passedTime: number): void {
-		const controller = new SessionController(this, this._session);
-
-		this._viewManager.update(passedTime, this._input, controller);
+		this._viewManager.update(passedTime, this._input, this._sessionController);
 
 		this._sessionRenderer.update();
 	}
