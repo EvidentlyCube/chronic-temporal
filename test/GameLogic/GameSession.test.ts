@@ -7,14 +7,14 @@ import {EntityType, PlayerAction} from '../../src/GameLogic/Enums';
 import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
 
 describe('GameLogic.GameSession', () => {
-	describe('constructor', () => {
-		const levelConfig: LevelConfig = {
-			width: 20,
-			height: 20,
-			playerStartX: 10,
-			playerStartY: 10,
-		};
+	const levelConfig: LevelConfig = {
+		width: 20,
+		height: 20,
+		playerStartX: 10,
+		playerStartY: 10,
+	};
 
+	describe('constructor', () => {
 		it('Adds a player-controlled protagonist to the level.', () => {
 			//Arrange
 			const level = new Level(levelConfig);
@@ -108,6 +108,58 @@ describe('GameLogic.GameSession', () => {
 			session.level.entities.getEntitiesOfType<Protagonist>(EntityType.Protagonist).forEach(protagonist => {
 				assert.equal(protagonist.movesQueue.position, 0);
 			});
+		});
+	});
+
+	describe('Recordings', () => {
+		it('Should return empty recordings when none added', () => {
+			const session = new GameSession(() => new Level(levelConfig));
+
+			assert.lengthOf(session.getRecordings(), 0);
+		});
+
+		it('Should return recordings added in constructor', () => {
+			const actionSequences = [
+				new ActionSequence(),
+				new ActionSequence(),
+			];
+			const session = new GameSession(() => new Level(levelConfig), {recordings: actionSequences});
+
+			assert.lengthOf(session.getRecordings(), 2);
+			assert.include(session.getRecordings(), actionSequences[0]);
+			assert.include(session.getRecordings(), actionSequences[1]);
+		});
+
+		it('Should return recordings added after construction', () => {
+			const actionSequences = [
+				new ActionSequence(),
+				new ActionSequence(),
+			];
+
+			const session = new GameSession(() => new Level(levelConfig));
+			session.registerRecording(actionSequences[0]);
+			session.registerRecording(actionSequences[1]);
+
+			assert.lengthOf(session.getRecordings(), 2);
+			assert.include(session.getRecordings(), actionSequences[0]);
+			assert.include(session.getRecordings(), actionSequences[1]);
+		});
+
+		it('Should delete previously added recordings', () => {
+			const actionSequence = new ActionSequence();
+
+			const session = new GameSession(() => new Level(levelConfig));
+			session.registerRecording(actionSequence);
+			session.removeRecording(actionSequence);
+
+			assert.lengthOf(session.getRecordings(), 0);
+		});
+
+		it('Should error when removing recording that is not added', () => {
+			const actionSequence = new ActionSequence();
+
+			const session = new GameSession(() => new Level(levelConfig));
+			assert.throws(() => session.removeRecording(actionSequence));
 		});
 	});
 });
