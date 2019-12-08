@@ -13,6 +13,14 @@ export class Entities {
 		this._entities.push(entity);
 	}
 
+	public removeEntity(entity: Entity): void {
+		const index = this._entities.indexOf(entity);
+		if (index == -1) {
+			throw new Error('Could not remove entity.');
+		}
+		this._entities.splice(index, 1);
+	}
+
 	public getEntitiesOfType<T extends Entity = Entity>(type: EntityType): T[] {
 		return this._entities.filter(entity => entity.type === type) as T[];
 	}

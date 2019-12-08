@@ -5,7 +5,6 @@ import {GameSession} from '../../src/GameLogic/GameSession';
 import {Level, LevelConfig} from '../../src/GameLogic/Level';
 import {EntityType, PlayerAction, FloorType} from '../../src/GameLogic/Enums';
 import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
-import {Entities} from '../../src/GameLogic/DataStructures/Entities';
 
 describe('GameLogic.GameSession', () => {
 	const levelConfig: LevelConfig = {
@@ -17,8 +16,8 @@ describe('GameLogic.GameSession', () => {
 
 	//A helper function for these tests, as gameSession adds protagonists to the level
 	function removeProtagonistsFromLevel(session: GameSession): void {
-		const newEntities = session.level.entities.entities.filter(entity => entity.type !== EntityType.Protagonist);
-		session.level.entities = new Entities(newEntities);
+		const protagonists = session.level.entities.getEntitiesOfType(EntityType.Protagonist);
+		protagonists.forEach(protagonist => session.level.entities.removeEntity(protagonist));
 	}
 
 	describe('constructor', () => {
