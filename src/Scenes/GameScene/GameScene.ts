@@ -2,7 +2,7 @@ import {Scene} from '../../../src.common/Managers/SceneManager';
 import {GameSession} from '../../GameLogic/GameSession';
 import {Game} from '../../../src.common/Core/Game';
 import {SessionRenderer} from './SessionRenderer';
-import {GameViewManager} from './States/GameViewManager';
+import {GameViewManager} from './Views/GameViewManager';
 import {SessionController} from './SessionController';
 import {PlayerInputManager} from './PlayerInputManager';
 
