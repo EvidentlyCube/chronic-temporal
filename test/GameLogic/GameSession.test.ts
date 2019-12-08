@@ -197,8 +197,8 @@ describe('GameLogic.GameSession', () => {
 
 			//Assert
 			removeProtagonistsFromLevel(session);
-			assert.deepEqual(session.level, level);
-			assert.notStrictEqual(session.level, level);
+			assert.deepEqual(session.level, session.levelBlueprint);
+			assert.notStrictEqual(session.level, session.levelBlueprint);
 		});
 	});
 });

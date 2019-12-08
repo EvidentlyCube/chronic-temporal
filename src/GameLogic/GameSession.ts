@@ -11,7 +11,7 @@ export interface GameSessionConfig {
 }
 
 export class GameSession {
-	private readonly levelBlueprint: Level;
+	private readonly _levelBlueprint: Level;
 
 	public level!: Level;
 
@@ -24,7 +24,7 @@ export class GameSession {
 	private readonly _recordings: ActionSequence[];
 
 	constructor(levelBlueprint: Level, config: GameSessionConfig = {}) {
-		this.levelBlueprint = levelBlueprint.clone();
+		this._levelBlueprint = levelBlueprint;
 
 		this.turnRunner = new TurnRunner(this);
 		this.eventStore = new EventStore(this);
@@ -32,6 +32,10 @@ export class GameSession {
 		this._recordings = Array.from(config.recordings ?? []);
 
 		this.resetLevel();
+	}
+
+	public get levelBlueprint(): Level {
+		return this._levelBlueprint;
 	}
 
 	public registerRecording(actionSequence: ActionSequence): void {
