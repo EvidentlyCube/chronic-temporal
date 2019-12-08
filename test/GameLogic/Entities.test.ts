@@ -5,7 +5,7 @@ import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
 import {Entities} from '../../src/GameLogic/DataStructures/Entities';
 
 describe('GameLogic.DataStructures.Entities', () => {
-	describe('push', () => {
+	describe('addEntity', () => {
 		it('addEntity adds new entities', () => {
 			//Arrange
 			const entities = new Entities();
@@ -18,6 +18,32 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 			//Assert
 			assert.deepEqual(entities.entities, [protagonist1, protagonist2]);
+		});
+	});
+
+	describe('removeEntity', () => {
+		it('removeEntity removes entity', () => {
+			//Arrange
+			const protagonist1 = new Protagonist();
+			const protagonist2 = new Protagonist();
+			const protagonist3 = new Protagonist();
+			const entities = new Entities([protagonist1, protagonist2, protagonist3]);
+
+			//Act
+			entities.removeEntity(protagonist2);
+
+			//Assert
+			assert.deepEqual(entities.entities, [protagonist1, protagonist3]);
+		});
+
+		it('removeEntity throws an error if entity does not exist', () => {
+			//Arrange
+			const protagonist1 = new Protagonist();
+			const protagonist2 = new Protagonist();
+			const entities = new Entities([protagonist1]);
+
+			//Act & Assert
+			assert.throws(() => entities.removeEntity(protagonist2));
 		});
 	});
 
