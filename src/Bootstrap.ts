@@ -6,8 +6,10 @@ import Constants from './Core/Constants';
 import {Game} from '../src.common/Core/Game';
 import {InitializerScene} from './Scenes/InitializerScene';
 
-import {ContainerUpscaleMode, ScalingGameContainer} from '../src.common/Core/ScalingGameContainer';
+import {ScalingGameContainer} from '../src.common/Core/ScalingGameContainer';
 import {queueAssets} from './Initialization/queueAssets';
+
+import {Config} from '../config/config';
 
 const game = new Game({
 	document,
@@ -23,7 +25,7 @@ const game = new Game({
 		Constants.VirtualWidth,
 		Constants.VirtualHeight,
 		PIXI.SCALE_MODES.NEAREST,
-		ContainerUpscaleMode.FullScale,
+		Config.containerUpscaleMode,
 	),
 	onQueueAssets: queueAssets,
 	onStartGame: () => {

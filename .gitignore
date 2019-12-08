@@ -5,3 +5,4 @@ dist
 .idea
 .git/hooks
 .vscode
+config/config.ts
