@@ -27,9 +27,9 @@ export class SessionPlayer {
 		moves: PlayerAction | PlayerAction[] | string,
 	): [GameSession, Level, Protagonist] {
 		const level = levelOrBuilder instanceof TestLevelBuilder ? levelOrBuilder.toLevel() : levelOrBuilder;
-		const session = new GameSession(() => level);
+		const session = new GameSession(level);
 
-		const player = level.entities.getPlayer();
+		const player = session.level.entities.getPlayer();
 
 		if (!player) {
 			throw new Error('No player found in the level!');
@@ -43,6 +43,6 @@ export class SessionPlayer {
 
 		moves.forEach(move => session.runTurn(move));
 
-		return [session, level, player];
+		return [session, session.level, player];
 	}
 }
