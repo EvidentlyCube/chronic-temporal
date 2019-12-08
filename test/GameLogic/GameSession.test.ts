@@ -3,8 +3,9 @@ import {assert} from 'chai';
 import {ActionSequence} from '../../src/GameLogic/DataStructures/ActionSequence';
 import {GameSession} from '../../src/GameLogic/GameSession';
 import {Level, LevelConfig} from '../../src/GameLogic/Level';
-import {EntityType, PlayerAction} from '../../src/GameLogic/Enums';
+import {EntityType, PlayerAction, FloorType} from '../../src/GameLogic/Enums';
 import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
+import {Entities} from '../../src/GameLogic/DataStructures/Entities';
 
 describe('GameLogic.GameSession', () => {
 	const levelConfig: LevelConfig = {
@@ -14,16 +15,35 @@ describe('GameLogic.GameSession', () => {
 		playerStartY: 10,
 	};
 
+	//A helper function for these tests, as gameSession adds protagonists to the level
+	function removeProtagonistsFromLevel(session: GameSession): void {
+		const newEntities = session.level.entities.entities.filter(entity => entity.type !== EntityType.Protagonist);
+		session.level.entities = new Entities(newEntities);
+	}
+
 	describe('constructor', () => {
+		it('Creates and uses a copy of the level passed in', () => {
+			//Arrange
+			const level = new Level(levelConfig);
+
+			//Act
+			const session = new GameSession(level);
+
+			//Assert
+			removeProtagonistsFromLevel(session);
+			assert.deepEqual(session.level, level);
+			assert.notStrictEqual(session.level, level);
+		});
+
 		it('Adds a player-controlled protagonist to the level.', () => {
 			//Arrange
 			const level = new Level(levelConfig);
 
 			//Act
-			new GameSession(() => level);
+			const session = new GameSession(level);
 
 			//Assert
-			assert.exists(level.entities.getPlayer());
+			assert.exists(session.level.entities.getPlayer());
 		});
 
 		it('Adds only one protagonist if _recordings is empty.', () => {
@@ -31,10 +51,10 @@ describe('GameLogic.GameSession', () => {
 			const level = new Level(levelConfig);
 
 			//Act
-			new GameSession(() => level);
+			const session = new GameSession(level);
 
 			//Assert
-			assert.equal(level.entities.getEntitiesOfType(EntityType.Protagonist).length, 1);
+			assert.equal(session.level.entities.getEntitiesOfType(EntityType.Protagonist).length, 1);
 		});
 
 		it('Adds 2 protagonists if _recordings has one entry.', () => {
@@ -42,10 +62,10 @@ describe('GameLogic.GameSession', () => {
 			const level = new Level(levelConfig);
 
 			//Act
-			new GameSession(() => level, {recordings: [new ActionSequence()]});
+			const session = new GameSession(level, {recordings: [new ActionSequence()]});
 
 			//Assert
-			assert.equal(level.entities.getEntitiesOfType(EntityType.Protagonist).length, 2);
+			assert.equal(session.level.entities.getEntitiesOfType(EntityType.Protagonist).length, 2);
 		});
 
 		it('Adds X + 1 protagonists if _recordings has X entries.', () => {
@@ -53,7 +73,7 @@ describe('GameLogic.GameSession', () => {
 			const level = new Level(levelConfig);
 
 			//Act
-			new GameSession(() => level, {
+			const session = new GameSession(level, {
 				recordings: [
 					new ActionSequence(),
 					new ActionSequence(),
@@ -64,7 +84,7 @@ describe('GameLogic.GameSession', () => {
 			});
 
 			//Assert
-			assert.equal(level.entities.getEntitiesOfType(EntityType.Protagonist).length, 6);
+			assert.equal(session.level.entities.getEntitiesOfType(EntityType.Protagonist).length, 6);
 		});
 
 		it('Adds X not player-controlled protagonists if _recordings has X entries.', () => {
@@ -72,7 +92,7 @@ describe('GameLogic.GameSession', () => {
 			const level = new Level(levelConfig);
 
 			//Act
-			new GameSession(() => level, {
+			const session = new GameSession(level, {
 				recordings: [
 					new ActionSequence(),
 					new ActionSequence(),
@@ -81,7 +101,7 @@ describe('GameLogic.GameSession', () => {
 			});
 
 			//Assert
-			const result = level.entities.getEntitiesOfType(EntityType.Protagonist) as Protagonist[];
+			const result = session.level.entities.getEntitiesOfType(EntityType.Protagonist) as Protagonist[];
 			let count = 0;
 			result.forEach(protagonist => {
 				if (!protagonist.isPlayerControlled) {
@@ -102,7 +122,7 @@ describe('GameLogic.GameSession', () => {
 			sequences[1].getNext();
 
 			// Act
-			const session = new GameSession(() => new Level(levelConfig), {recordings: sequences});
+			const session = new GameSession(new Level(levelConfig), {recordings: sequences});
 
 			// Assert
 			session.level.entities.getEntitiesOfType<Protagonist>(EntityType.Protagonist).forEach(protagonist => {
@@ -113,7 +133,7 @@ describe('GameLogic.GameSession', () => {
 
 	describe('Recordings', () => {
 		it('Should return empty recordings when none added', () => {
-			const session = new GameSession(() => new Level(levelConfig));
+			const session = new GameSession(new Level(levelConfig));
 
 			assert.lengthOf(session.getRecordings(), 0);
 		});
@@ -123,7 +143,7 @@ describe('GameLogic.GameSession', () => {
 				new ActionSequence(),
 				new ActionSequence(),
 			];
-			const session = new GameSession(() => new Level(levelConfig), {recordings: actionSequences});
+			const session = new GameSession(new Level(levelConfig), {recordings: actionSequences});
 
 			assert.lengthOf(session.getRecordings(), 2);
 			assert.include(session.getRecordings(), actionSequences[0]);
@@ -136,7 +156,7 @@ describe('GameLogic.GameSession', () => {
 				new ActionSequence(),
 			];
 
-			const session = new GameSession(() => new Level(levelConfig));
+			const session = new GameSession(new Level(levelConfig));
 			session.registerRecording(actionSequences[0]);
 			session.registerRecording(actionSequences[1]);
 
@@ -148,7 +168,7 @@ describe('GameLogic.GameSession', () => {
 		it('Should delete previously added recordings', () => {
 			const actionSequence = new ActionSequence();
 
-			const session = new GameSession(() => new Level(levelConfig));
+			const session = new GameSession(new Level(levelConfig));
 			session.registerRecording(actionSequence);
 			session.removeRecording(actionSequence);
 
@@ -158,8 +178,27 @@ describe('GameLogic.GameSession', () => {
 		it('Should error when removing recording that is not added', () => {
 			const actionSequence = new ActionSequence();
 
-			const session = new GameSession(() => new Level(levelConfig));
+			const session = new GameSession(new Level(levelConfig));
 			assert.throws(() => session.removeRecording(actionSequence));
+		});
+	});
+
+	describe('levelReset', () => {
+		it('Should use a copy of the level blueprint', () => {
+			//Arrange
+			const level = new Level(levelConfig);
+
+			//Act
+			const session = new GameSession(level);
+			session.level.tilesFloor.set(5, 5, FloorType.Wall);
+			session.level.tilesFloor.set(12, 5, FloorType.Wall);
+			session.level.entities.addEntity({type: 21} as any);
+			session.resetLevel();
+
+			//Assert
+			removeProtagonistsFromLevel(session);
+			assert.deepEqual(session.level, session.levelBlueprint);
+			assert.notStrictEqual(session.level, session.levelBlueprint);
 		});
 	});
 });

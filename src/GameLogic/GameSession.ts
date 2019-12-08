@@ -11,6 +11,8 @@ export interface GameSessionConfig {
 }
 
 export class GameSession {
+	private readonly _levelBlueprint: Level;
+
 	public level!: Level;
 
 	public turnRunner: TurnRunner;
@@ -21,10 +23,8 @@ export class GameSession {
 
 	private readonly _recordings: ActionSequence[];
 
-	private readonly _levelFactory: () => Level;
-
-	constructor(levelFactory: () => Level, config: GameSessionConfig = {}) {
-		this._levelFactory =  levelFactory;
+	constructor(levelBlueprint: Level, config: GameSessionConfig = {}) {
+		this._levelBlueprint = levelBlueprint;
 
 		this.turnRunner = new TurnRunner(this);
 		this.eventStore = new EventStore(this);
@@ -32,6 +32,10 @@ export class GameSession {
 		this._recordings = Array.from(config.recordings ?? []);
 
 		this.resetLevel();
+	}
+
+	public get levelBlueprint(): Level {
+		return this._levelBlueprint;
 	}
 
 	public registerRecording(actionSequence: ActionSequence): void {
@@ -56,7 +60,7 @@ export class GameSession {
 			// @todo If a level is loaded destroy it
 		}
 
-		this.level = this._levelFactory();
+		this.level = this.levelBlueprint.clone();
 		this._recordings.forEach(recording => recording.reset());
 
 		this._addProtagonist(true);
