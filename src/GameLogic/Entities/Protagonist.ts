@@ -45,9 +45,6 @@ export class Protagonist implements Entity {
 
 		if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
 			level.entities.removeEntity(this);
-			if (this.isPlayerControlled) {
-				// @ todo figure out how to reset the level if this is the player-controlled protagonist
-			}
 		}
 	}
 
