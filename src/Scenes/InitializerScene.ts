@@ -42,6 +42,9 @@ export class InitializerScene implements Scene {
 		level.tilesFloor.set(2, 2, FloorType.Wall);
 		level.tilesFloor.set(7, 3, FloorType.Wall);
 		level.tilesFloor.set(15, 17, FloorType.Wall);
+		level.tilesFloor.set(6, 14, FloorType.Water);
+		level.tilesFloor.set(8, 12, FloorType.Water);
+		level.tilesFloor.set(15, 4, FloorType.Water);
 
 		const session = new GameSession(level);
 
