@@ -19,7 +19,8 @@ export enum EntityType {
 
 export enum FloorType {
 	FloorTile = 0,
-	Wall = 1
+	Wall = 1,
+	Water = 2
 }
 
 const directionToActionMap: Hashmap<PlayerAction> = {};

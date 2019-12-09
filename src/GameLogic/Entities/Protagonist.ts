@@ -42,6 +42,10 @@ export class Protagonist implements Entity {
 			this.x += direction.x;
 			this.y += direction.y;
 		}
+
+		if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
+			level.entities.removeEntity(this);
+		}
 	}
 
 	public clone(): Protagonist {
@@ -61,7 +65,7 @@ export class Protagonist implements Entity {
 
 		const floor = level.tilesFloor.get(newX, newY);
 
-		if (floor !== FloorType.FloorTile) {
+		if (floor == FloorType.Wall) {
 			return false;
 		}
 

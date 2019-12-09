@@ -18,8 +18,7 @@ export class SessionController {
 	}
 
 	public restartAndSaveRecording(): void {
-		const player = this._session.level.entities.getPlayer();
-		player && this._session.registerRecording(player.movesQueue.copy());
+		this._session.registerRecording(this._session.actionRecorder.end());
 		this._session.resetLevel();
 	}
 
