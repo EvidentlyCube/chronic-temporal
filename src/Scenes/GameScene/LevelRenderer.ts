@@ -48,7 +48,7 @@ export class LevelRenderer extends PIXI.Sprite {
 		for (let x = 0; x < level.width; x++) {
 			for (let y = 0; y < level.height; y++) {
 				const sprite = this.floorTiles.get(x, y) ?? new PIXI.Sprite();
-				sprite.texture = this.getFloorTypeSprite(level.tilesFloor.get(x, y));
+				sprite.texture = this.getFloorTypeTexture(level.tilesFloor.get(x, y));
 
 				if (!sprite.parent) {
 					this.floorTiles.set(x, y, sprite);
@@ -82,7 +82,7 @@ export class LevelRenderer extends PIXI.Sprite {
 		}
 	}
 
-	private getFloorTypeSprite(floorType: FloorType): PIXI.Texture {
+	private getFloorTypeTexture(floorType: FloorType): PIXI.Texture {
 		switch (floorType) {
 			case FloorType.Wall:
 				return this._textureFactory.getTile(GfxConstants.InitialTileset, 1, 3);
