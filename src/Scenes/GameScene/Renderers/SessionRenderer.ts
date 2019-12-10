@@ -9,6 +9,10 @@ export class SessionRenderer extends PIXI.Sprite {
 
 	private readonly _levelRenderer: LevelRenderer;
 
+	public get levelRenderer(): LevelRenderer {
+		return this._levelRenderer;
+	}
+
 	constructor(session: GameSession, textureFactory: TextureFactory) {
 		super();
 
