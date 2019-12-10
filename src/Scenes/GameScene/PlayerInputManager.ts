@@ -1,5 +1,5 @@
 import {KeyboardInput} from 'evidently-input/dist/KeyboardInput';
-import {MouseInput} from 'evidently-input/dist/MouseInput';
+import {MouseButtons, MouseInput} from 'evidently-input/dist/MouseInput';
 
 export class PlayerInputManager {
 	private readonly _keyboard: KeyboardInput;
@@ -38,4 +38,10 @@ export class PlayerInputManager {
 	public readonly uiOk = (): boolean => this.actionWait();
 
 	public readonly uiSwitchViews = (): boolean => this._keyboard.isKeyPressed('Tab');
+
+	public readonly editorDraw = (): boolean => this._mouse.isMouseDown(MouseButtons.Left);
+
+	public readonly editorErase = (): boolean => this._mouse.isMouseDown(MouseButtons.Right);
+
+	// public readonly editorMousePosition = (): PIXI.Point => new PIXI.Point(this._mouse)
 }

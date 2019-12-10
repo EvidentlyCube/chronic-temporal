@@ -3,11 +3,14 @@ import {ViewMoveProtagonist} from './ViewMoveProtagonist';
 import {ViewEditRecordings} from './ViewEditRecordings';
 import {SessionController} from '../SessionController';
 import {PlayerInputManager} from '../PlayerInputManager';
+import {ViewLevelEditor} from './ViewLevelEditor';
+import {GameScene} from '../GameScene';
 
 export interface GameView extends PIXI.Container {
 	update(passedTime: number, input: PlayerInputManager, controller: SessionController): void;
 
 	onBlur(controller: SessionController): void;
+
 	onFocus(controller: SessionController): void;
 }
 
@@ -16,15 +19,16 @@ export class GameViewManager extends PIXI.Container {
 
 	private readonly _states: GameView[];
 
-	constructor() {
+	constructor(gameScene: GameScene) {
 		super();
 
 		this._states = [
 			new ViewMoveProtagonist(this),
 			new ViewEditRecordings(this),
+			new ViewLevelEditor(this, gameScene.sessionRenderer),
 		];
 
-		this.addChild(... this._states);
+		this.addChild(...this._states);
 
 		this._activeState = this._states[0];
 	}
