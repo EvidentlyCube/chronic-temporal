@@ -179,6 +179,56 @@ describe('GameLogic.DataStructures.Entities', () => {
 		});
 	});
 
+	describe('getEntitiesAtCoordinates', () => {
+		it('Returns empty array if no entities match the coordinates', () => {
+			//Arrange
+			const entities = new Entities();
+			const protagonist1 = new Protagonist(false);
+			protagonist1.x = 1;
+			protagonist1.y = 1;
+			const protagonist2 = new Protagonist(false);
+			protagonist2.x = 2;
+			protagonist2.y = 2;
+
+			//Act
+			entities.addEntity(protagonist1);
+			entities.addEntity(protagonist2);
+
+			//Assert
+			assert.isEmpty(entities.getEntitiesAtCoordinates(3, 3));
+		});
+
+		it('Returns all entities that match both coordinates', () => {
+			//Arrange
+			const entities = new Entities();
+			const protagonist1 = new Protagonist(false);
+			protagonist1.x = 1;
+			protagonist1.y = 1;
+			const protagonist2 = new Protagonist(false);
+			protagonist2.x = 1;
+			protagonist2.y = 2;
+			const protagonist3 = new Protagonist(false);
+			protagonist3.x = 2;
+			protagonist3.y = 1;
+			const protagonist4 = new Protagonist(false);
+			protagonist4.x = 2;
+			protagonist4.y = 2;
+			const protagonist5 = new Protagonist(false);
+			protagonist5.x = 1;
+			protagonist5.y = 1;
+
+			//Act
+			entities.addEntity(protagonist1);
+			entities.addEntity(protagonist2);
+			entities.addEntity(protagonist3);
+			entities.addEntity(protagonist4);
+			entities.addEntity(protagonist5);
+
+			//Assert
+			assert.deepEqual(entities.getEntitiesAtCoordinates(1, 1), [protagonist1, protagonist5]);
+		});
+	});
+
 	describe('getPlayer', () => {
 		it('Returns undefined if no player-controlled Protagonist exists', () => {
 			//Arrange
