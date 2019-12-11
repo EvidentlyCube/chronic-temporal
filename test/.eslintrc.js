@@ -7,5 +7,6 @@ module.exports = {
 	rules: {
 		"@typescript-eslint/indent": ["error", 'tab'],
 		"@typescript-eslint/no-explicit-any": [0],
+		"@typescript-eslint/no-use-before-define": [0]
 	}
 };
