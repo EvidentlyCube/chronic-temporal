@@ -3,6 +3,7 @@ import {EntityType, FloorType, PlayerAction} from '../../../src/GameLogic/Enums'
 import {Protagonist} from '../../../src/GameLogic/Entities/Protagonist';
 import {ActionSequence} from '../../../src/GameLogic/DataStructures/ActionSequence';
 import {Entity} from '../../../src/GameLogic/Entity';
+import {Pushable} from '../../../src/GameLogic/Entities/Pushable';
 
 export function generateCompleteLevel(): Level {
 	const level = new Level({
@@ -24,6 +25,10 @@ function addEveryEntity(level: Level): void {
 			case EntityType.Protagonist:
 				insertEntity(level, new Protagonist(true));
 				insertEntity(level, new Protagonist(false, new ActionSequence([PlayerAction.MoveDown, PlayerAction.MoveUpLeft], 1)));
+				break;
+
+			case EntityType.Pushable:
+				insertEntity(level, new Pushable());
 				break;
 
 			default:

@@ -3,6 +3,7 @@ import {Entity} from '../Entity';
 import {EntityType} from '../Enums';
 import {Protagonist} from '../Entities/Protagonist';
 import {ActionSequence} from '../DataStructures/ActionSequence';
+import {Pushable} from '../Entities/Pushable';
 
 export class LevelDeserializer {
 	public static deserialize(levelObject: any): Level {
@@ -26,6 +27,14 @@ export class LevelDeserializer {
 					LevelDeserializer.insertEntity(
 						level,
 						new Protagonist(data.isPlayerControlled, LevelDeserializer.deserializeActionSequence(data.sequence)),
+						data,
+					);
+					break;
+
+				case EntityType.Pushable:
+					LevelDeserializer.insertEntity(
+						level,
+						new Pushable(),
 						data,
 					);
 					break;
