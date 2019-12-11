@@ -13,6 +13,10 @@ export class Grid2D<T> {
 		return this._height;
 	}
 
+	public get toArray(): readonly T[][] {
+		return this._squares;
+	}
+
 	constructor(width: number, height: number, defaultValue: T) {
 		this._width = width;
 		this._height = height;
