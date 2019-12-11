@@ -32,6 +32,9 @@ export class LevelSerializer {
 
 					return base;
 
+				case EntityType.Pushable:
+					return base;
+
 				default:
 					throw new Error();
 			}

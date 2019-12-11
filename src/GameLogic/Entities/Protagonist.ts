@@ -3,6 +3,7 @@ import {EntityType, FloorType, PlayerActionUtils} from '../Enums';
 import {ActionSequence} from '../DataStructures/ActionSequence';
 import {Direction8} from '../../../src.common/Enums/Direction8';
 import {Level} from '../Level';
+import {Pushable} from './Pushable';
 
 // @todo I think we should only have a single class for the player entity, to ensure we never treat them differently based on how they move
 export class Protagonist implements Entity {
@@ -41,6 +42,9 @@ export class Protagonist implements Entity {
 		if (this.isMoveAllowed(level, direction)) {
 			this.x += direction.x;
 			this.y += direction.y;
+			const entities = level.entities.getEntitiesAtCoordinates(this.x, this.y);
+			const pushable = entities.filter(entity => entity.type === EntityType.Pushable) as Pushable[];
+			pushable.forEach(p => p.push(level, direction));
 		}
 
 		if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
@@ -64,8 +68,14 @@ export class Protagonist implements Entity {
 		}
 
 		const floor = level.tilesFloor.get(newX, newY);
+		const entities = level.entities.getEntitiesAtCoordinates(newX, newY);
 
 		if (floor == FloorType.Wall) {
+			return false;
+		}
+
+		const pushable = entities.find(entity => entity.type === EntityType.Pushable) as Pushable;
+		if (pushable && !pushable.isMoveAllowed(level, direction)) {
 			return false;
 		}
 

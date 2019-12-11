@@ -14,7 +14,8 @@ export enum PlayerAction {
 }
 
 export enum EntityType {
-	Protagonist = 0
+	Protagonist = 0,
+	Pushable = 1
 }
 
 export enum FloorType {
