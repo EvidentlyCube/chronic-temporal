@@ -42,13 +42,14 @@ export class FloorTilesRenderer extends PIXI.Sprite {
 
 	private getFloorTypeTexture(floorType: FloorType): PIXI.Texture {
 		switch (floorType) {
-			case FloorType.Wall:
-				return this._textureFactory.getTile(GfxConstants.InitialTileset, 1, 3);
-			case FloorType.Water:
-				return this._textureFactory.getTile(GfxConstants.InitialTileset, 1, 4);
 			case FloorType.FloorTile:
+				return this._textureFactory.getTile(GfxConstants.InitialTileset, 9, 5);
+			case FloorType.Wall:
+				return this._textureFactory.getTile(GfxConstants.InitialTileset, 5, 7);
+			case FloorType.Water:
+				return this._textureFactory.getTile(GfxConstants.InitialTileset, 6, 7);
 			default:
-				return this._textureFactory.getTile(GfxConstants.InitialTileset, 3, 0);
+				throw new Error(`Invalid floor type "${floorType}"`);
 		}
 	}
 }
