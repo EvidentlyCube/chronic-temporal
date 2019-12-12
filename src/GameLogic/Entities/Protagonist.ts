@@ -42,7 +42,7 @@ export class Protagonist implements Entity {
 		if (this.isMoveAllowed(level, direction)) {
 			this.x += direction.x;
 			this.y += direction.y;
-			const entities = level.entities.getEntitiesAtCoordinates(this.x, this.y);
+			const entities = level.entities.getEntitiesAt(this.x, this.y);
 			const pushable = entities.filter(entity => entity.type === EntityType.Pushable) as Pushable[];
 			pushable.forEach(p => p.push(level, direction));
 		}
@@ -68,7 +68,7 @@ export class Protagonist implements Entity {
 		}
 
 		const floor = level.tilesFloor.get(newX, newY);
-		const entities = level.entities.getEntitiesAtCoordinates(newX, newY);
+		const entities = level.entities.getEntitiesAt(newX, newY);
 
 		if (floor == FloorType.Wall) {
 			return false;

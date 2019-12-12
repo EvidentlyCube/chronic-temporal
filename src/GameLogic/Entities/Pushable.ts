@@ -36,7 +36,7 @@ export class Pushable implements Entity {
 		}
 
 		const floor = level.tilesFloor.get(newX, newY);
-		const entities = level.entities.getEntitiesAtCoordinates(newX, newY);
+		const entities = level.entities.getEntitiesAt(newX, newY);
 
 		if (floor == FloorType.Wall) {
 			return false;

@@ -29,7 +29,7 @@ export class Entities {
 		return this._entities.find(entity => entity.type === type);
 	}
 
-	public getEntitiesAtCoordinates(x: number, y: number): Entity[] {
+	public getEntitiesAt(x: number, y: number): Entity[] {
 		return this._entities.filter(entity => entity.x == x && entity.y == y);
 	}
 

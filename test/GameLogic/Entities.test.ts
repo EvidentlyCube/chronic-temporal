@@ -179,7 +179,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 		});
 	});
 
-	describe('getEntitiesAtCoordinates', () => {
+	describe('getEntitiesAt', () => {
 		it('Returns empty array if no entities match the coordinates', () => {
 			//Arrange
 			const entities = new Entities();
@@ -195,7 +195,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 			entities.addEntity(protagonist2);
 
 			//Assert
-			assert.isEmpty(entities.getEntitiesAtCoordinates(3, 3));
+			assert.isEmpty(entities.getEntitiesAt(3, 3));
 		});
 
 		it('Returns all entities that match both coordinates', () => {
@@ -225,7 +225,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 			entities.addEntity(protagonist5);
 
 			//Assert
-			assert.deepEqual(entities.getEntitiesAtCoordinates(1, 1), [protagonist1, protagonist5]);
+			assert.deepEqual(entities.getEntitiesAt(1, 1), [protagonist1, protagonist5]);
 		});
 	});
 

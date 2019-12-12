@@ -66,8 +66,8 @@ describe('GameLogic.e2e - pushable', () => {
 
 			assert.equal(player.x, 10);
 			assert.equal(player.y, 10);
-			assert.deepEqual(level.entities.getEntitiesAtCoordinates(pushable1X, pushable1Y), [pushable1]);
-			assert.deepEqual(level.entities.getEntitiesAtCoordinates(pushable2X, pushable2Y), [pushable2]);
+			assert.deepEqual(level.entities.getEntitiesAt(pushable1X, pushable1Y), [pushable1]);
+			assert.deepEqual(level.entities.getEntitiesAt(pushable2X, pushable2Y), [pushable2]);
 		});
 	});
 
