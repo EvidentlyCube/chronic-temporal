@@ -4,6 +4,7 @@ import {Level} from '../GameLogic/Level';
 import {FloorType} from '../GameLogic/Enums';
 import {GameSession} from '../GameLogic/GameSession';
 import {GameScene} from './GameScene/GameScene';
+import {Pushable} from '../GameLogic/Entities/Pushable';
 
 export class InitializerScene implements Scene {
 	private readonly _game: Game;
@@ -45,6 +46,11 @@ export class InitializerScene implements Scene {
 		level.tilesFloor.set(6, 14, FloorType.Water);
 		level.tilesFloor.set(8, 12, FloorType.Water);
 		level.tilesFloor.set(15, 4, FloorType.Water);
+
+		const pushable = new Pushable();
+		pushable.x = 9;
+		pushable.y = 9;
+		level.entities.addEntity(pushable);
 
 		const session = new GameSession(level);
 
