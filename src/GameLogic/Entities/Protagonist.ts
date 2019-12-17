@@ -1,7 +1,7 @@
 import {Entity} from '../Entity';
 import {EntityType, FloorType, PlayerActionUtils} from '../Enums';
 import {ActionSequence} from '../DataStructures/ActionSequence';
-import {Direction8} from '../../../src.common/Enums/Direction8';
+import {Direction8, Direction8Utils} from '../../../src.common/Enums/Direction8';
 import {Level} from '../Level';
 import {Pushable} from './Pushable';
 
@@ -40,11 +40,17 @@ export class Protagonist implements Entity {
 		const direction = PlayerActionUtils.actionToDirection(action);
 
 		if (this.isMoveAllowed(level, direction)) {
-			this.x += direction.x;
-			this.y += direction.y;
+			this.x += Direction8Utils.getX(direction);
+			this.y += Direction8Utils.getY(direction);
+
 			const entities = level.entities.getEntitiesAt(this.x, this.y);
-			const pushable = entities.filter(entity => entity.type === EntityType.Pushable) as Pushable[];
-			pushable.forEach(p => p.push(level, direction));
+
+			const pushables = entities.filter(entity => entity.type === EntityType.Pushable) as Pushable[];
+			pushables.forEach(p => p.push(level, direction));
+
+			if (entities.some(entity => entity.type === EntityType.Fireball)) {
+				level.entities.removeEntity(this);
+			}
 		}
 
 		if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
@@ -60,8 +66,8 @@ export class Protagonist implements Entity {
 	}
 
 	public isMoveAllowed(level: Level, direction: Direction8): boolean {
-		const newX = this.x + direction.x;
-		const newY = this.y + direction.y;
+		const newX = this.x + Direction8Utils.getX(direction);
+		const newY = this.y + Direction8Utils.getY(direction);
 
 		if (newX < 0 || newY < 0 || newX >= level.width || newY >= level.height) {
 			return false;

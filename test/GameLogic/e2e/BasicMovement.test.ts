@@ -3,6 +3,7 @@ import {assert} from 'chai';
 import {SessionPlayer} from '../helpers/SessionPlayer';
 import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
 import {PlayerAction, PlayerActionUtils} from '../../../src/GameLogic/Enums';
+import {Direction8Utils} from '../../../src.common/Enums/Direction8';
 
 describe('GameLogic.e2e - basic movement', () => {
 	PlayerActionUtils.all.forEach((action) => {
@@ -13,8 +14,8 @@ describe('GameLogic.e2e - basic movement', () => {
 				action,
 			);
 
-			assert.equal(player.x, 10 + moveDirection.x);
-			assert.equal(player.y, 10 + moveDirection.y);
+			assert.equal(player.x, 10 + Direction8Utils.getX(moveDirection));
+			assert.equal(player.y, 10 + Direction8Utils.getY(moveDirection));
 		});
 
 		it(`Player should move twice with move ${PlayerAction[action]}`, () => {
@@ -24,8 +25,8 @@ describe('GameLogic.e2e - basic movement', () => {
 				[action, action],
 			);
 
-			assert.equal(player.x, 10 + moveDirection.x * 2);
-			assert.equal(player.y, 10 + moveDirection.y * 2);
+			assert.equal(player.x, 10 + Direction8Utils.getX(moveDirection) * 2);
+			assert.equal(player.y, 10 + Direction8Utils.getY(moveDirection) * 2);
 		});
 	});
 

@@ -1,4 +1,4 @@
-import {Direction8} from '../../src.common/Enums/Direction8';
+import {Direction8, Direction8Utils} from '../../src.common/Enums/Direction8';
 import {Hashmap} from '../../src.common/GenericInterfaces';
 
 export enum PlayerAction {
@@ -15,7 +15,8 @@ export enum PlayerAction {
 
 export enum EntityType {
 	Protagonist = 0,
-	Pushable = 1
+	Pushable = 1,
+	Fireball = 2
 }
 
 export enum FloorType {
@@ -25,15 +26,15 @@ export enum FloorType {
 }
 
 const directionToActionMap: Hashmap<PlayerAction> = {};
-directionToActionMap[Direction8.UpLeft.id] = PlayerAction.MoveUpLeft;
-directionToActionMap[Direction8.Up.id] = PlayerAction.MoveUp;
-directionToActionMap[Direction8.UpRight.id] = PlayerAction.MoveUpRight;
-directionToActionMap[Direction8.Left.id] = PlayerAction.MoveLeft;
-directionToActionMap[Direction8.None.id] = PlayerAction.Wait;
-directionToActionMap[Direction8.Right.id] = PlayerAction.MoveRight;
-directionToActionMap[Direction8.DownLeft.id] = PlayerAction.MoveDownLeft;
-directionToActionMap[Direction8.Down.id] = PlayerAction.MoveDown;
-directionToActionMap[Direction8.DownRight.id] = PlayerAction.MoveDownRight;
+directionToActionMap[Direction8.UpLeft] = PlayerAction.MoveUpLeft;
+directionToActionMap[Direction8.Up] = PlayerAction.MoveUp;
+directionToActionMap[Direction8.UpRight] = PlayerAction.MoveUpRight;
+directionToActionMap[Direction8.Left] = PlayerAction.MoveLeft;
+directionToActionMap[Direction8.None] = PlayerAction.Wait;
+directionToActionMap[Direction8.Right] = PlayerAction.MoveRight;
+directionToActionMap[Direction8.DownLeft] = PlayerAction.MoveDownLeft;
+directionToActionMap[Direction8.Down] = PlayerAction.MoveDown;
+directionToActionMap[Direction8.DownRight] = PlayerAction.MoveDownRight;
 
 const actionToDirectionMap: Hashmap<Direction8> = {};
 actionToDirectionMap[PlayerAction.MoveUpLeft] = Direction8.UpLeft;
@@ -79,10 +80,10 @@ export class PlayerActionUtils {
 	}
 
 	public static directionToAction(direction: Direction8): PlayerAction {
-		const action = directionToActionMap[direction.id];
+		const action = directionToActionMap[direction];
 
 		if (action === undefined) {
-			throw new Error(`No action found for direction ${direction.name}(ID=${direction.id})`);
+			throw new Error(`No action found for direction ${Direction8Utils.getName(direction)}(ID=${direction})`);
 		}
 
 		return action;

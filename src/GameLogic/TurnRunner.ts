@@ -1,5 +1,5 @@
 import {GameSession} from './GameSession';
-import {PlayerAction} from './Enums';
+import {PlayerAction, EntityType} from './Enums';
 import {Level} from './Level';
 
 export class TurnRunner {
@@ -16,6 +16,7 @@ export class TurnRunner {
 			player.movesQueue.push(playerInput);
 		}
 
-		level.entities.entities.forEach(entity => entity.update(level));
+		level.entities.getEntitiesOfType(EntityType.Protagonist).forEach(entity => entity.update(level));
+		level.entities.getEntitiesNotOfType(EntityType.Protagonist).forEach(entity => entity.update(level));
 	}
 }

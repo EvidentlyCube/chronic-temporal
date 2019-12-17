@@ -3,6 +3,7 @@ import {Entities} from '../DataStructures/Entities';
 import {EntityType} from '../Enums';
 import {Protagonist} from '../Entities/Protagonist';
 import {ActionSequence} from '../DataStructures/ActionSequence';
+import {Fireball} from '../Entities/Fireball';
 
 export class LevelSerializer {
 	public static serialize(level: Level): object {
@@ -29,10 +30,14 @@ export class LevelSerializer {
 					const protagonist = entity as Protagonist;
 					base.isPlayerControlled = protagonist.isPlayerControlled;
 					base.sequence = LevelSerializer.serializeActionSequence(protagonist.movesQueue);
-
 					return base;
 
 				case EntityType.Pushable:
+					return base;
+
+				case EntityType.Fireball:
+					const fireball = entity as Fireball;
+					base.direction = fireball.direction;
 					return base;
 
 				default:
