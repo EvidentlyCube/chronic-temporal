@@ -255,7 +255,7 @@ describe('GameLogic.e2e - Fireball', () => {
 		});
 	});
 
-	it('Fireball should destroy Protagonist when it moves into one', () => {
+	it('Fireball should destroy Protagonist when Fireball moves', () => {
 		const fireball = new Fireball(Direction8.Down);
 		fireball.x = 10;
 		fireball.y = 9;
@@ -264,6 +264,20 @@ describe('GameLogic.e2e - Fireball', () => {
 				.newLevel()
 				.addEntity(fireball),
 			PlayerAction.Wait,
+		);
+
+		assert.isUndefined(level.entities.getPlayer());
+	});
+
+	it('Fireball should destroy Protagonist when Protagonist moves', () => {
+		const fireball = new Fireball(Direction8.Left);
+		fireball.x = 10;
+		fireball.y = 9;
+		const [, level] = SessionPlayer.play(
+			TestLevelBuilder
+				.newLevel()
+				.addEntity(fireball),
+			PlayerAction.MoveUp,
 		);
 
 		assert.isUndefined(level.entities.getPlayer());
