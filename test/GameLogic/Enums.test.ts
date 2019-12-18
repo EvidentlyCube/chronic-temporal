@@ -1,6 +1,6 @@
 import 'mocha';
 import {assert} from 'chai';
-import {Direction8} from '../../src.common/Enums/Direction8';
+import {Direction8, Direction8Utils} from '../../src.common/Enums/Direction8';
 import {PlayerAction, PlayerActionUtils} from '../../src/GameLogic/Enums';
 
 describe('GameLogic.Enums', () => {
@@ -17,10 +17,10 @@ describe('GameLogic.Enums', () => {
 	];
 
 	actionDirectionPairs.forEach(([direction, action]) => {
-		it(`PlayerActionUtils.directionToAction(${direction.name}) should return ${PlayerAction[action]}`, () => {
+		it(`PlayerActionUtils.directionToAction(${Direction8Utils.getName(direction)}) should return ${PlayerAction[action]}`, () => {
 			assert.equal(PlayerActionUtils.directionToAction(direction), action);
 		});
-		it(`PlayerActionUtils.actionToDirection(${PlayerAction[action]}) should return ${direction.name}`, () => {
+		it(`PlayerActionUtils.actionToDirection(${PlayerAction[action]}) should return ${Direction8Utils.getName(direction)}`, () => {
 			assert.equal(PlayerActionUtils.actionToDirection(action), direction);
 		});
 	});

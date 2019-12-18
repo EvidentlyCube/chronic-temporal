@@ -5,6 +5,8 @@ import {FloorType} from '../GameLogic/Enums';
 import {GameSession} from '../GameLogic/GameSession';
 import {GameScene} from './GameScene/GameScene';
 import {Pushable} from '../GameLogic/Entities/Pushable';
+import {Fireball} from '../GameLogic/Entities/Fireball';
+import {Direction8} from '../../src.common/Enums/Direction8';
 
 export class InitializerScene implements Scene {
 	private readonly _game: Game;
@@ -51,6 +53,11 @@ export class InitializerScene implements Scene {
 		pushable.x = 9;
 		pushable.y = 9;
 		level.entities.addEntity(pushable);
+
+		const fireball = new Fireball(Direction8.DownRight);
+		fireball.x = 4;
+		fireball.y = 5;
+		level.entities.addEntity(fireball);
 
 		const session = new GameSession(level);
 

@@ -1,7 +1,8 @@
 import {Entity} from '../Entity';
 import {EntityType, FloorType} from '../Enums';
-import {Direction8} from '../../../src.common/Enums/Direction8';
+import {Direction8, Direction8Utils} from '../../../src.common/Enums/Direction8';
 import {Level} from '../Level';
+import {Fireball} from './Fireball';
 
 export class Pushable implements Entity {
 	public readonly type: EntityType;
@@ -28,8 +29,8 @@ export class Pushable implements Entity {
 	}
 
 	public isMoveAllowed(level: Level, direction: Direction8): boolean {
-		const newX = this.x + direction.x;
-		const newY = this.y + direction.y;
+		const newX = this.x + Direction8Utils.getX(direction);
+		const newY = this.y + Direction8Utils.getY(direction);
 
 		if (newX < 0 || newY < 0 || newX >= level.width || newY >= level.height) {
 			return false;
@@ -51,12 +52,16 @@ export class Pushable implements Entity {
 
 	public push(level: Level, direction: Direction8): void {
 		if (this.isMoveAllowed(level, direction)) {
-			this.x += direction.x;
-			this.y += direction.y;
+			this.x += Direction8Utils.getX(direction);
+			this.y += Direction8Utils.getY(direction);
 
 			if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
 				level.entities.removeEntity(this);
 			}
+
+			const entities = level.entities.getEntitiesAt(this.x, this.y);
+			const fireballs = entities.filter(entity => entity.type === EntityType.Fireball) as Fireball[];
+			fireballs.forEach(f => level.entities.removeEntity(f));
 		}
 	}
 }

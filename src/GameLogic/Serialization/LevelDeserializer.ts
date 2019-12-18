@@ -4,6 +4,7 @@ import {EntityType} from '../Enums';
 import {Protagonist} from '../Entities/Protagonist';
 import {ActionSequence} from '../DataStructures/ActionSequence';
 import {Pushable} from '../Entities/Pushable';
+import {Fireball} from '../Entities/Fireball';
 
 export class LevelDeserializer {
 	public static deserialize(levelObject: any): Level {
@@ -35,6 +36,14 @@ export class LevelDeserializer {
 					LevelDeserializer.insertEntity(
 						level,
 						new Pushable(),
+						data,
+					);
+					break;
+
+				case EntityType.Fireball:
+					LevelDeserializer.insertEntity(
+						level,
+						new Fireball(data.direction),
 						data,
 					);
 					break;
