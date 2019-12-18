@@ -3,7 +3,7 @@ import {assert} from 'chai';
 import {SessionPlayer} from '../helpers/SessionPlayer';
 import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
 import {PlayerAction, PlayerActionUtils} from '../../../src/GameLogic/Enums';
-import {Direction8Utils} from '../../../src.common/Enums/Direction8';
+import {Direction8Utils} from '../../../src/GameLogic/Enums/Direction8';
 
 describe('GameLogic.e2e - basic movement', () => {
 	PlayerActionUtils.all.forEach((action) => {

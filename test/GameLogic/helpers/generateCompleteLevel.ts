@@ -4,7 +4,7 @@ import {Protagonist} from '../../../src/GameLogic/Entities/Protagonist';
 import {ActionSequence} from '../../../src/GameLogic/DataStructures/ActionSequence';
 import {Entity} from '../../../src/GameLogic/Entity';
 import {Pushable} from '../../../src/GameLogic/Entities/Pushable';
-import {Direction8} from '../../../src.common/Enums/Direction8';
+import {Direction8} from '../../../src/GameLogic/Enums/Direction8';
 import {Fireball} from '../../../src/GameLogic/Entities/Fireball';
 
 export function generateCompleteLevel(): Level {

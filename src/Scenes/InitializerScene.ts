@@ -6,7 +6,7 @@ import {GameSession} from '../GameLogic/GameSession';
 import {GameScene} from './GameScene/GameScene';
 import {Pushable} from '../GameLogic/Entities/Pushable';
 import {Fireball} from '../GameLogic/Entities/Fireball';
-import {Direction8} from '../../src.common/Enums/Direction8';
+import {Direction8} from '../GameLogic/Enums/Direction8';
 
 export class InitializerScene implements Scene {
 	private readonly _game: Game;

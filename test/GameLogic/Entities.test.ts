@@ -5,7 +5,7 @@ import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
 import {Entities} from '../../src/GameLogic/DataStructures/Entities';
 import {Fireball} from '../../src/GameLogic/Entities/Fireball';
 import {Pushable} from '../../src/GameLogic/Entities/Pushable';
-import {Direction8} from '../../src.common/Enums/Direction8';
+import {Direction8} from '../../src/GameLogic/Enums/Direction8';
 
 describe('GameLogic.DataStructures.Entities', () => {
 	describe('addEntity', () => {

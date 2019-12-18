@@ -1,7 +1,7 @@
 import {Entity} from '../Entity';
 import {EntityType, FloorType, PlayerActionUtils} from '../Enums';
 import {ActionSequence} from '../DataStructures/ActionSequence';
-import {Direction8, Direction8Utils} from '../../../src.common/Enums/Direction8';
+import {Direction8, Direction8Utils} from '../Enums/Direction8';
 import {Level} from '../Level';
 import {Pushable} from './Pushable';
 

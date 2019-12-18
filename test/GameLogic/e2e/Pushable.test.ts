@@ -4,7 +4,7 @@ import {SessionPlayer} from '../helpers/SessionPlayer';
 import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
 import {PlayerAction, PlayerActionUtils, EntityType, FloorType} from '../../../src/GameLogic/Enums';
 import {Pushable} from '../../../src/GameLogic/Entities/Pushable';
-import {Direction8Utils, Direction8} from '../../../src.common/Enums/Direction8';
+import {Direction8Utils, Direction8} from '../../../src/GameLogic/Enums/Direction8';
 import {Fireball} from '../../../src/GameLogic/Entities/Fireball';
 
 describe('GameLogic.e2e - Pushable', () => {
