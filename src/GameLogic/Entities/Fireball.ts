@@ -21,25 +21,14 @@ export class Fireball implements Entity {
 	}
 
 	public update(level: Level): void {
-		// Try moving forward
-		if (this.isMoveAllowed(level, this.direction)) {
+		if (this.isMoveAllowed(level, this.direction)) { // Try moving forward
 			this.move(level, this.direction);
-			return;
-		}
-		// Try moving clockwise 90 degrees
-		if (this.isMoveAllowed(level, Direction8Utils.cw90(this.direction))) {
+		} else if (this.isMoveAllowed(level, Direction8Utils.cw90(this.direction))) { // Try moving clockwise 90 degrees
 			this.move(level, Direction8Utils.cw90(this.direction));
-			return;
-		}
-		// Try moving counterclockwise 90 degrees
-		if (this.isMoveAllowed(level, Direction8Utils.ccw90(this.direction))) {
+		} else if (this.isMoveAllowed(level, Direction8Utils.ccw90(this.direction))) { // Try moving counterclockwise 90 degrees
 			this.move(level, Direction8Utils.ccw90(this.direction));
-			return;
-		}
-		// Try moving backwards
-		if (this.isMoveAllowed(level, Direction8Utils.opposite(this.direction))) {
+		} else if (this.isMoveAllowed(level, Direction8Utils.opposite(this.direction))) { // Try moving backwards
 			this.move(level, Direction8Utils.opposite(this.direction));
-			return;
 		}
 	}
 

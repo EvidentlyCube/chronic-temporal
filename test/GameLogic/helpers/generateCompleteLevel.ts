@@ -35,6 +35,7 @@ function addEveryEntity(level: Level): void {
 
 			case EntityType.Fireball:
 				insertEntity(level, new Fireball(Direction8.Up));
+				insertEntity(level, new Fireball(Direction8.DownRight));
 				break;
 
 			default:
