@@ -4,9 +4,10 @@ import {SessionPlayer} from '../helpers/SessionPlayer';
 import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
 import {PlayerAction, PlayerActionUtils, EntityType, FloorType} from '../../../src/GameLogic/Enums';
 import {Pushable} from '../../../src/GameLogic/Entities/Pushable';
-import {Direction8Utils} from '../../../src.common/Enums/Direction8';
+import {Direction8Utils, Direction8} from '../../../src.common/Enums/Direction8';
+import {Fireball} from '../../../src/GameLogic/Entities/Fireball';
 
-describe('GameLogic.e2e - pushable', () => {
+describe('GameLogic.e2e - Pushable', () => {
 	PlayerActionUtils.moves.forEach((action) => {
 		it(`Player should push the pushable into empty floor with move ${PlayerAction[action]}`, () => {
 			const moveDirection = PlayerActionUtils.actionToDirection(action);
@@ -116,5 +117,23 @@ describe('GameLogic.e2e - pushable', () => {
 		);
 
 		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Pushable));
+	});
+
+	it('Pushable should extinguish Fireball when it is pushed into it', () => {
+		const pushable = new Pushable();
+		pushable.x = 10;
+		pushable.y = 9;
+		const fireball = new Fireball(Direction8.Left);
+		fireball.x = 10;
+		fireball.y = 8;
+		const [, level] = SessionPlayer.play(
+			TestLevelBuilder
+				.newLevel()
+				.addEntity(pushable)
+				.addEntity(fireball),
+			PlayerAction.MoveUp,
+		);
+
+		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Fireball));
 	});
 });

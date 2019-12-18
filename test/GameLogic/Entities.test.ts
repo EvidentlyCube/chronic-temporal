@@ -3,6 +3,9 @@ import {assert} from 'chai';
 import {EntityType} from '../../src/GameLogic/Enums';
 import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
 import {Entities} from '../../src/GameLogic/DataStructures/Entities';
+import {Fireball} from '../../src/GameLogic/Entities/Fireball';
+import {Pushable} from '../../src/GameLogic/Entities/Pushable';
+import {Direction8} from '../../src.common/Enums/Direction8';
 
 describe('GameLogic.DataStructures.Entities', () => {
 	describe('addEntity', () => {
@@ -61,8 +64,8 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const entities = new Entities();
 
 			//Act
-			entities.addEntity({type: 21} as any); // @todo replace this dummy value with another entity once we have any other entity
-			entities.addEntity({type: 17} as any);
+			entities.addEntity(new Pushable());
+			entities.addEntity(new Fireball(Direction8.Up));
 
 			//Assert
 			assert.isEmpty(entities.getEntitiesOfType(EntityType.Protagonist));
@@ -74,9 +77,9 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const protagonist = new Protagonist();
 
 			//Act
-			entities.addEntity({type: 21} as any);
+			entities.addEntity(new Pushable());
 			entities.addEntity(protagonist);
-			entities.addEntity({type: 17} as any);
+			entities.addEntity(new Fireball(Direction8.Up));
 
 			//Assert
 			assert.deepEqual(entities.getEntitiesOfType(EntityType.Protagonist), [protagonist]);
@@ -90,11 +93,11 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const protagonist3 = new Protagonist();
 
 			//Act
-			entities.addEntity({type: 21} as any);
+			entities.addEntity(new Pushable());
 			entities.addEntity(protagonist1);
 			entities.addEntity(protagonist2);
 			entities.addEntity(protagonist3);
-			entities.addEntity({type: 17} as any);
+			entities.addEntity(new Fireball(Direction8.Up));
 
 			//Assert
 			assert.deepEqual(entities.getEntitiesOfType(EntityType.Protagonist), [protagonist1, protagonist2, protagonist3]);
@@ -115,7 +118,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const entities = new Entities();
 
 			//Act
-			entities.addEntity({type: 21} as any);
+			entities.addEntity(new Pushable());
 
 			//Assert
 			assert.equal(entities.getFirstEntityOfType(EntityType.Protagonist), undefined);
@@ -153,10 +156,10 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const protagonist2 = new Protagonist();
 
 			//Act
-			entities.addEntity({type: 21} as any);
+			entities.addEntity(new Pushable());
 			entities.addEntity(protagonist1);
 			entities.addEntity(protagonist2);
-			entities.addEntity({type: 17} as any);
+			entities.addEntity(new Fireball(Direction8.Up));
 
 			//Assert
 			assert.equal(entities.getFirstEntityOfType(EntityType.Protagonist), protagonist1);
@@ -169,13 +172,66 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const protagonist2 = new Protagonist();
 
 			//Act
-			entities.addEntity({type: 21} as any);
+			entities.addEntity(new Pushable());
 			entities.addEntity(protagonist2);
 			entities.addEntity(protagonist1);
-			entities.addEntity({type: 17} as any);
+			entities.addEntity(new Fireball(Direction8.Up));
 
 			//Assert
 			assert.equal(entities.getFirstEntityOfType(EntityType.Protagonist), protagonist2);
+		});
+	});
+
+	describe('getEntitiesNotOfType', () => {
+		it('Return empty collection when no entity found', () => {
+			//Arrange & Act
+			const entities = new Entities();
+
+			//Assert
+			assert.isEmpty(entities.getEntitiesNotOfType(EntityType.Protagonist));
+		});
+
+		it('Return empty collection when only disallowed entity type is present', () => {
+			//Arrange
+			const entities = new Entities();
+
+			//Act
+			entities.addEntity(new Protagonist());
+			entities.addEntity(new Protagonist());
+
+			//Assert
+			assert.isEmpty(entities.getEntitiesNotOfType(EntityType.Protagonist));
+		});
+
+		it('Return all allowed entities (one match)', () => {
+			//Arrange
+			const entities = new Entities();
+			const pushable = new Pushable();
+
+			//Act
+			entities.addEntity(new Protagonist());
+			entities.addEntity(pushable);
+			entities.addEntity(new Protagonist());
+
+			//Assert
+			assert.deepEqual(entities.getEntitiesNotOfType(EntityType.Protagonist), [pushable]);
+		});
+
+		it('Return all allowed entities (many match)', () => {
+			//Arrange
+			const entities = new Entities();
+			const pushable = new Pushable();
+			const fireball = new Fireball(Direction8.Up);
+
+			//Act
+			entities.addEntity(pushable);
+			entities.addEntity(new Protagonist());
+			entities.addEntity(new Protagonist());
+			entities.addEntity(new Protagonist());
+			entities.addEntity(fireball);
+
+			//Assert
+			assert.deepEqual(entities.getEntitiesNotOfType(EntityType.Protagonist), [pushable, fireball]);
 		});
 	});
 
