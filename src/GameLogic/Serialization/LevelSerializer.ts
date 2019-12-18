@@ -13,7 +13,7 @@ export class LevelSerializer {
 			playerStartX: level.playerStartX,
 			playerStartY: level.playerStartY,
 			entities: LevelSerializer.serializeEntities(level.entities),
-			tilesFloor: level.tilesFloor.toArray,
+			tilesFloor: level.tilesFloor.toArray(),
 		};
 	}
 

@@ -5,6 +5,7 @@ import {GameSession} from '../../src/GameLogic/GameSession';
 import {Level, LevelConfig} from '../../src/GameLogic/Level';
 import {EntityType, PlayerAction, FloorType} from '../../src/GameLogic/Enums';
 import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
+import {assertDeepJsonEqual} from '../helpers/assertDeepJsonEqual';
 
 describe('GameLogic.GameSession', () => {
 	const levelConfig: LevelConfig = {
@@ -30,7 +31,7 @@ describe('GameLogic.GameSession', () => {
 
 			//Assert
 			removeProtagonistsFromLevel(session);
-			assert.deepEqual(session.level, level);
+			assertDeepJsonEqual(session.level, level);
 			assert.notStrictEqual(session.level, level);
 		});
 
@@ -196,7 +197,7 @@ describe('GameLogic.GameSession', () => {
 
 			//Assert
 			removeProtagonistsFromLevel(session);
-			assert.deepEqual(session.level, session.levelBlueprint);
+			assertDeepJsonEqual(session.level, session.levelBlueprint);
 			assert.notStrictEqual(session.level, session.levelBlueprint);
 		});
 	});

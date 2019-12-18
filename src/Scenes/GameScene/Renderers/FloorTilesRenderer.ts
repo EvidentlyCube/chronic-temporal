@@ -1,28 +1,28 @@
-import {Grid2D} from '../../../../src.common/DataStructures/Grid2D';
 import * as PIXI from 'pixi.js';
 import {Level} from '../../../GameLogic/Level';
 import {FloorType} from '../../../GameLogic/Enums';
 import {GfxConstants} from '../../../Core/Constants/GfxConstants';
 import Constants from '../../../Core/Constants';
 import {TextureFactory} from '../../../../src.common/Managers/TextureFactory';
+import {Grid2D} from 'evidently-data-structures';
 
 export class FloorTilesRenderer extends PIXI.Sprite {
 	private readonly _textureFactory: TextureFactory;
 
-	private _floorTiles: Grid2D<PIXI.Sprite | undefined>;
+	private readonly _floorTiles: Grid2D<PIXI.Sprite | undefined>;
 
 	constructor(textureFactory: TextureFactory) {
 		super();
 
 		this._textureFactory = textureFactory;
-		this._floorTiles = new Grid2D<PIXI.Sprite | undefined>(20, 20, undefined);
+		this._floorTiles = new Grid2D<PIXI.Sprite | undefined>(20, 20, () => undefined);
 	}
 
 	public sync(level: Level): void {
 		if (this._floorTiles.width !== level.width || this._floorTiles.height !== level.height) {
 			this.removeChildren();
 
-			this._floorTiles = new Grid2D<PIXI.Sprite | undefined>(level.width, level.height, undefined);
+			this._floorTiles.resize(level.width, level.height);
 		}
 
 		for (let x = 0; x < level.width; x++) {

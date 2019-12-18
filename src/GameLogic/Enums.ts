@@ -1,4 +1,4 @@
-import {Direction8, Direction8Utils} from '../../src.common/Enums/Direction8';
+import {Direction8, Direction8Utils} from './Enums/Direction8';
 import {Hashmap} from '../../src.common/GenericInterfaces';
 
 export enum PlayerAction {

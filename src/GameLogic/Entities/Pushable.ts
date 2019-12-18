@@ -1,6 +1,6 @@
 import {Entity} from '../Entity';
 import {EntityType, FloorType} from '../Enums';
-import {Direction8, Direction8Utils} from '../../../src.common/Enums/Direction8';
+import {Direction8, Direction8Utils} from '../Enums/Direction8';
 import {Level} from '../Level';
 import {Fireball} from './Fireball';
 
