@@ -5,6 +5,7 @@ import {FloorType, PlayerAction} from '../../src/GameLogic/Enums';
 import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
 import {ActionSequence} from '../../src/GameLogic/DataStructures/ActionSequence';
 import * as levelJson from './helpers/level.json';
+import {assertDeepJsonEqual} from '../helpers/assertDeepJsonEqual';
 
 describe('GameLogic.Level', () => {
 	const levelConfig: LevelConfig = {
@@ -25,8 +26,8 @@ describe('GameLogic.Level', () => {
 	it('Level has not had new properties added', () => {
 		const level = createTestLevel(levelConfig);
 
-		//console.log(JSON.stringify(level));
-		assert.deepEqual(JSON.parse(JSON.stringify(level)), levelJson, 'Level has changed, make sure to update the clone method and tests!');
+		console.log(JSON.stringify(level));
+		assertDeepJsonEqual(level, levelJson, 'Level has changed, make sure to update the clone method and tests!');
 	});
 
 	describe('clone', () => {
@@ -34,11 +35,11 @@ describe('GameLogic.Level', () => {
 			const level = createTestLevel(levelConfig);
 			const levelClone = level.clone();
 
-			assert.deepEqual(level, levelClone);
+			assertDeepJsonEqual(level, levelClone);
 			assert.notStrictEqual(level, levelClone);
-			assert.deepEqual(level.tilesFloor, levelClone.tilesFloor);
+			assertDeepJsonEqual(level.tilesFloor, levelClone.tilesFloor);
 			assert.notStrictEqual(level.tilesFloor, levelClone.tilesFloor, 'tilesFloor is a reference to the original object');
-			assert.deepEqual(level.entities, levelClone.entities);
+			assertDeepJsonEqual(level.entities, levelClone.entities);
 			assert.notStrictEqual(level.entities, levelClone.entities, 'entities is a reference to the original object');
 		});
 

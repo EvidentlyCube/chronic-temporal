@@ -52,7 +52,7 @@ export class LevelDeserializer {
 	}
 
 	private static deserializeFloorTiles(level: Level, tilesFloor: any[][]): void {
-		level.tilesFloor.setAllByCallback((x, y) => tilesFloor[x][y]);
+		level.tilesFloor.setAllCallback((x, y) => tilesFloor[x][y]);
 	}
 
 	private static deserializeActionSequence(data: any): ActionSequence {

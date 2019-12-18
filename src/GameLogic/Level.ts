@@ -1,6 +1,6 @@
-import {Grid2D} from '../../src.common/DataStructures/Grid2D';
 import {Entities} from './DataStructures/Entities';
 import {FloorType} from './Enums';
+import {Grid2D} from 'evidently-data-structures';
 
 export interface LevelConfig {
 	width: number;
@@ -30,7 +30,7 @@ export class Level {
 		this.playerStartX = config.playerStartX;
 		this.playerStartY = config.playerStartY;
 
-		this.tilesFloor = new Grid2D<FloorType>(this.width, this.height, FloorType.FloorTile);
+		this.tilesFloor = new Grid2D<FloorType>(this.width, this.height, () => FloorType.FloorTile);
 		this.entities = new Entities();
 	}
 
@@ -41,7 +41,7 @@ export class Level {
 			playerStartX: this.playerStartX,
 			playerStartY: this.playerStartY,
 		});
-		clonedLevel.tilesFloor.setAllByCallback((x, y) => this.tilesFloor.get(x, y));
+		clonedLevel.tilesFloor.setAllCallback((x, y) => this.tilesFloor.get(x, y));
 		this.entities.entities.forEach(entity => clonedLevel.entities.addEntity(entity.clone()));
 
 		return clonedLevel;
