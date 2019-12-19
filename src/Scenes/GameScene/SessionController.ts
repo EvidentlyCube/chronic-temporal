@@ -5,9 +5,9 @@ import {PlayerAction} from '../../GameLogic/Enums';
 import {GameSession} from '../../GameLogic/GameSession';
 import {ActionSequence} from '../../GameLogic/DataStructures/ActionSequence';
 import {SessionRenderer} from './Renderers/SessionRenderer';
-import {Game} from '../../../src.common/Core/Game';
 import Constants from '../../Core/Constants';
 import {Level} from '../../GameLogic/Level';
+import {Game} from 'evidently-pixi';
 
 export class SessionController {
 	private readonly _game: Game;

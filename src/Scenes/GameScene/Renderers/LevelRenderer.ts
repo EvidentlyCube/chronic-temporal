@@ -1,22 +1,22 @@
 import * as PIXI from 'pixi.js';
-import {TextureFactory} from '../../../../src.common/Managers/TextureFactory';
 import {Level} from '../../../GameLogic/Level';
 import {FloorTilesRenderer} from './FloorTilesRenderer';
 import {EntitiesRenderer} from './EntitiesRenderer';
+import {TextureStore} from 'evidently-pixi';
 
 export class LevelRenderer extends PIXI.Sprite {
-	private readonly _textureFactory: TextureFactory;
+	private readonly _textureStore: TextureStore;
 
 	private readonly _floorTilesRenderer: FloorTilesRenderer;
 
 	private readonly _entityRenderer: EntitiesRenderer;
 
-	constructor(textureFactory: TextureFactory) {
+	constructor(textureStore: TextureStore) {
 		super(undefined);
 
-		this._textureFactory = textureFactory;
-		this._floorTilesRenderer = new FloorTilesRenderer(textureFactory);
-		this._entityRenderer = new EntitiesRenderer(textureFactory);
+		this._textureStore = textureStore;
+		this._floorTilesRenderer = new FloorTilesRenderer(textureStore);
+		this._entityRenderer = new EntitiesRenderer(textureStore);
 
 		this.addChild(this._floorTilesRenderer);
 		this.addChild(this._entityRenderer);

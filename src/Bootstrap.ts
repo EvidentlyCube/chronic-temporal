@@ -3,13 +3,12 @@
 
 import * as PIXI from 'pixi.js';
 import Constants from './Core/Constants';
-import {Game} from '../src.common/Core/Game';
 import {InitializerScene} from './Scenes/InitializerScene';
 
-import {ScalingGameContainer} from '../src.common/Core/ScalingGameContainer';
 import {queueAssets} from './Initialization/queueAssets';
 
 import {Config} from '../config/config';
+import {Game, ScalingStage} from 'evidently-pixi';
 
 const game = new Game({
 	document,
@@ -20,17 +19,18 @@ const game = new Game({
 		backgroundColor: 0,
 		antialias: false,
 	},
-	containerFactory: (game: Game) => new ScalingGameContainer(
+	stageFactory: (game: Game) => new ScalingStage(
 		game,
 		Constants.VirtualWidth,
 		Constants.VirtualHeight,
 		PIXI.SCALE_MODES.NEAREST,
-		Config.containerUpscaleMode,
+		Config.upscaleMode,
 	),
 	onQueueAssets: queueAssets,
 	onStartGame: () => {
 	},
-	initialScene: InitializerScene,
+	gameContainerId: 'game',
+	initialSceneFactory: (game) => new InitializerScene(game),
 });
 
 game.start();

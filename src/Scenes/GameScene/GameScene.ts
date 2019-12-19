@@ -1,10 +1,9 @@
-import {Scene} from '../../../src.common/Managers/SceneManager';
 import {GameSession} from '../../GameLogic/GameSession';
-import {Game} from '../../../src.common/Core/Game';
 import {GameViewManager} from './Views/GameViewManager';
 import {SessionController} from './SessionController';
 import {PlayerInputManager} from './PlayerInputManager';
 import {SessionRenderer} from './Renderers/SessionRenderer';
+import {Game, Scene} from 'evidently-pixi';
 
 export class GameScene implements Scene {
 	private readonly _game: Game;
@@ -25,10 +24,10 @@ export class GameScene implements Scene {
 		this._game = game;
 		this._session = session;
 		this._input = new PlayerInputManager(game.keyboard, game.mouse);
-		this.sessionRenderer = new SessionRenderer(this._session, game.textureFactory);
+		this.sessionRenderer = new SessionRenderer(this._session, game.textureStore);
 		this._sessionController = new SessionController(game, this, this._session, this.sessionRenderer);
 		this._viewManager = new GameViewManager(this);
-		this._layer = game.createLayer();
+		this._layer = game.createContainer();
 
 		this._layer.addChild(this.sessionRenderer);
 		this._layer.addChild(this._viewManager);
@@ -39,7 +38,7 @@ export class GameScene implements Scene {
 	}
 
 	public onEnded(): void {
-		this._game.removeLayer(this._layer);
+		this._game.removeContainer(this._layer);
 	}
 
 	public update(passedTime: number): void {

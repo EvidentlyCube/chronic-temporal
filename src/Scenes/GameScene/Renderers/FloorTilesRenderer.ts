@@ -3,18 +3,18 @@ import {Level} from '../../../GameLogic/Level';
 import {FloorType} from '../../../GameLogic/Enums';
 import {GfxConstants} from '../../../Core/Constants/GfxConstants';
 import Constants from '../../../Core/Constants';
-import {TextureFactory} from '../../../../src.common/Managers/TextureFactory';
 import {Grid2D} from 'evidently-data-structures';
+import {TextureStore} from 'evidently-pixi';
 
 export class FloorTilesRenderer extends PIXI.Sprite {
-	private readonly _textureFactory: TextureFactory;
+	private readonly _textureStore: TextureStore;
 
 	private readonly _floorTiles: Grid2D<PIXI.Sprite | undefined>;
 
-	constructor(textureFactory: TextureFactory) {
+	constructor(textureStore: TextureStore) {
 		super();
 
-		this._textureFactory = textureFactory;
+		this._textureStore = textureStore;
 		this._floorTiles = new Grid2D<PIXI.Sprite | undefined>(20, 20, () => undefined);
 	}
 
@@ -43,11 +43,11 @@ export class FloorTilesRenderer extends PIXI.Sprite {
 	private getFloorTypeTexture(floorType: FloorType): PIXI.Texture {
 		switch (floorType) {
 			case FloorType.FloorTile:
-				return this._textureFactory.getTile(GfxConstants.InitialTileset, 9, 5);
+				return this._textureStore.getTile(GfxConstants.InitialTileset, 9, 5);
 			case FloorType.Wall:
-				return this._textureFactory.getTile(GfxConstants.InitialTileset, 5, 7);
+				return this._textureStore.getTile(GfxConstants.InitialTileset, 5, 7);
 			case FloorType.Water:
-				return this._textureFactory.getTile(GfxConstants.InitialTileset, 6, 7);
+				return this._textureStore.getTile(GfxConstants.InitialTileset, 6, 7);
 			default:
 				throw new Error(`Invalid floor type "${floorType}"`);
 		}

@@ -1,5 +1,5 @@
-import {ContainerUpscaleMode} from '../src.common/Core/ScalingGameContainer';
+import {ScalingStageUpscaleMode} from 'evidently-pixi';
 
 export interface BootstrapConfig {
-	containerUpscaleMode: ContainerUpscaleMode;
+	upscaleMode: ScalingStageUpscaleMode;
 }

@@ -1,5 +1,4 @@
-import {KeyboardInput} from 'evidently-input/dist/KeyboardInput';
-import {MouseButtons, MouseInput} from 'evidently-input/dist/MouseInput';
+import {KeyboardInput, MouseButtons, MouseInput} from 'evidently-input';
 
 export class PlayerInputManager {
 	private readonly _keyboard: KeyboardInput;
