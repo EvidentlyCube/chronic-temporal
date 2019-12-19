@@ -1,5 +1,3 @@
-import {Scene} from '../../src.common/Managers/SceneManager';
-import {Game} from '../../src.common/Core/Game';
 import {Level} from '../GameLogic/Level';
 import {FloorType} from '../GameLogic/Enums';
 import {GameSession} from '../GameLogic/GameSession';
@@ -7,6 +5,7 @@ import {GameScene} from './GameScene/GameScene';
 import {Pushable} from '../GameLogic/Entities/Pushable';
 import {Fireball} from '../GameLogic/Entities/Fireball';
 import {Direction8} from '../GameLogic/Enums/Direction8';
+import {Game, Scene} from 'evidently-pixi';
 
 export class InitializerScene implements Scene {
 	private readonly _game: Game;

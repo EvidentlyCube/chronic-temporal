@@ -2,8 +2,8 @@ import {Level} from '../../../src/GameLogic/Level';
 import {TestLevelBuilder} from './TestLevelBuilder';
 import {GameSession} from '../../../src/GameLogic/GameSession';
 import {PlayerAction} from '../../../src/GameLogic/Enums';
-import {Hashmap} from '../../../src.common/GenericInterfaces';
 import {Protagonist} from '../../../src/GameLogic/Entities/Protagonist';
+import {Hashmap} from '../../../src/GenericInterfaces';
 
 const charToActionMap: Hashmap<PlayerAction> = {
 	7: PlayerAction.MoveUpLeft,

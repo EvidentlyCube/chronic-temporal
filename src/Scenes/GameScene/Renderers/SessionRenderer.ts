@@ -1,8 +1,8 @@
 import * as PIXI from 'pixi.js';
 import {LevelRenderer} from './LevelRenderer';
 import {GameSession} from '../../../GameLogic/GameSession';
-import {TextureFactory} from '../../../../src.common/Managers/TextureFactory';
 import Constants from '../../../Core/Constants';
+import {TextureStore} from 'evidently-pixi';
 
 export class SessionRenderer extends PIXI.Sprite {
 	private readonly _session: GameSession;
@@ -13,11 +13,11 @@ export class SessionRenderer extends PIXI.Sprite {
 		return this._levelRenderer;
 	}
 
-	constructor(session: GameSession, textureFactory: TextureFactory) {
+	constructor(session: GameSession, textureStore: TextureStore) {
 		super();
 
 		this._session = session;
-		this._levelRenderer = new LevelRenderer(textureFactory);
+		this._levelRenderer = new LevelRenderer(textureStore);
 
 		this.addChild(this._levelRenderer);
 	}

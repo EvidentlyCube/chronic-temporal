@@ -2,18 +2,18 @@ import * as PIXI from 'pixi.js';
 import {Level} from '../../../GameLogic/Level';
 import {GfxConstants} from '../../../Core/Constants/GfxConstants';
 import Constants from '../../../Core/Constants';
-import {TextureFactory} from '../../../../src.common/Managers/TextureFactory';
 import {EntityType} from '../../../GameLogic/Enums';
+import {TextureStore} from 'evidently-pixi';
 
 export class EntitiesRenderer extends PIXI.Sprite {
-	private readonly _textureFactory: TextureFactory;
+	private readonly _textureStore: TextureStore;
 
 	private readonly _entities: PIXI.Sprite[];
 
-	constructor(textureFactory: TextureFactory) {
+	constructor(textureStore: TextureStore) {
 		super();
 
-		this._textureFactory = textureFactory;
+		this._textureStore = textureStore;
 		this._entities = [];
 	}
 
@@ -39,11 +39,11 @@ export class EntitiesRenderer extends PIXI.Sprite {
 	private getTypeTexture(entityType: EntityType): PIXI.Texture {
 		switch (entityType) {
 			case EntityType.Protagonist:
-				return this._textureFactory.getTile(GfxConstants.InitialTileset, 1, 0);
+				return this._textureStore.getTile(GfxConstants.InitialTileset, 1, 0);
 			case EntityType.Pushable:
-				return this._textureFactory.getTile(GfxConstants.InitialTileset, 7, 5);
+				return this._textureStore.getTile(GfxConstants.InitialTileset, 7, 5);
 			case EntityType.Fireball:
-				return this._textureFactory.getTile(GfxConstants.InitialTileset, 3, 6);
+				return this._textureStore.getTile(GfxConstants.InitialTileset, 7, 0);
 			default:
 				throw new Error(`Invalid entity type "${entityType}"`);
 		}

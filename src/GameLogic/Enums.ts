@@ -1,5 +1,5 @@
 import {Direction8, Direction8Utils} from './Enums/Direction8';
-import {Hashmap} from '../../src.common/GenericInterfaces';
+import {Hashmap} from '../GenericInterfaces';
 
 export enum PlayerAction {
 	MoveUpLeft = 0,
