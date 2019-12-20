@@ -3,15 +3,12 @@ import {LevelRenderer} from './LevelRenderer';
 import {GameSession} from '../../../GameLogic/GameSession';
 import Constants from '../../../Core/Constants';
 import {TextureStore} from 'evidently-pixi';
+import {Level} from '../../../GameLogic/Level';
 
 export class SessionRenderer extends PIXI.Sprite {
 	private readonly _session: GameSession;
 
 	private readonly _levelRenderer: LevelRenderer;
-
-	public get levelRenderer(): LevelRenderer {
-		return this._levelRenderer;
-	}
 
 	constructor(session: GameSession, textureStore: TextureStore) {
 		super();
@@ -22,9 +19,17 @@ export class SessionRenderer extends PIXI.Sprite {
 		this.addChild(this._levelRenderer);
 	}
 
-	public update(): void {
-		this._session.level && this._levelRenderer.sync(this._session.level);
+	public get levelRenderer(): LevelRenderer {
+		return this._levelRenderer;
+	}
+
+	public update(timePassed: number): void {
+		this._levelRenderer.update(timePassed);
 		this._levelRenderer.x = (Constants.VirtualWidth - this._levelRenderer.getLocalBounds().width) / 2 | 0;
 		this._levelRenderer.y = (Constants.VirtualHeight - this._levelRenderer.getLocalBounds().height) / 2 | 0;
+	}
+
+	public sync(level: Level): void {
+		this._levelRenderer.sync(level);
 	}
 }
