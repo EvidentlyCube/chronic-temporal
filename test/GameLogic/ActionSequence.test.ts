@@ -107,7 +107,7 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 			assert.equal(sequence.peek(), undefined);
 		});
 
-		it('Return next move wihtout advancing the sequence', () => {
+		it('Return next move without advancing the sequence', () => {
 			const sequence = new ActionSequence(actionList);
 
 			const peekedAction = sequence.peek();

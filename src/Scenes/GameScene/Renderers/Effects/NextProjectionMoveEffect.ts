@@ -18,14 +18,12 @@ export class NextProjectionMoveEffect extends PIXI.Sprite implements Effect {
 	private static readonly _pool: Pool<NextProjectionMoveEffect>;
 
 	public static getOne(projection: Protagonist, textureStore: TextureStore): NextProjectionMoveEffect {
-		const effect = pool.getOne();
+		const effect = NextProjectionMoveEffect._pool.getOne();
 
 		effect.init(projection, textureStore);
 
 		return effect;
 	}
-
-	private _projection!: Protagonist;
 
 	private _fromX!: number;
 
@@ -37,6 +35,15 @@ export class NextProjectionMoveEffect extends PIXI.Sprite implements Effect {
 
 	private _timer = 0;
 
+	constructor() {
+		super(undefined);
+
+		this._fromX = 0;
+		this._fromY = 0;
+		this._toX = 0;
+		this._toY = 0;
+	}
+
 	public update(timePassed: number): void {
 		this._timer = (this._timer + timePassed) % cycleLength;
 
@@ -47,21 +54,19 @@ export class NextProjectionMoveEffect extends PIXI.Sprite implements Effect {
 	}
 
 	public release(): void {
-		this._projection = undefined!;
-		pool.release(this);
+		NextProjectionMoveEffect._pool.release(this);
 	}
 
 	private init(projection: Protagonist, textureStore: TextureStore): void {
-		this._projection = projection;
 		this.texture = textureStore.getTile(GfxConstants.InitialTileset, 1, 0);
 		this.visible = false;
 		this.alpha = initialAlpha;
 		this._timer = 0;
 
-		this._fromX = this._projection.x * Constants.TileWidth;
-		this._fromY = this._projection.y * Constants.TileHeight;
+		this._fromX = projection.x * Constants.TileWidth;
+		this._fromY = projection.y * Constants.TileHeight;
 
-		const nextAction = this._projection.movesQueue.peek();
+		const nextAction = projection.movesQueue.peek();
 
 		if (nextAction !== undefined && PlayerActionUtils.isMoveAction(nextAction)) {
 			const direction = PlayerActionUtils.actionToDirection(nextAction);
