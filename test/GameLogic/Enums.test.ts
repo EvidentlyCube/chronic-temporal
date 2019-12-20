@@ -24,4 +24,12 @@ describe('GameLogic.Enums', () => {
 			assert.equal(PlayerActionUtils.actionToDirection(action), direction);
 		});
 	});
+
+	PlayerActionUtils.all.forEach(action => {
+		const isMove = PlayerActionUtils.moves.includes(action);
+
+		it(`PlayerActionUtils.isMoveAction(${action}) should return ${isMove ? 'true' : 'false'}`, () => {
+			assert.strictEqual(PlayerActionUtils.isMoveAction(action), isMove);
+		});
+	});
 });
