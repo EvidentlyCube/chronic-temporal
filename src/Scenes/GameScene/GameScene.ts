@@ -6,11 +6,11 @@ import {SessionRenderer} from './Renderers/SessionRenderer';
 import {Game, Scene} from 'evidently-pixi';
 
 export class GameScene implements Scene {
+	public readonly sessionRenderer: SessionRenderer;
+
 	private readonly _game: Game;
 
 	private readonly _session: GameSession;
-
-	public readonly sessionRenderer: SessionRenderer;
 
 	private readonly _layer: PIXI.Sprite;
 
@@ -31,6 +31,8 @@ export class GameScene implements Scene {
 
 		this._layer.addChild(this.sessionRenderer);
 		this._layer.addChild(this._viewManager);
+
+		this.sessionRenderer.sync(this._session.level);
 	}
 
 	public onStarted(): void {
@@ -41,9 +43,13 @@ export class GameScene implements Scene {
 		this._game.removeContainer(this._layer);
 	}
 
-	public update(passedTime: number): void {
-		this._viewManager.update(passedTime, this._input, this._sessionController);
+	public update(timePassed: number): void {
+		this._viewManager.update(timePassed, this._input, this._sessionController);
 
-		this.sessionRenderer.update();
+		this.sessionRenderer.update(timePassed);
+		if (this._sessionController.turnPassed) {
+			this.sessionRenderer.sync(this._session.level);
+			this._sessionController.turnPassed = false;
+		}
 	}
 }

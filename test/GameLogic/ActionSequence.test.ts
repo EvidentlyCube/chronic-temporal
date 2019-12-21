@@ -12,12 +12,23 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 		PlayerAction.MoveUp,
 	];
 
+	it('get length - Returns actual sequence length', () => {
+		const actionSequence = new ActionSequence();
+
+		assert.equal(actionSequence.length, 0);
+
+		for (let i = 0; i < actionList.length; i++) {
+			actionSequence.push(actionList[i]);
+			assert.equal(actionSequence.length, i + 1);
+		}
+	});
+
 	it('push() should add the actions in the correct order.', () => {
 		//Arrange
 		const actionSequence = new ActionSequence();
 
 		//Act
-		for (let i = 0; i < 5; i++) {
+		for (let i = 0; i < actionList.length; i++) {
 			actionSequence.push(actionList[i]);
 		}
 		//Assert
@@ -30,7 +41,7 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 		const result: (PlayerAction | undefined)[] = [];
 
 		//Act
-		for (let i = 0; i < 5; i++) {
+		for (let i = 0; i < actionList.length; i++) {
 			result.push(actionSequence.getNext());
 		}
 		//Assert
@@ -42,7 +53,7 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 		const actionSequence = new ActionSequence(actionList);
 
 		//Act
-		for (let i = 0; i < 5; i++) {
+		for (let i = 0; i < actionList.length; i++) {
 			actionSequence.getNext();
 		}
 
@@ -77,5 +88,33 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 		sequence.reset();
 
 		assert.equal(sequence.position, 0);
+	});
+
+	describe('peek()', () => {
+		it('Return undefined on empty sequence', () => {
+			const sequence = new ActionSequence();
+
+			assert.equal(sequence.peek(), undefined);
+		});
+
+		it('Return undefined when at the end of a sequence', () => {
+			const sequence = new ActionSequence(actionList);
+
+			while (sequence.position < sequence.length) {
+				sequence.getNext();
+			}
+
+			assert.equal(sequence.peek(), undefined);
+		});
+
+		it('Return next move without advancing the sequence', () => {
+			const sequence = new ActionSequence(actionList);
+
+			const peekedAction = sequence.peek();
+			assert.equal(sequence.position, 0);
+
+			const retrievedAction = sequence.getNext();
+			assert.equal(peekedAction, retrievedAction);
+		});
 	});
 });

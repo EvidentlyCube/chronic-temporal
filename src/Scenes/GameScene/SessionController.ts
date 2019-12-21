@@ -10,6 +10,8 @@ import {Level} from '../../GameLogic/Level';
 import {Game} from 'evidently-pixi';
 
 export class SessionController {
+	public turnPassed: boolean;
+
 	private readonly _game: Game;
 
 	private readonly _gameScene: GameScene;
@@ -18,15 +20,16 @@ export class SessionController {
 
 	private readonly _session: GameSession;
 
-	public get currentLevel(): Level {
-		return this._session.level;
-	}
-
 	constructor(game: Game, gameScene: GameScene, session: GameSession, sessionRenderer: SessionRenderer) {
 		this._game = game;
 		this._gameScene = gameScene;
 		this._session = session;
 		this._sessionRenderer = sessionRenderer;
+		this.turnPassed = false;
+	}
+
+	public get currentLevel(): Level {
+		return this._session.level;
 	}
 
 	public getTileUnderMouse(): PIXI.Point {
@@ -43,16 +46,22 @@ export class SessionController {
 
 	public executeAction(action: PlayerAction): void {
 		this._session.runTurn(action);
+
+		this.turnPassed = true;
 	}
 
 	public restartAndSaveRecording(): void {
 		this._session.registerRecording(this._session.actionRecorder.end());
 		this._session.resetLevel();
+
+		this.turnPassed = true;
 	}
 
 	public restartAndRemoveRecording(recording: ActionSequence): void {
 		this._session.removeRecording(recording);
 		this._session.resetLevel();
+
+		this.turnPassed = true;
 	}
 
 	public getRecordings(): readonly ActionSequence[] {

@@ -5,7 +5,6 @@ import {Direction8, Direction8Utils} from '../Enums/Direction8';
 import {Level} from '../Level';
 import {Pushable} from './Pushable';
 
-// @todo I think we should only have a single class for the player entity, to ensure we never treat them differently based on how they move
 export class Protagonist implements Entity {
 	public readonly type: EntityType;
 

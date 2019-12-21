@@ -40,10 +40,13 @@ export class EntitiesRenderer extends PIXI.Sprite {
 		switch (entityType) {
 			case EntityType.Protagonist:
 				return this._textureStore.getTile(GfxConstants.InitialTileset, 1, 0);
+
 			case EntityType.Pushable:
 				return this._textureStore.getTile(GfxConstants.InitialTileset, 7, 5);
+
 			case EntityType.Fireball:
 				return this._textureStore.getTile(GfxConstants.InitialTileset, 7, 0);
+
 			default:
 				throw new Error(`Invalid entity type "${entityType}"`);
 		}

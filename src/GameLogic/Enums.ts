@@ -98,4 +98,8 @@ export class PlayerActionUtils {
 
 		return direction;
 	}
+
+	public static isMoveAction(action: PlayerAction): boolean {
+		return action >= PlayerAction.MoveUpLeft && action <= PlayerAction.MoveDownRight && action !== PlayerAction.Wait;
+	}
 }

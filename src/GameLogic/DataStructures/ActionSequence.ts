@@ -5,6 +5,10 @@ export class ActionSequence {
 
 	private _position = 0;
 
+	public get length(): number {
+		return this._actionSequence.length;
+	}
+
 	public get position(): number {
 		return this._position;
 	}
@@ -27,6 +31,10 @@ export class ActionSequence {
 			return undefined;
 		}
 		return this._actionSequence[this._position++];
+	}
+
+	public peek(): PlayerAction | undefined {
+		return this._actionSequence[this._position];
 	}
 
 	public copy(): ActionSequence {

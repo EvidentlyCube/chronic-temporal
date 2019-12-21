@@ -26,6 +26,7 @@ module.exports = {
 		'@typescript-eslint/triple-slash-reference': ['off'],
 		'@typescript-eslint/no-explicit-any': ['off'],
 		'@typescript-eslint/type-annotation-spacing': ['warn'],
+		'@typescript-eslint/no-non-null-assertion': ['off'],
 
 		// ESLint Style rules
 		'block-spacing': ['warn', 'always'],
