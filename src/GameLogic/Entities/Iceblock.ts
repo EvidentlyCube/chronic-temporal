@@ -13,19 +13,19 @@ export class Iceblock implements Entity {
 
 	public direction: Direction8;
 
-	public contains: Entity;
+	public containedEntity: Entity;
 
 	public melting: boolean;
 
 	public justPushed: boolean;
 
-	constructor(contains: Entity) {
+	constructor(containedEntity: Entity) {
 		this.type = EntityType.Iceblock;
 		this.x = 0;
 		this.y = 0;
 		this.direction = Direction8.None;
-		this.contains = contains;
-		this.melting = contains.type == EntityType.Fireball;
+		this.containedEntity = containedEntity;
+		this.melting = containedEntity.type == EntityType.Fireball;
 		this.justPushed = false;
 	}
 
@@ -40,15 +40,15 @@ export class Iceblock implements Entity {
 			this.direction = Direction8.None;
 		}
 		if (this.melting) {
-			this.contains.x = this.x;
-			this.contains.y = this.y;
-			level.entities.addEntity(this.contains);
+			this.containedEntity.x = this.x;
+			this.containedEntity.y = this.y;
+			level.entities.addEntity(this.containedEntity);
 			level.entities.removeEntity(this);
 		}
 	}
 
 	public clone(): Iceblock {
-		const clone = new Iceblock(this.contains.clone());
+		const clone = new Iceblock(this.containedEntity.clone());
 		clone.x = this.x;
 		clone.y = this.y;
 		clone.direction = this.direction;
