@@ -3,7 +3,7 @@ import {EntityType, FloorType} from '../Enums';
 import {Direction8, Direction8Utils} from '../Enums/Direction8';
 import {Level} from '../Level';
 import {Protagonist} from './Protagonist';
-import { Iceblock } from './Iceblock';
+import {Iceblock} from './Iceblock';
 
 export class Fireball implements Entity {
 	public readonly type: EntityType;

@@ -24,44 +24,38 @@ export class LevelDeserializer {
 
 	private static deserializeEntities(level: Level, entities: any[]): void {
 		entities.forEach(data => {
-			switch (data.type) {
-				case EntityType.Protagonist:
-					LevelDeserializer.insertEntity(
-						level,
-						new Protagonist(data.isPlayerControlled, LevelDeserializer.deserializeActionSequence(data.sequence)),
-						data,
-					);
-					break;
-
-				case EntityType.Pushable:
-					LevelDeserializer.insertEntity(
-						level,
-						new Pushable(),
-						data,
-					);
-					break;
-
-				case EntityType.Fireball:
-					LevelDeserializer.insertEntity(
-						level,
-						new Fireball(data.direction),
-						data,
-					);
-					break;
-
-				case EntityType.Iceblock:
-					const iceblock = new Iceblock(data.contains);
-					iceblock.melting = data.melting;
-					iceblock.direction = data.direction;
-					iceblock.justPushed = data.justPushed;
-					LevelDeserializer.insertEntity(
-						level,
-						iceblock,
-						data,
-					);
-					break;
-			}
+			level.entities.addEntity(this.deserializeEntity(level, data));
 		});
+	}
+
+	private static deserializeEntity(level: Level, data: any): Entity {
+		let entity: any;
+		switch (data.type) {
+			case EntityType.Protagonist:
+				entity = new Protagonist(data.isPlayerControlled, LevelDeserializer.deserializeActionSequence(data.sequence));
+				break;
+
+			case EntityType.Pushable:
+				entity = new Pushable();
+				break;
+
+			case EntityType.Fireball:
+				entity = new Fireball(data.direction);
+				break;
+
+			case EntityType.Iceblock:
+				entity = new Iceblock(this.deserializeEntity(level, data.contains));
+				entity.melting = data.melting;
+				entity.direction = data.direction;
+				entity.justPushed = data.justPushed;
+				break;
+
+			default:
+				throw new Error();
+		}
+		entity.x = data.x;
+		entity.y = data.y;
+		return entity;
 	}
 
 	private static deserializeFloorTiles(level: Level, tilesFloor: any[][]): void {
@@ -90,12 +84,5 @@ export class LevelDeserializer {
 		}
 
 		return value;
-	}
-
-	private static insertEntity(level: Level, entity: Entity, data: any): void {
-		entity.x = data.x;
-		entity.y = data.y;
-
-		level.entities.addEntity(entity);
 	}
 }

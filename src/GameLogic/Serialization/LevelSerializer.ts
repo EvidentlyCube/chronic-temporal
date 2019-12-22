@@ -5,6 +5,7 @@ import {Protagonist} from '../Entities/Protagonist';
 import {ActionSequence} from '../DataStructures/ActionSequence';
 import {Fireball} from '../Entities/Fireball';
 import {Iceblock} from '../Entities/Iceblock';
+import {Entity} from '../Entity';
 
 export class LevelSerializer {
 	public static serialize(level: Level): object {
@@ -18,41 +19,45 @@ export class LevelSerializer {
 		};
 	}
 
-	private static serializeEntities(entities: Entities): object[] {
+	private static serializeEntities(entities: Entities): any[] {
 		return entities.entities.map(entity => {
-			const base: any = {
-				x: entity.x,
-				y: entity.y,
-				type: entity.type,
-			};
-
-			switch (entity.type) {
-				case EntityType.Protagonist:
-					const protagonist = entity as Protagonist;
-					base.isPlayerControlled = protagonist.isPlayerControlled;
-					base.sequence = LevelSerializer.serializeActionSequence(protagonist.movesQueue);
-					return base;
-
-				case EntityType.Pushable:
-					return base;
-
-				case EntityType.Fireball:
-					const fireball = entity as Fireball;
-					base.direction = fireball.direction;
-					return base;
-
-				case EntityType.Iceblock:
-					const iceblock = entity as Iceblock;
-					base.direction = iceblock.direction;
-					base.contains = iceblock.contains;
-					base.melting = iceblock.melting;
-					base.justPushed = iceblock.justPushed;
-					return base;
-
-				default:
-					throw new Error();
-			}
+			return this.serializeEntity(entity);
 		});
+	}
+
+	private static serializeEntity(entity: Entity): any[] {
+		const base: any = {
+			x: entity.x,
+			y: entity.y,
+			type: entity.type,
+		};
+
+		switch (entity.type) {
+			case EntityType.Protagonist:
+				const protagonist = entity as Protagonist;
+				base.isPlayerControlled = protagonist.isPlayerControlled;
+				base.sequence = LevelSerializer.serializeActionSequence(protagonist.movesQueue);
+				return base;
+
+			case EntityType.Pushable:
+				return base;
+
+			case EntityType.Fireball:
+				const fireball = entity as Fireball;
+				base.direction = fireball.direction;
+				return base;
+
+			case EntityType.Iceblock:
+				const iceblock = entity as Iceblock;
+				base.direction = iceblock.direction;
+				base.contains = LevelSerializer.serializeEntity(iceblock.contains);
+				base.melting = iceblock.melting;
+				base.justPushed = iceblock.justPushed;
+				return base;
+
+			default:
+				throw new Error();
+		}
 	}
 
 	private static serializeActionSequence(action: ActionSequence): any {
