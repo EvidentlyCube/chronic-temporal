@@ -65,6 +65,8 @@ export class NextProjectionMoveEffect extends PIXI.Sprite implements Effect {
 
 		this._fromX = projection.x * Constants.TileWidth;
 		this._fromY = projection.y * Constants.TileHeight;
+		this.x = this._fromX;
+		this.y = this._fromY;
 
 		const nextAction = projection.movesQueue.peek();
 
