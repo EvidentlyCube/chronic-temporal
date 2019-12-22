@@ -66,11 +66,12 @@ export class Iceblock implements Entity {
 		}
 
 		const floor = level.tilesFloor.get(newX, newY);
-		const entities = level.entities.getEntitiesAt(newX, newY);
 
 		if (floor == FloorType.Wall) {
 			return false;
 		}
+
+		const entities = level.entities.getEntitiesAt(newX, newY);
 
 		if (entities.some(entity => entity.type === EntityType.Pushable)) {
 			return false;

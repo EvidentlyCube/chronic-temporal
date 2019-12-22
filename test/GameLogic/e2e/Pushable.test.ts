@@ -6,6 +6,7 @@ import {PlayerAction, PlayerActionUtils, EntityType, FloorType} from '../../../s
 import {Pushable} from '../../../src/GameLogic/Entities/Pushable';
 import {Direction8Utils, Direction8} from '../../../src/GameLogic/Enums/Direction8';
 import {Fireball} from '../../../src/GameLogic/Entities/Fireball';
+import {Iceblock} from '../../../src/GameLogic/Entities/Iceblock';
 
 describe('GameLogic.e2e - Pushable', () => {
 	PlayerActionUtils.moves.forEach((action) => {
@@ -70,6 +71,32 @@ describe('GameLogic.e2e - Pushable', () => {
 			assert.equal(player.y, 10);
 			assert.deepEqual(level.entities.getEntitiesAt(pushable1X, pushable1Y), [pushable1]);
 			assert.deepEqual(level.entities.getEntitiesAt(pushable2X, pushable2Y), [pushable2]);
+		});
+
+		it(`No movement when trying to push pushable ${PlayerAction[action]} into an iceblock`, () => {
+			const moveDirection = PlayerActionUtils.actionToDirection(action);
+			const pushable = new Pushable();
+			const pushableX = 10 + Direction8Utils.getX(moveDirection);
+			const pushableY = 10 + Direction8Utils.getY(moveDirection);
+			pushable.x = pushableX;
+			pushable.y = pushableY;
+			const iceblock = new Iceblock(new Pushable());
+			const iceblockX = 10 + Direction8Utils.getX(moveDirection) * 2;
+			const iceblockY = 10 + Direction8Utils.getY(moveDirection) * 2;
+			iceblock.x = iceblockX;
+			iceblock.y = iceblockY;
+			const [, level, player] = SessionPlayer.play(
+				TestLevelBuilder
+					.newLevel()
+					.addEntity(pushable)
+					.addEntity(iceblock),
+				action,
+			);
+
+			assert.equal(player.x, 10);
+			assert.equal(player.y, 10);
+			assert.deepEqual(level.entities.getEntitiesAt(pushableX, pushableY), [pushable]);
+			assert.deepEqual(level.entities.getEntitiesAt(iceblockX, iceblockY), [iceblock]);
 		});
 	});
 

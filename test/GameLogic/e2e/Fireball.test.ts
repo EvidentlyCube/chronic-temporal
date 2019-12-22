@@ -6,6 +6,7 @@ import {PlayerAction, EntityType, FloorType} from '../../../src/GameLogic/Enums'
 import {Pushable} from '../../../src/GameLogic/Entities/Pushable';
 import {Direction8Utils, Direction8} from '../../../src/GameLogic/Enums/Direction8';
 import {Fireball} from '../../../src/GameLogic/Entities/Fireball';
+import {Iceblock} from '../../../src/GameLogic/Entities/Iceblock';
 
 describe('GameLogic.e2e - Fireball', () => {
 	Direction8Utils.allDirectional.forEach((direction) => {
@@ -281,5 +282,26 @@ describe('GameLogic.e2e - Fireball', () => {
 		);
 
 		assert.isUndefined(level.entities.getPlayer());
+	});
+
+	it('Fireball should exitinguish when it moves into an iceblock and melt it', () => {
+		const fireball = new Fireball(Direction8.Left);
+		fireball.x = 6;
+		fireball.y = 5;
+		const pushable = new Pushable();
+		const iceblock = new Iceblock(pushable);
+		iceblock.x = 5;
+		iceblock.y = 5;
+		const [, level] = SessionPlayer.play(
+			TestLevelBuilder
+				.newLevel()
+				.addEntity(fireball)
+				.addEntity(iceblock),
+			PlayerAction.Wait,
+		);
+
+		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Fireball));
+		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Iceblock));
+		assert.deepEqual(level.entities.getEntitiesOfType(EntityType.Pushable), [pushable]);
 	});
 });

@@ -111,14 +111,76 @@ describe('GameLogic.e2e - Iceblock', () => {
 			assert.deepEqual(level.entities.getEntitiesAt(iceblock1X, iceblock1Y), [iceblock1]);
 			assert.deepEqual(level.entities.getEntitiesAt(iceblock2X, iceblock2Y), [iceblock2]);
 		});
+
+		it(`Iceblock stops moving when it moves ${PlayerAction[action]} into a wall`, () => {
+			const moveDirection = PlayerActionUtils.actionToDirection(action);
+			const iceblock = new Iceblock(new Pushable());
+			iceblock.x = 10 + Direction8Utils.getX(moveDirection);
+			iceblock.y = 10 + Direction8Utils.getY(moveDirection);
+			const wallX = 10 + Direction8Utils.getX(moveDirection) * 4;
+			const wallY = 10 + Direction8Utils.getY(moveDirection) * 4;
+			const [, level] = SessionPlayer.play(
+				TestLevelBuilder
+					.newLevel()
+					.plotFloor(wallX, wallY, FloorType.Wall)
+					.addEntity(iceblock),
+				[action, PlayerAction.Wait, PlayerAction.Wait, PlayerAction.Wait],
+			);
+
+			assert.equal(level.entities.getFirstEntityOfType(EntityType.Iceblock)?.x, 10 + Direction8Utils.getX(moveDirection) * 3);
+			assert.equal(level.entities.getFirstEntityOfType(EntityType.Iceblock)?.y, 10 + Direction8Utils.getY(moveDirection) * 3);
+			assert.equal(iceblock.direction, Direction8.None);
+		});
+
+		it(`Iceblock stops moving when it moves ${PlayerAction[action]} into a pushable`, () => {
+			const moveDirection = PlayerActionUtils.actionToDirection(action);
+			const iceblock = new Iceblock(new Pushable());
+			iceblock.x = 10 + Direction8Utils.getX(moveDirection);
+			iceblock.y = 10 + Direction8Utils.getY(moveDirection);
+			const pushable = new Pushable();
+			pushable.x = 10 + Direction8Utils.getX(moveDirection) * 4;
+			pushable.y = 10 + Direction8Utils.getY(moveDirection) * 4;
+			const [, level] = SessionPlayer.play(
+				TestLevelBuilder
+					.newLevel()
+					.addEntity(iceblock)
+					.addEntity(pushable),
+				[action, PlayerAction.Wait, PlayerAction.Wait, PlayerAction.Wait],
+			);
+
+			assert.equal(level.entities.getFirstEntityOfType(EntityType.Iceblock)?.x, 10 + Direction8Utils.getX(moveDirection) * 3);
+			assert.equal(level.entities.getFirstEntityOfType(EntityType.Iceblock)?.y, 10 + Direction8Utils.getY(moveDirection) * 3);
+			assert.equal(iceblock.direction, Direction8.None);
+		});
+
+		it(`Iceblock stops moving when it moves ${PlayerAction[action]} into another iceblock`, () => {
+			const moveDirection = PlayerActionUtils.actionToDirection(action);
+			const iceblock1 = new Iceblock(new Pushable());
+			iceblock1.x = 10 + Direction8Utils.getX(moveDirection);
+			iceblock1.y = 10 + Direction8Utils.getY(moveDirection);
+			const iceblock2 = new Iceblock(new Pushable());
+			iceblock2.x = 10 + Direction8Utils.getX(moveDirection) * 4;
+			iceblock2.y = 10 + Direction8Utils.getY(moveDirection) * 4;
+			const [, level] = SessionPlayer.play(
+				TestLevelBuilder
+					.newLevel()
+					.addEntity(iceblock1)
+					.addEntity(iceblock2),
+				[action, PlayerAction.Wait, PlayerAction.Wait, PlayerAction.Wait],
+			);
+
+			assert.equal(level.entities.getFirstEntityOfType(EntityType.Iceblock)?.x, 10 + Direction8Utils.getX(moveDirection) * 3);
+			assert.equal(level.entities.getFirstEntityOfType(EntityType.Iceblock)?.y, 10 + Direction8Utils.getY(moveDirection) * 3);
+			assert.equal(iceblock1.direction, Direction8.None);
+		});
 	});
 
 	const roomEdgeMoves: [number, number, PlayerAction][] = [
-		[1,  1, PlayerAction.MoveUpLeft],
-		[10, 1, PlayerAction.MoveUp],
-		[18, 1, PlayerAction.MoveUpRight],
+		[1,  1,  PlayerAction.MoveUpLeft],
+		[10, 1,  PlayerAction.MoveUp],
+		[18, 1,  PlayerAction.MoveUpRight],
 		[1,  10, PlayerAction.MoveLeft],
-		[18,  10, PlayerAction.MoveRight],
+		[18, 10, PlayerAction.MoveRight],
 		[1,  18, PlayerAction.MoveDownLeft],
 		[10, 18, PlayerAction.MoveDown],
 		[18, 18, PlayerAction.MoveDownRight],
@@ -141,6 +203,34 @@ describe('GameLogic.e2e - Iceblock', () => {
 			assert.equal(player.y, y);
 			assert.equal(level.entities.getFirstEntityOfType(EntityType.Iceblock)?.x, iceblockX);
 			assert.equal(level.entities.getFirstEntityOfType(EntityType.Iceblock)?.y, iceblockY);
+		});
+	});
+
+	const roomEdgeMoves2: [number, number, PlayerAction, number, number][] = [
+		[3,  3,  PlayerAction.MoveUpLeft,    0,  0],
+		[10, 3,  PlayerAction.MoveUp,        10, 0],
+		[16, 3,  PlayerAction.MoveUpRight,   19, 0],
+		[3,  10, PlayerAction.MoveLeft,      0,  10],
+		[16, 10, PlayerAction.MoveRight,     19, 10],
+		[3,  16, PlayerAction.MoveDownLeft,  0,  19],
+		[10, 16, PlayerAction.MoveDown,      10, 19],
+		[16, 16, PlayerAction.MoveDownRight, 19, 19],
+	];
+
+	roomEdgeMoves2.forEach(([x, y, action, expectedX, expectedY]) => {
+		it(`Iceblock stops moving when it tries to move ${PlayerAction[action]} out of bounds`, () => {
+			const moveDirection = PlayerActionUtils.actionToDirection(action);
+			const iceblock = new Iceblock(new Pushable());
+			iceblock.x = x + Direction8Utils.getX(moveDirection);
+			iceblock.y = y + Direction8Utils.getY(moveDirection);
+			const [, level] = SessionPlayer.play(
+				TestLevelBuilder.newLevel(x, y).addEntity(iceblock),
+				[action, PlayerAction.Wait, PlayerAction.Wait, PlayerAction.Wait],
+			);
+
+			assert.equal(level.entities.getFirstEntityOfType(EntityType.Iceblock)?.x, expectedX);
+			assert.equal(level.entities.getFirstEntityOfType(EntityType.Iceblock)?.y, expectedY);
+			assert.equal(iceblock.direction, Direction8.None);
 		});
 	});
 
@@ -215,6 +305,27 @@ describe('GameLogic.e2e - Iceblock', () => {
 		);
 
 		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Fireball));
+		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Iceblock));
+		assert.equal(level.entities.getFirstEntityOfType(EntityType.Pushable)?.x, 10);
+		assert.equal(level.entities.getFirstEntityOfType(EntityType.Pushable)?.y, 7);
+	});
+
+	it('Iceblock stops moving while melting', () => {
+		const pushable = new Pushable();
+		const iceblock = new Iceblock(pushable);
+		iceblock.x = 10;
+		iceblock.y = 9;
+		const fireball = new Fireball(Direction8.Left);
+		fireball.x = 13;
+		fireball.y = 7;
+		const [, level] = SessionPlayer.play(
+			TestLevelBuilder
+				.newLevel()
+				.addEntity(iceblock)
+				.addEntity(fireball),
+			[PlayerAction.MoveUp, PlayerAction.Wait, PlayerAction.Wait],
+		);
+
 		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Iceblock));
 		assert.equal(level.entities.getFirstEntityOfType(EntityType.Pushable)?.x, 10);
 		assert.equal(level.entities.getFirstEntityOfType(EntityType.Pushable)?.y, 7);
