@@ -48,7 +48,7 @@ export class Iceblock implements Entity {
 	}
 
 	public clone(): Iceblock {
-		const clone = new Iceblock(this.contains);
+		const clone = new Iceblock(this.contains.clone());
 		clone.x = this.x;
 		clone.y = this.y;
 		clone.direction = this.direction;

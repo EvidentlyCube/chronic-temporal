@@ -304,7 +304,8 @@ describe('GameLogic.e2e - Fireball', () => {
 
 		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Fireball));
 		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Iceblock));
-		assert.deepEqual(level.entities.getEntitiesOfType(EntityType.Pushable), [pushable]);
+		assert.equal(level.entities.getFirstEntityOfType(EntityType.Pushable)?.x, 5);
+		assert.equal(level.entities.getFirstEntityOfType(EntityType.Pushable)?.y, 5);
 	});
 
 	it('Multiple fireballs should exitinguish when they move into an iceblock and melt it, but contents are ejected safely', () => {
@@ -315,6 +316,8 @@ describe('GameLogic.e2e - Fireball', () => {
 		fireball2.x = 4;
 		fireball2.y = 5;
 		const protagonist = new Protagonist(false, new ActionSequence([PlayerAction.Wait, PlayerAction.Wait]));
+		protagonist.x = 5;
+		protagonist.y = 5;
 		const iceblock = new Iceblock(protagonist);
 		iceblock.x = 5;
 		iceblock.y = 5;
