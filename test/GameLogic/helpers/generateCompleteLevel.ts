@@ -6,6 +6,7 @@ import {Entity} from '../../../src/GameLogic/Entity';
 import {Pushable} from '../../../src/GameLogic/Entities/Pushable';
 import {Direction8} from '../../../src/GameLogic/Enums/Direction8';
 import {Fireball} from '../../../src/GameLogic/Entities/Fireball';
+import {Iceblock} from '../../../src/GameLogic/Entities/Iceblock';
 
 export function generateCompleteLevel(): Level {
 	const level = new Level({
@@ -36,6 +37,11 @@ function addEveryEntity(level: Level): void {
 			case EntityType.Fireball:
 				insertEntity(level, new Fireball(Direction8.Up));
 				insertEntity(level, new Fireball(Direction8.DownRight));
+				break;
+
+			case EntityType.Iceblock:
+				insertEntity(level, new Iceblock(new Pushable()));
+				insertEntity(level, new Iceblock(new Protagonist(false, new ActionSequence([PlayerAction.MoveDown, PlayerAction.MoveUpLeft], 1))));
 				break;
 
 			default:

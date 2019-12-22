@@ -5,6 +5,7 @@ import {Protagonist} from '../Entities/Protagonist';
 import {ActionSequence} from '../DataStructures/ActionSequence';
 import {Pushable} from '../Entities/Pushable';
 import {Fireball} from '../Entities/Fireball';
+import {Iceblock} from '../Entities/Iceblock';
 
 export class LevelDeserializer {
 	public static deserialize(levelObject: any): Level {
@@ -44,6 +45,18 @@ export class LevelDeserializer {
 					LevelDeserializer.insertEntity(
 						level,
 						new Fireball(data.direction),
+						data,
+					);
+					break;
+
+				case EntityType.Iceblock:
+					const iceblock = new Iceblock(data.contains);
+					iceblock.melting = data.melting;
+					iceblock.direction = data.direction;
+					iceblock.justPushed = data.justPushed;
+					LevelDeserializer.insertEntity(
+						level,
+						iceblock,
 						data,
 					);
 					break;

@@ -17,6 +17,7 @@ export class TurnRunner {
 		}
 
 		level.entities.getEntitiesOfType(EntityType.Protagonist).forEach(entity => entity.update(level));
-		level.entities.getEntitiesNotOfType(EntityType.Protagonist).forEach(entity => entity.update(level));
+		level.entities.getEntitiesOfType(EntityType.Fireball).forEach(entity => entity.update(level));
+		level.entities.getEntitiesOfType(EntityType.Iceblock).forEach(entity => entity.update(level));
 	}
 }

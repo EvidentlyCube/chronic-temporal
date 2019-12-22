@@ -3,6 +3,7 @@ import {EntityType, FloorType} from '../Enums';
 import {Direction8, Direction8Utils} from '../Enums/Direction8';
 import {Level} from '../Level';
 import {Protagonist} from './Protagonist';
+import { Iceblock } from './Iceblock';
 
 export class Fireball implements Entity {
 	public readonly type: EntityType;
@@ -68,5 +69,10 @@ export class Fireball implements Entity {
 		const entities = level.entities.getEntitiesAt(this.x, this.y);
 		const protagonists = entities.filter(entity => entity.type === EntityType.Protagonist) as Protagonist[];
 		protagonists.forEach(p => level.entities.removeEntity(p));
+		const iceblocks = entities.filter(entity => entity.type === EntityType.Iceblock) as Iceblock[];
+		if (iceblocks.length) {
+			level.entities.removeEntity(this);
+		}
+		iceblocks.forEach(i => i.melting = true);
 	}
 }

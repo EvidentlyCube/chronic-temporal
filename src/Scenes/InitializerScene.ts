@@ -6,6 +6,7 @@ import {Pushable} from '../GameLogic/Entities/Pushable';
 import {Fireball} from '../GameLogic/Entities/Fireball';
 import {Direction8} from '../GameLogic/Enums/Direction8';
 import {Game, Scene} from 'evidently-pixi';
+import {Iceblock} from '../GameLogic/Entities/Iceblock';
 
 export class InitializerScene implements Scene {
 	private readonly _game: Game;
@@ -57,6 +58,11 @@ export class InitializerScene implements Scene {
 		fireball.x = 4;
 		fireball.y = 5;
 		level.entities.addEntity(fireball);
+
+		const iceblock = new Iceblock(new Pushable());
+		iceblock.x = 15;
+		iceblock.y = 7;
+		level.entities.addEntity(iceblock);
 
 		const session = new GameSession(level);
 

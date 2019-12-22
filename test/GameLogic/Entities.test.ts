@@ -182,59 +182,6 @@ describe('GameLogic.DataStructures.Entities', () => {
 		});
 	});
 
-	describe('getEntitiesNotOfType', () => {
-		it('Return empty collection when no entity found', () => {
-			//Arrange & Act
-			const entities = new Entities();
-
-			//Assert
-			assert.isEmpty(entities.getEntitiesNotOfType(EntityType.Protagonist));
-		});
-
-		it('Return empty collection when only disallowed entity type is present', () => {
-			//Arrange
-			const entities = new Entities();
-
-			//Act
-			entities.addEntity(new Protagonist());
-			entities.addEntity(new Protagonist());
-
-			//Assert
-			assert.isEmpty(entities.getEntitiesNotOfType(EntityType.Protagonist));
-		});
-
-		it('Return all allowed entities (one match)', () => {
-			//Arrange
-			const entities = new Entities();
-			const pushable = new Pushable();
-
-			//Act
-			entities.addEntity(new Protagonist());
-			entities.addEntity(pushable);
-			entities.addEntity(new Protagonist());
-
-			//Assert
-			assert.deepEqual(entities.getEntitiesNotOfType(EntityType.Protagonist), [pushable]);
-		});
-
-		it('Return all allowed entities (many match)', () => {
-			//Arrange
-			const entities = new Entities();
-			const pushable = new Pushable();
-			const fireball = new Fireball(Direction8.Up);
-
-			//Act
-			entities.addEntity(pushable);
-			entities.addEntity(new Protagonist());
-			entities.addEntity(new Protagonist());
-			entities.addEntity(new Protagonist());
-			entities.addEntity(fireball);
-
-			//Assert
-			assert.deepEqual(entities.getEntitiesNotOfType(EntityType.Protagonist), [pushable, fireball]);
-		});
-	});
-
 	describe('getEntitiesAt', () => {
 		it('Returns empty array if no entities match the coordinates', () => {
 			//Arrange

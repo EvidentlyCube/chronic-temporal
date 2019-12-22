@@ -4,6 +4,7 @@ import {EntityType} from '../Enums';
 import {Protagonist} from '../Entities/Protagonist';
 import {ActionSequence} from '../DataStructures/ActionSequence';
 import {Fireball} from '../Entities/Fireball';
+import {Iceblock} from '../Entities/Iceblock';
 
 export class LevelSerializer {
 	public static serialize(level: Level): object {
@@ -38,6 +39,14 @@ export class LevelSerializer {
 				case EntityType.Fireball:
 					const fireball = entity as Fireball;
 					base.direction = fireball.direction;
+					return base;
+
+				case EntityType.Iceblock:
+					const iceblock = entity as Iceblock;
+					base.direction = iceblock.direction;
+					base.contains = iceblock.contains;
+					base.melting = iceblock.melting;
+					base.justPushed = iceblock.justPushed;
 					return base;
 
 				default:

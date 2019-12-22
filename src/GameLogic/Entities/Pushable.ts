@@ -47,6 +47,10 @@ export class Pushable implements Entity {
 			return false;
 		}
 
+		if (entities.some(entity => entity.type === EntityType.Iceblock)) {
+			return false;
+		}
+
 		return true;
 	}
 

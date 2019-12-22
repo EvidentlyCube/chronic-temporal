@@ -241,7 +241,7 @@ describe('GameLogic.e2e - Fireball', () => {
 	];
 
 	roomEdgeMoves.forEach(([x, y, direction, expectedX, expectedY]) => {
-		it(`Fireball should turn correctly when trying to move ${direction} out of bounds`, () => {
+		it(`Fireball should turn correctly when trying to move ${Direction8Utils.getName(direction)} out of bounds`, () => {
 			const fireball = new Fireball(direction);
 			fireball.x = x;
 			fireball.y = y;
