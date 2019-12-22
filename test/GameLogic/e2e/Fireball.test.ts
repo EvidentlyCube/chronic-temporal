@@ -7,6 +7,8 @@ import {Pushable} from '../../../src/GameLogic/Entities/Pushable';
 import {Direction8Utils, Direction8} from '../../../src/GameLogic/Enums/Direction8';
 import {Fireball} from '../../../src/GameLogic/Entities/Fireball';
 import {Iceblock} from '../../../src/GameLogic/Entities/Iceblock';
+import {Protagonist} from '../../../src/GameLogic/Entities/Protagonist';
+import {ActionSequence} from '../../../src/GameLogic/DataStructures/ActionSequence';
 
 describe('GameLogic.e2e - Fireball', () => {
 	Direction8Utils.allDirectional.forEach((direction) => {
@@ -284,7 +286,7 @@ describe('GameLogic.e2e - Fireball', () => {
 		assert.isUndefined(level.entities.getPlayer());
 	});
 
-	it('Fireball should exitinguish when it moves into an iceblock and melt it', () => {
+	it('Single fireball should exitinguish when it moves into an iceblock and melt it', () => {
 		const fireball = new Fireball(Direction8.Left);
 		fireball.x = 6;
 		fireball.y = 5;
@@ -303,5 +305,30 @@ describe('GameLogic.e2e - Fireball', () => {
 		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Fireball));
 		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Iceblock));
 		assert.deepEqual(level.entities.getEntitiesOfType(EntityType.Pushable), [pushable]);
+	});
+
+	it('Multiple fireballs should exitinguish when they move into an iceblock and melt it, but contents are ejected safely', () => {
+		const fireball1 = new Fireball(Direction8.Left);
+		fireball1.x = 6;
+		fireball1.y = 5;
+		const fireball2 = new Fireball(Direction8.Right);
+		fireball2.x = 4;
+		fireball2.y = 5;
+		const protagonist = new Protagonist(false, new ActionSequence([PlayerAction.Wait, PlayerAction.Wait]));
+		const iceblock = new Iceblock(protagonist);
+		iceblock.x = 5;
+		iceblock.y = 5;
+		const [, level] = SessionPlayer.play(
+			TestLevelBuilder
+				.newLevel()
+				.addEntity(fireball1)
+				.addEntity(fireball2)
+				.addEntity(iceblock),
+			PlayerAction.Wait,
+		);
+
+		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Fireball));
+		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Iceblock));
+		assert.deepEqual(level.entities.getEntitiesAt(5, 5), [protagonist]);
 	});
 });

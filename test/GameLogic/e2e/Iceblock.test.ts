@@ -267,8 +267,7 @@ describe('GameLogic.e2e - Iceblock', () => {
 	});
 
 	it('Iceblock should extinguish Fireball and melt, ejecting its contents when it is pushed into it', () => {
-		const pushable = new Pushable();
-		const iceblock = new Iceblock(pushable);
+		const iceblock = new Iceblock(new Pushable());
 		iceblock.x = 10;
 		iceblock.y = 9;
 		const fireball = new Fireball(Direction8.Left);
@@ -289,8 +288,7 @@ describe('GameLogic.e2e - Iceblock', () => {
 	});
 
 	it('Iceblock should extinguish Fireball and melt, ejecting its contents when it moves into it', () => {
-		const pushable = new Pushable();
-		const iceblock = new Iceblock(pushable);
+		const iceblock = new Iceblock(new Pushable());
 		iceblock.x = 10;
 		iceblock.y = 9;
 		const fireball = new Fireball(Direction8.Left);
@@ -311,8 +309,7 @@ describe('GameLogic.e2e - Iceblock', () => {
 	});
 
 	it('Iceblock stops moving while melting', () => {
-		const pushable = new Pushable();
-		const iceblock = new Iceblock(pushable);
+		const iceblock = new Iceblock(new Pushable());
 		iceblock.x = 10;
 		iceblock.y = 9;
 		const fireball = new Fireball(Direction8.Left);
