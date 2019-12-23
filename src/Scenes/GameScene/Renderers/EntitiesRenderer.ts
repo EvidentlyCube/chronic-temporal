@@ -47,6 +47,9 @@ export class EntitiesRenderer extends PIXI.Sprite {
 			case EntityType.Fireball:
 				return this._textureStore.getTile(GfxConstants.InitialTileset, 7, 0);
 
+			case EntityType.Iceblock:
+				return this._textureStore.getTile(GfxConstants.InitialTileset, 6, 3);
+
 			default:
 				throw new Error(`Invalid entity type "${entityType}"`);
 		}

@@ -4,6 +4,7 @@ import {ActionSequence} from '../DataStructures/ActionSequence';
 import {Direction8, Direction8Utils} from '../Enums/Direction8';
 import {Level} from '../Level';
 import {Pushable} from './Pushable';
+import {Iceblock} from './Iceblock';
 
 export class Protagonist implements Entity {
 	public readonly type: EntityType;
@@ -47,6 +48,9 @@ export class Protagonist implements Entity {
 			const pushables = entities.filter(entity => entity.type === EntityType.Pushable) as Pushable[];
 			pushables.forEach(p => p.push(level, direction));
 
+			const iceblocks = entities.filter(entity => entity.type === EntityType.Iceblock) as Iceblock[];
+			iceblocks.forEach(i => i.push(level, direction));
+
 			if (entities.some(entity => entity.type === EntityType.Fireball)) {
 				level.entities.removeEntity(this);
 			}
@@ -73,14 +77,20 @@ export class Protagonist implements Entity {
 		}
 
 		const floor = level.tilesFloor.get(newX, newY);
-		const entities = level.entities.getEntitiesAt(newX, newY);
 
 		if (floor == FloorType.Wall) {
 			return false;
 		}
 
+		const entities = level.entities.getEntitiesAt(newX, newY);
+
 		const pushable = entities.find(entity => entity.type === EntityType.Pushable) as Pushable;
 		if (pushable && !pushable.isMoveAllowed(level, direction)) {
+			return false;
+		}
+
+		const iceblock = entities.find(entity => entity.type === EntityType.Iceblock) as Iceblock;
+		if (iceblock && !iceblock.isMoveAllowed(level, direction)) {
 			return false;
 		}
 
