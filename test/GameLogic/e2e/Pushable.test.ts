@@ -63,28 +63,21 @@ describe('GameLogic.e2e - Pushable', () => {
 
 		it(`No movement when trying to push pushable ${PlayerAction[action]} into an iceblock`, () => {
 			const moveDirection = PlayerActionUtils.actionToDirection(action);
-			const pushable = new Pushable();
-			const pushableX = 10 + Direction8Utils.getX(moveDirection);
-			const pushableY = 10 + Direction8Utils.getY(moveDirection);
-			pushable.x = pushableX;
-			pushable.y = pushableY;
-			const iceblock = new Iceblock(new Pushable());
-			const iceblockX = 10 + Direction8Utils.getX(moveDirection) * 2;
-			const iceblockY = 10 + Direction8Utils.getY(moveDirection) * 2;
-			iceblock.x = iceblockX;
-			iceblock.y = iceblockY;
-			const [, level, player] = SessionPlayer.play(
+			const pushableX = 10 + getX(moveDirection);
+			const pushableY = 10 + getY(moveDirection);
+			const iceblockX = 10 + getX(moveDirection) * 2;
+			const iceblockY = 10 + getY(moveDirection) * 2;
+			const [, level] = SessionPlayer.play(
 				TestLevelBuilder
 					.newLevel()
-					.addEntity(pushable)
-					.addEntity(iceblock),
+					.addEntity(new Pushable(), pushableX,  pushableY)
+					.addEntity(new Iceblock(new Pushable()), iceblockX, iceblockY),
 				action,
 			);
 
-			assert.equal(player.x, 10);
-			assert.equal(player.y, 10);
-			assert.deepEqual(level.entities.getEntitiesAt(pushableX, pushableY), [pushable]);
-			assert.deepEqual(level.entities.getEntitiesAt(iceblockX, iceblockY), [iceblock]);
+			levelAssert.assertEntityAt(level, EntityType.Protagonist, 10, 10);
+			levelAssert.assertEntityAt(level, EntityType.Pushable, pushableX, pushableY);
+			levelAssert.assertEntityAt(level, EntityType.Iceblock, iceblockX, iceblockY);
 		});
 	});
 

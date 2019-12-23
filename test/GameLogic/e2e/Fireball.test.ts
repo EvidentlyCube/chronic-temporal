@@ -214,51 +214,31 @@ describe('GameLogic.e2e - Fireball', () => {
 	});
 
 	it('Single fireball should exitinguish when it moves into an iceblock and melt it', () => {
-		const fireball = new Fireball(Direction8.Left);
-		fireball.x = 6;
-		fireball.y = 5;
-		const pushable = new Pushable();
-		const iceblock = new Iceblock(pushable);
-		iceblock.x = 5;
-		iceblock.y = 5;
 		const [, level] = SessionPlayer.play(
 			TestLevelBuilder
 				.newLevel()
-				.addEntity(fireball)
-				.addEntity(iceblock),
+				.addEntity(new Fireball(Direction8.Left), 6, 5)
+				.addEntity(new Iceblock(new Pushable()), 5, 5),
 			PlayerAction.Wait,
 		);
 
-		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Fireball));
-		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Iceblock));
-		assert.equal(level.entities.getFirstEntityOfType(EntityType.Pushable)?.x, 5);
-		assert.equal(level.entities.getFirstEntityOfType(EntityType.Pushable)?.y, 5);
+		levelAssert.assertEntityCount(level, EntityType.Fireball, 0);
+		levelAssert.assertEntityCount(level, EntityType.Iceblock, 0);
+		levelAssert.assertEntityAt(level, EntityType.Pushable, 5, 5);
 	});
 
 	it('Multiple fireballs should exitinguish when they move into an iceblock and melt it, but contents are ejected safely', () => {
-		const fireball1 = new Fireball(Direction8.Left);
-		fireball1.x = 6;
-		fireball1.y = 5;
-		const fireball2 = new Fireball(Direction8.Right);
-		fireball2.x = 4;
-		fireball2.y = 5;
-		const protagonist = new Protagonist(false, new ActionSequence([PlayerAction.Wait, PlayerAction.Wait]));
-		protagonist.x = 5;
-		protagonist.y = 5;
-		const iceblock = new Iceblock(protagonist);
-		iceblock.x = 5;
-		iceblock.y = 5;
 		const [, level] = SessionPlayer.play(
 			TestLevelBuilder
 				.newLevel()
-				.addEntity(fireball1)
-				.addEntity(fireball2)
-				.addEntity(iceblock),
+				.addEntity(new Fireball(Direction8.Left), 6, 5)
+				.addEntity(new Fireball(Direction8.Right), 4, 5)
+				.addEntity(new Iceblock(new Protagonist(false, new ActionSequence([]))), 5, 5),
 			PlayerAction.Wait,
 		);
 
-		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Fireball));
-		assert.isEmpty(level.entities.getEntitiesOfType(EntityType.Iceblock));
-		assert.deepEqual(level.entities.getEntitiesAt(5, 5), [protagonist]);
+		levelAssert.assertEntityCount(level, EntityType.Fireball, 0);
+		levelAssert.assertEntityCount(level, EntityType.Iceblock, 0);
+		levelAssert.assertEntityAt(level, EntityType.Protagonist, 5, 5);
 	});
 });
