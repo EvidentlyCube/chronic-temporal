@@ -12,7 +12,7 @@ describe('GameLogic.DataStructures.ActionSequence', () => {
 		PlayerAction.MoveUp,
 	];
 
-	it('get length - Returns actual sequence length', () => {
+	it('get size - Returns actual sequence size', () => {
 		const actionSequence = new ActionSequence();
 
 		assert.equal(actionSequence.length, 0);

@@ -64,8 +64,13 @@ export class Fireball implements Entity {
 
 	private move(level: Level, direction: Direction8): void {
 		this.direction = direction;
-		this.x += Direction8Utils.getX(direction);
-		this.y += Direction8Utils.getY(direction);
+		const newX = this.x + Direction8Utils.getX(direction);
+		const newY = this.y + Direction8Utils.getY(direction);
+
+		level.entities.updatePosition(this, newX, newY);
+		this.x = newX;
+		this.y = newY;
+
 		const entities = level.entities.getEntitiesAt(this.x, this.y);
 		const protagonists = entities.filter(entity => entity.type === EntityType.Protagonist) as Protagonist[];
 		protagonists.forEach(p => level.entities.removeEntity(p));

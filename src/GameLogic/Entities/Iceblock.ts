@@ -33,12 +33,18 @@ export class Iceblock implements Entity {
 		if (this.justPushed) {
 			this.justPushed = false; //Don't update because we've just been moved via push()
 		} else if (this.isMoveAllowed(level, this.direction) && !this.melting) {
-			this.x += Direction8Utils.getX(this.direction);
-			this.y += Direction8Utils.getY(this.direction);
+			const newX = this.x + Direction8Utils.getX(this.direction);
+			const newY = this.y + Direction8Utils.getY(this.direction);
+
+			level.entities.updatePosition(this, newX, newY);
+			this.x = newX;
+			this.y = newY;
+
 			this.postMoveProcessing(level);
 		} else {
 			this.direction = Direction8.None;
 		}
+
 		if (this.melting) {
 			this.containedEntity.x = this.x;
 			this.containedEntity.y = this.y;
@@ -86,8 +92,12 @@ export class Iceblock implements Entity {
 
 	public push(level: Level, direction: Direction8): void {
 		if (this.isMoveAllowed(level, direction)) {
-			this.x += Direction8Utils.getX(direction);
-			this.y += Direction8Utils.getY(direction);
+			const newX = this.x + Direction8Utils.getX(direction);
+			const newY = this.y + Direction8Utils.getY(direction);
+
+			level.entities.updatePosition(this, newX, newY);
+			this.x = newX;
+			this.y = newY;
 			this.direction = direction;
 			this.justPushed = true;
 			this.postMoveProcessing(level);

@@ -56,8 +56,12 @@ export class Pushable implements Entity {
 
 	public push(level: Level, direction: Direction8): void {
 		if (this.isMoveAllowed(level, direction)) {
-			this.x += Direction8Utils.getX(direction);
-			this.y += Direction8Utils.getY(direction);
+			const newX = this.x + Direction8Utils.getX(direction);
+			const newY = this.y + Direction8Utils.getY(direction);
+
+			level.entities.updatePosition(this, newX, newY);
+			this.x = newX;
+			this.y = newY;
 
 			if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
 				level.entities.removeEntity(this);

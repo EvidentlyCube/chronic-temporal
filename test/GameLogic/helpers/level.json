@@ -451,29 +451,109 @@
 		]
 	},
 	"entities": {
-		"_entities": [
-			{
-				"type": 0,
-				"x": 0,
-				"y": 0,
-				"isPlayerControlled": true,
-				"movesQueue": {
-					"_position": 0,
-					"_actionSequence": []
-				}
-			},
-			{
-				"type": 0,
-				"x": 0,
-				"y": 0,
-				"isPlayerControlled": false,
-				"movesQueue": {
-					"_position": 1,
-					"_actionSequence": [
-						0
-					]
-				}
-			}
-		]
+		"_entities": {
+			"_gridWidth": 20,
+			"_gridHeight": 20,
+			"_bucketWidth": 3,
+			"_bucketHeight": 3,
+			"_config": {},
+			"_size": 2,
+			"_buckets": [
+				[
+					[
+						{
+							"x": 0,
+							"y": 0,
+							"value": {
+								"type": 0,
+								"x": 0,
+								"y": 0,
+								"isPlayerControlled": true,
+								"movesQueue": {
+									"_position": 0,
+									"_actionSequence": []
+								}
+							}
+						},
+						{
+							"x": 0,
+							"y": 0,
+							"value": {
+								"type": 0,
+								"x": 0,
+								"y": 0,
+								"isPlayerControlled": false,
+								"movesQueue": {
+									"_position": 1,
+									"_actionSequence": [
+										0
+									]
+								}
+							}
+						}
+					],
+					[],
+					[],
+					[],
+					[],
+					[],
+					[]
+				],
+				[
+					[],
+					[],
+					[],
+					[],
+					[],
+					[],
+					[]
+				],
+				[
+					[],
+					[],
+					[],
+					[],
+					[],
+					[],
+					[]
+				],
+				[
+					[],
+					[],
+					[],
+					[],
+					[],
+					[],
+					[]
+				],
+				[
+					[],
+					[],
+					[],
+					[],
+					[],
+					[],
+					[]
+				],
+				[
+					[],
+					[],
+					[],
+					[],
+					[],
+					[],
+					[]
+				],
+				[
+					[],
+					[],
+					[],
+					[],
+					[],
+					[],
+					[]
+				]
+			]
+		}
 	}
 }

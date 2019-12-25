@@ -40,11 +40,14 @@ export class Protagonist implements Entity {
 		const direction = PlayerActionUtils.actionToDirection(action);
 
 		if (this.isMoveAllowed(level, direction)) {
-			this.x += Direction8Utils.getX(direction);
-			this.y += Direction8Utils.getY(direction);
+			const newX = this.x + Direction8Utils.getX(direction);
+			const newY = this.y + Direction8Utils.getY(direction);
+
+			level.entities.updatePosition(this, newX, newY);
+			this.x = newX;
+			this.y = newY;
 
 			const entities = level.entities.getEntitiesAt(this.x, this.y);
-
 			const pushables = entities.filter(entity => entity.type === EntityType.Pushable) as Pushable[];
 			pushables.forEach(p => p.push(level, direction));
 

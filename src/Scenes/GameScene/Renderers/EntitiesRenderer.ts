@@ -31,7 +31,7 @@ export class EntitiesRenderer extends PIXI.Sprite {
 			sprite.y = entity.y * Constants.TileHeight;
 		});
 
-		while (level.entities.length < this._entities.length) {
+		while (level.entities.size < this._entities.length) {
 			this._entities.pop()?.destroy();
 		}
 	}
