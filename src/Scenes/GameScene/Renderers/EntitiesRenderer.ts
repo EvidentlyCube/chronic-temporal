@@ -36,6 +36,10 @@ export class EntitiesRenderer extends PIXI.Sprite {
 			this._entities.push(sprite);
 			this.addChild(sprite);
 		});
+
+		while (level.entities.size < this._entities.length) {
+			this._entities.pop()?.destroy();
+		}
 	}
 
 	private getEntitySprite(entity: Entity): EntitySprite {

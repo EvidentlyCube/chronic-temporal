@@ -26,7 +26,7 @@ describe('GameLogic.Level', () => {
 	it('Level has not had new properties added', () => {
 		const level = createTestLevel(levelConfig);
 
-		// console.log(JSON.stringify(level));
+		console.log(JSON.stringify(level));
 		assertDeepJsonEqual(level, levelJson, 'Level has changed, make sure to update the clone method and tests!');
 	});
 
