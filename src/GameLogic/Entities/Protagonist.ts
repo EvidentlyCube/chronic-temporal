@@ -13,6 +13,10 @@ export class Protagonist implements Entity {
 
 	public y: number;
 
+	public prevX: number;
+
+	public prevY: number;
+
 	public isPlayerControlled: boolean;
 
 	public movesQueue: ActionSequence;
@@ -21,6 +25,8 @@ export class Protagonist implements Entity {
 		this.type = EntityType.Protagonist;
 		this.x = 0;
 		this.y = 0;
+		this.prevX = 0;
+		this.prevY = 0;
 		this.isPlayerControlled = isPlayerControlled;
 		if (isPlayerControlled) {
 			this.movesQueue = new ActionSequence();
@@ -66,6 +72,8 @@ export class Protagonist implements Entity {
 		const clone = new Protagonist(this.isPlayerControlled, this.movesQueue.copy());
 		clone.x = this.x;
 		clone.y = this.y;
+		clone.prevX = this.prevX;
+		clone.prevY = this.prevY;
 		return clone;
 	}
 

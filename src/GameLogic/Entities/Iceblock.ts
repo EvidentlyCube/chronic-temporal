@@ -11,6 +11,10 @@ export class Iceblock implements Entity {
 
 	public y: number;
 
+	public prevX: number;
+
+	public prevY: number;
+
 	public direction: Direction8;
 
 	public containedEntity: Entity;
@@ -23,6 +27,8 @@ export class Iceblock implements Entity {
 		this.type = EntityType.Iceblock;
 		this.x = 0;
 		this.y = 0;
+		this.prevX = 0;
+		this.prevY = 0;
 		this.direction = Direction8.None;
 		this.containedEntity = containedEntity;
 		this.melting = containedEntity.type == EntityType.Fireball;
@@ -55,6 +61,8 @@ export class Iceblock implements Entity {
 		const clone = new Iceblock(this.containedEntity.clone());
 		clone.x = this.x;
 		clone.y = this.y;
+		clone.prevX = this.prevX;
+		clone.prevY = this.prevY;
 		clone.direction = this.direction;
 		clone.melting = this.melting;
 		clone.justPushed = this.justPushed;

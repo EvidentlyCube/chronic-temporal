@@ -29,6 +29,8 @@ export class LevelSerializer {
 		const base: any = {
 			x: entity.x,
 			y: entity.y,
+			prevX: entity.prevX,
+			prevY: entity.prevY,
 			type: entity.type,
 		};
 

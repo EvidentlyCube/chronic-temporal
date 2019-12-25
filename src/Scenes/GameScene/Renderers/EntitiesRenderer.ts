@@ -1,14 +1,18 @@
 import * as PIXI from 'pixi.js';
 import {Level} from '../../../GameLogic/Level';
 import {GfxConstants} from '../../../Core/Constants/GfxConstants';
-import Constants from '../../../Core/Constants';
 import {EntityType} from '../../../GameLogic/Enums';
 import {TextureStore} from 'evidently-pixi';
+import {EntitySprite} from './Entities/EntitySprite';
+import {SingleTextureEntitySprite} from './Entities/SingleTextureEntitySprite';
+import {Entity} from '../../../GameLogic/Entity';
+import {IceblockEntitySprite} from './Entities/IceblockEntitySprite';
+import {Iceblock} from '../../../GameLogic/Entities/Iceblock';
 
 export class EntitiesRenderer extends PIXI.Sprite {
 	private readonly _textureStore: TextureStore;
 
-	private readonly _entities: PIXI.Sprite[];
+	private readonly _entities: EntitySprite[];
 
 	constructor(textureStore: TextureStore) {
 		super();
@@ -17,41 +21,39 @@ export class EntitiesRenderer extends PIXI.Sprite {
 		this._entities = [];
 	}
 
-	public sync(level: Level): void {
-		level.entities.entities.forEach((entity, index) => {
-			const sprite = this._entities[index] ?? new PIXI.Sprite();
-			sprite.texture = this.getTypeTexture(entity.type);
-
-			if (!sprite.parent) {
-				this._entities[index] = sprite;
-				this.addChild(sprite);
-			}
-
-			sprite.x = entity.x * Constants.TileWidth;
-			sprite.y = entity.y * Constants.TileHeight;
-		});
-
-		while (level.entities.size < this._entities.length) {
-			this._entities.pop()?.destroy();
-		}
+	public update(timePassed: number): void {
+		this._entities.forEach(entity => entity.update(timePassed));
 	}
 
-	private getTypeTexture(entityType: EntityType): PIXI.Texture {
-		switch (entityType) {
+	public sync(level: Level): void {
+		this.removeChildren();
+		this._entities.forEach(entity => entity.release());
+		this._entities.length = 0;
+
+		level.entities.entities.forEach(entity => {
+			const sprite = this.getEntitySprite(entity);
+
+			this._entities.push(sprite);
+			this.addChild(sprite);
+		});
+	}
+
+	private getEntitySprite(entity: Entity): EntitySprite {
+		switch (entity.type) {
 			case EntityType.Protagonist:
-				return this._textureStore.getTile(GfxConstants.InitialTileset, 1, 0);
+				return SingleTextureEntitySprite.getOne(entity, this._textureStore.getTile(GfxConstants.InitialTileset, 1, 0));
 
 			case EntityType.Pushable:
-				return this._textureStore.getTile(GfxConstants.InitialTileset, 7, 5);
+				return SingleTextureEntitySprite.getOne(entity, this._textureStore.getTile(GfxConstants.InitialTileset, 7, 5));
 
 			case EntityType.Fireball:
-				return this._textureStore.getTile(GfxConstants.InitialTileset, 7, 0);
+				return SingleTextureEntitySprite.getOne(entity, this._textureStore.getTile(GfxConstants.InitialTileset, 7, 0));
 
 			case EntityType.Iceblock:
-				return this._textureStore.getTile(GfxConstants.InitialTileset, 6, 3);
+				return IceblockEntitySprite.getOne(entity as Iceblock, this._textureStore);
 
 			default:
-				throw new Error(`Invalid entity type "${entityType}"`);
+				throw new Error(`Invalid entity type "${entity.type}"`);
 		}
 	}
 }

@@ -28,6 +28,7 @@ export class LevelRenderer extends PIXI.Sprite {
 	}
 
 	public update(timePassed: number): void {
+		this._entitiesRenderer.update(timePassed);
 		this._effectsRenderer.update(timePassed);
 	}
 

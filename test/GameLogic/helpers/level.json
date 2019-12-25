@@ -468,6 +468,8 @@
 								"type": 0,
 								"x": 0,
 								"y": 0,
+								"prevX": 0,
+								"prevY": 0,
 								"isPlayerControlled": true,
 								"movesQueue": {
 									"_position": 0,
@@ -482,6 +484,8 @@
 								"type": 0,
 								"x": 0,
 								"y": 0,
+								"prevX": 0,
+								"prevY": 0,
 								"isPlayerControlled": false,
 								"movesQueue": {
 									"_position": 1,
