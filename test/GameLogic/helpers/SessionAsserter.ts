@@ -23,7 +23,11 @@ export class SessionAsserter {
 	}
 
 	public assertEntityCount(entityType: EntityType, expectedCount: number): SessionAsserter {
-		assert.lengthOf(this._session.level.entities.getEntitiesOfType(entityType), expectedCount, `Expected to find '${expectedCount}' entities of type '${entityType}'`);
+		assert.lengthOf(
+			this._session.level.entities.getEntitiesOfType(entityType),
+			expectedCount,
+			`Expected to find '${expectedCount}' entities of type '${entityType}'`
+		);
 
 		return this;
 	}

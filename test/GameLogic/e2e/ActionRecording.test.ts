@@ -1,6 +1,5 @@
 import 'mocha';
 import {assert} from 'chai';
-import {SessionPlayer} from '../helpers/SessionPlayer';
 import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
 import {FloorType, PlayerAction} from '../../../src/GameLogic/Enums';
 

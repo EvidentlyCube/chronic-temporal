@@ -3,7 +3,6 @@ import {LevelRenderer} from './LevelRenderer';
 import {GameSession} from '../../../GameLogic/GameSession';
 import Constants from '../../../Core/Constants';
 import {TextureStore} from 'evidently-pixi';
-import {Level} from '../../../GameLogic/Level';
 import {TurnState} from '../../../GameLogic/TurnState';
 
 export class SessionRenderer extends PIXI.Sprite {
