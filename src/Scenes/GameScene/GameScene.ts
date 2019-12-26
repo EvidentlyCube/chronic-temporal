@@ -33,7 +33,7 @@ export class GameScene implements Scene {
 		this._layer.addChild(this.sessionRenderer);
 		this._layer.addChild(this._viewManager);
 
-		this.sessionRenderer.sync(this._session.level, new TurnState(this._session.level));
+		this.sessionRenderer.sync(new TurnState(this._session.level));
 	}
 
 	public onStarted(): void {
@@ -49,7 +49,7 @@ export class GameScene implements Scene {
 
 		this.sessionRenderer.update(timePassed);
 		if (this._sessionController.lastTurnState) {
-			this.sessionRenderer.sync(this._session.level, this._sessionController.lastTurnState);
+			this.sessionRenderer.sync(this._sessionController.lastTurnState);
 			this._sessionController.lastTurnState = undefined;
 		}
 	}

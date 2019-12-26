@@ -30,7 +30,7 @@ export class SessionRenderer extends PIXI.Sprite {
 		this._levelRenderer.y = (Constants.VirtualHeight - this._levelRenderer.getLocalBounds().height) / 2 | 0;
 	}
 
-	public sync(level: Level, turnState: TurnState): void {
-		this._levelRenderer.sync(level, turnState);
+	public sync(turnState: TurnState): void {
+		this._levelRenderer.sync(turnState);
 	}
 }
