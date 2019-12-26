@@ -1,5 +1,5 @@
 import {Level} from '../GameLogic/Level';
-import {FloorType} from '../GameLogic/Enums';
+import {FloorType} from '../GameLogic/Enums/FloorType';
 import {GameSession} from '../GameLogic/GameSession';
 import {GameScene} from './GameScene/GameScene';
 import {Pushable} from '../GameLogic/Entities/Pushable';

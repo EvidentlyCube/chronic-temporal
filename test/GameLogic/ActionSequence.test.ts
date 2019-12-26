@@ -1,6 +1,6 @@
 import 'mocha';
 import {assert} from 'chai';
-import {PlayerAction} from '../../src/GameLogic/Enums';
+import {PlayerAction} from '../../src/GameLogic/Enums/PlayerAction';
 import {ActionSequence} from '../../src/GameLogic/DataStructures/ActionSequence';
 
 describe('GameLogic.DataStructures.ActionSequence', () => {

@@ -1,5 +1,6 @@
 import {Entity} from '../Entity';
-import {EntityType, FloorType} from '../Enums';
+import {EntityType} from '../Enums/EntityType';
+import {FloorType} from '../Enums/FloorType';
 import {Direction8, Direction8Utils} from '../Enums/Direction8';
 import {Level} from '../Level';
 import {Fireball} from './Fireball';

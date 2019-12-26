@@ -1,4 +1,4 @@
-import {PlayerAction} from './Enums';
+import {PlayerAction} from './Enums/PlayerAction';
 import {ActionSequence} from './DataStructures/ActionSequence';
 
 export class ActionRecorder {

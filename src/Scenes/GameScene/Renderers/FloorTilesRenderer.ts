@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import {Level} from '../../../GameLogic/Level';
-import {FloorType} from '../../../GameLogic/Enums';
+import {FloorType} from '../../../GameLogic/Enums/FloorType';
 import {GfxConstants} from '../../../Core/Constants/GfxConstants';
 import Constants from '../../../Core/Constants';
 import {Grid2D} from 'evidently-data-structures';

@@ -1,6 +1,8 @@
 import 'mocha';
 import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
-import {EntityType, FloorType, PlayerAction, PlayerActionUtils} from '../../../src/GameLogic/Enums';
+import {EntityType} from '../../../src/GameLogic/Enums/EntityType';
+import {FloorType} from '../../../src/GameLogic/Enums/FloorType';
+import {PlayerAction, PlayerActionUtils} from '../../../src/GameLogic/Enums/PlayerAction';
 import {Pushable} from '../../../src/GameLogic/Entities/Pushable';
 import {Direction8, Direction8Utils} from '../../../src/GameLogic/Enums/Direction8';
 import {Fireball} from '../../../src/GameLogic/Entities/Fireball';

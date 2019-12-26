@@ -1,5 +1,5 @@
 import {GameSession} from '../../../src/GameLogic/GameSession';
-import {EntityType} from '../../../src/GameLogic/Enums';
+import {EntityType} from '../../../src/GameLogic/Enums/EntityType';
 import {assert} from 'chai';
 import {Level} from '../../../src/GameLogic/Level';
 import {TurnState} from '../../../src/GameLogic/TurnState';

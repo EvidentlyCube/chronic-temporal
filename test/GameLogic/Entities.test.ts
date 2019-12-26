@@ -1,6 +1,6 @@
 import 'mocha';
 import {assert} from 'chai';
-import {EntityType} from '../../src/GameLogic/Enums';
+import {EntityType} from '../../src/GameLogic/Enums/EntityType';
 import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
 import {Entities} from '../../src/GameLogic/DataStructures/Entities';
 import {Fireball} from '../../src/GameLogic/Entities/Fireball';

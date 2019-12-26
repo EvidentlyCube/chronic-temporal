@@ -1,5 +1,7 @@
 import {Level} from '../../../src/GameLogic/Level';
-import {EntityType, FloorType, PlayerAction} from '../../../src/GameLogic/Enums';
+import {EntityType} from '../../../src/GameLogic/Enums/EntityType';
+import {FloorType} from '../../../src/GameLogic/Enums/FloorType';
+import {PlayerAction} from '../../../src/GameLogic/Enums/PlayerAction';
 import {Protagonist} from '../../../src/GameLogic/Entities/Protagonist';
 import {ActionSequence} from '../../../src/GameLogic/DataStructures/ActionSequence';
 import {Entity} from '../../../src/GameLogic/Entity';

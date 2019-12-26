@@ -3,7 +3,9 @@ import {assert} from 'chai';
 import {ActionSequence} from '../../src/GameLogic/DataStructures/ActionSequence';
 import {GameSession} from '../../src/GameLogic/GameSession';
 import {Level, LevelConfig} from '../../src/GameLogic/Level';
-import {EntityType, PlayerAction, FloorType} from '../../src/GameLogic/Enums';
+import {EntityType} from '../../src/GameLogic/Enums/EntityType';
+import {PlayerAction} from '../../src/GameLogic/Enums/PlayerAction';
+import {FloorType} from '../../src/GameLogic/Enums/FloorType';
 import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
 import {assertDeepJsonEqual} from '../helpers/assertDeepJsonEqual';
 
