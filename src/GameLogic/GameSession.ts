@@ -5,6 +5,7 @@ import {PlayerAction} from './Enums';
 import {Protagonist} from './Entities/Protagonist';
 import {ActionRecorder} from './ActionRecorder';
 import {ActionSequence} from './DataStructures/ActionSequence';
+import {TurnState} from './TurnState';
 
 export interface GameSessionConfig {
 	recordings?: ActionSequence[];
@@ -67,7 +68,7 @@ export class GameSession {
 		this._recordings.forEach(recording => this._addProtagonist(false, recording));
 	}
 
-	public runTurn(playerInput: PlayerAction): void {
+	public runTurn(playerInput: PlayerAction): TurnState {
 		if (!this.level) {
 			throw new Error('Tried to runTurn on a session that does not have a level attached');
 		}
@@ -80,7 +81,7 @@ export class GameSession {
 			@todo figure out if we pass the input to TurnRunner and it knows which entity is the protagonist or we set the
 				  next move on the protagonist here, then just run the turn
 		 */
-		this.turnRunner.runTurn(playerInput, this.level);
+		return this.turnRunner.runTurn(playerInput, this.level);
 	}
 
 	private _addProtagonist(isPlayerControlled: boolean, movesQueue: ActionSequence = new ActionSequence()): void {

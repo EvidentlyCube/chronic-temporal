@@ -1,5 +1,5 @@
 import {EntityType} from './Enums';
-import {Level} from './Level';
+import {TurnState} from './TurnState';
 
 export interface Entity {
 	readonly type: EntityType;
@@ -8,6 +8,6 @@ export interface Entity {
 	prevX: number;
 	prevY: number;
 
-	update(level: Level): void;
+	update(turnState: TurnState): void;
 	clone(): Entity;
 }

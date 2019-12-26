@@ -5,6 +5,8 @@ import {Direction8, Direction8Utils} from '../Enums/Direction8';
 import {Level} from '../Level';
 import {Pushable} from './Pushable';
 import {Iceblock} from './Iceblock';
+import {TurnState} from '../TurnState';
+import {TurnEventType} from '../Enums/TurnEventType';
 
 export class Protagonist implements Entity {
 	public readonly type: EntityType;
@@ -35,7 +37,8 @@ export class Protagonist implements Entity {
 		}
 	}
 
-	public update(level: Level): void {
+	public update(turnState: TurnState): void {
+		const {level} = turnState;
 		const action = this.movesQueue.getNext();
 
 		if (action === undefined) {
@@ -53,18 +56,18 @@ export class Protagonist implements Entity {
 
 			const entities = level.entities.getEntitiesAt(this.x, this.y);
 			const pushables = entities.filter(entity => entity.type === EntityType.Pushable) as Pushable[];
-			pushables.forEach(p => p.push(level, direction));
+			pushables.forEach(p => p.push(turnState, direction));
 
 			const iceblocks = entities.filter(entity => entity.type === EntityType.Iceblock) as Iceblock[];
-			iceblocks.forEach(i => i.push(level, direction));
+			iceblocks.forEach(i => i.push(turnState, direction));
 
 			if (entities.some(entity => entity.type === EntityType.Fireball)) {
-				level.entities.removeEntity(this);
+				turnState.killEntity(this, TurnEventType.EntityKilled);
 			}
 		}
 
 		if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
-			level.entities.removeEntity(this);
+			turnState.killEntity(this, TurnEventType.EntityDrowned);
 		}
 	}
 

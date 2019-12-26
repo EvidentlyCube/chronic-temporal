@@ -3,6 +3,8 @@ import {EntityType, FloorType} from '../Enums';
 import {Direction8, Direction8Utils} from '../Enums/Direction8';
 import {Level} from '../Level';
 import {Fireball} from './Fireball';
+import {TurnState} from '../TurnState';
+import {TurnEventType} from '../Enums/TurnEventType';
 
 export class Pushable implements Entity {
 	public readonly type: EntityType;
@@ -62,20 +64,22 @@ export class Pushable implements Entity {
 		return true;
 	}
 
-	public push(level: Level, direction: Direction8): void {
+	public push(turnState: TurnState, direction: Direction8): void {
+		const {level} = turnState;
+
 		if (this.isMoveAllowed(level, direction)) {
 			const newX = this.x + Direction8Utils.getX(direction);
 			const newY = this.y + Direction8Utils.getY(direction);
 
 			level.entities.updatePosition(this, newX, newY);
 
-			if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
-				level.entities.removeEntity(this);
-			}
-
 			const entities = level.entities.getEntitiesAt(this.x, this.y);
 			const fireballs = entities.filter(entity => entity.type === EntityType.Fireball) as Fireball[];
-			fireballs.forEach(f => level.entities.removeEntity(f));
+			fireballs.forEach(f => turnState.killEntity(f, TurnEventType.EntityKilled));
+
+			if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
+				turnState.killEntity(this, TurnEventType.EntityDrowned);
+			}
 		}
 	}
 }

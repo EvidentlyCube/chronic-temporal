@@ -4,6 +4,7 @@ import {FloorTilesRenderer} from './FloorTilesRenderer';
 import {EntitiesRenderer} from './EntitiesRenderer';
 import {TextureStore} from 'evidently-pixi';
 import {EffectsRenderer} from './EffectsRenderer';
+import {TurnState} from '../../../GameLogic/TurnState';
 
 export class LevelRenderer extends PIXI.Sprite {
 	private readonly _textureStore: TextureStore;
@@ -32,9 +33,9 @@ export class LevelRenderer extends PIXI.Sprite {
 		this._effectsRenderer.update(timePassed);
 	}
 
-	public sync(level: Level): void {
-		this._floorTilesRenderer.sync(level);
-		this._entitiesRenderer.sync(level);
-		this._effectsRenderer.sync(level);
+	public sync(turnState: TurnState): void {
+		this._floorTilesRenderer.sync(turnState.level);
+		this._entitiesRenderer.sync(turnState.level);
+		this._effectsRenderer.sync(turnState);
 	}
 }
