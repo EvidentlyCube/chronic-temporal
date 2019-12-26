@@ -25,8 +25,8 @@ export class Entities {
 		return this._entities.filter(entity => entity.type === type) as T[];
 	}
 
-	public getFirstEntityOfType(type: EntityType): Entity | undefined {
-		return this._entities.find(entity => entity.type === type);
+	public getFirstEntityOfType<T extends Entity>(type: EntityType): T | undefined {
+		return this._entities.find(entity => entity.type === type) as T;
 	}
 
 	public getEntitiesAt(x: number, y: number): Entity[] {

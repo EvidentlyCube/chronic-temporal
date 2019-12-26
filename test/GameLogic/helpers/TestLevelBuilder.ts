@@ -19,8 +19,11 @@ export class TestLevelBuilder {
 		return this;
 	}
 
-	public addEntity(entity: Entity): TestLevelBuilder {
+	public addEntity(entity: Entity, x: number, y: number): TestLevelBuilder {
 		this._level.entities.addEntity(entity);
+
+		entity.x = x;
+		entity.y = y;
 
 		return this;
 	}
