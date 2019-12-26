@@ -15,7 +15,7 @@ export class TurnRunner {
 
 	public runTurn(playerInput: PlayerAction, level: Level): TurnState {
 		const turnState = new TurnState(level);
-		turnState.addEvent(TurnEventType.TurnPassed);
+		turnState.addEvent(TurnEventType.TurnExecuted);
 
 		const player = level.entities.getPlayer();
 

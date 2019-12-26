@@ -27,7 +27,7 @@ export class EntitiesRenderer extends PIXI.Sprite {
 	public sync(turnState: TurnState): void {
 		const {level} = turnState;
 
-		if (turnState.hasEvent(TurnEventType.TurnPassed) || turnState.hasEvent(TurnEventType.LevelLoaded)) {
+		if (turnState.hasEvent(TurnEventType.TurnExecuted) || turnState.hasEvent(TurnEventType.LevelLoaded)) {
 			this.removeChildren();
 			this._entitiesMap.forEach(entity => entity.release());
 			this._entitiesMap.clear();

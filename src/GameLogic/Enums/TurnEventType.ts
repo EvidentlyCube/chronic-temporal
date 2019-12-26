@@ -5,7 +5,7 @@ export enum TurnEventType {
 	EntityKilled = 1, // data: Entity
 	EntityDrowned = 2, // data: Entity
 
-	TurnPassed = 20, // data: undefined
+	TurnExecuted = 20, // data: undefined
 	LevelLoaded = 21, // data: undefined
 	TileChanged = 22, // data: [number, number] (x and y coordinate)
 }
