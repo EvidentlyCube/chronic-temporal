@@ -1,5 +1,6 @@
 import {Level, LevelConfig} from '../../../src/GameLogic/Level';
-import {FloorType, PlayerAction} from '../../../src/GameLogic/Enums';
+import {FloorType} from '../../../src/GameLogic/Enums/FloorType';
+import {PlayerAction} from '../../../src/GameLogic/Enums/PlayerAction';
 import {Entity} from '../../../src/GameLogic/Entity';
 import {SessionAsserter} from './SessionAsserter';
 import {SessionPlayer} from './SessionPlayer';

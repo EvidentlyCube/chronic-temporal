@@ -1,5 +1,5 @@
-import {Direction8, Direction8Utils} from './Enums/Direction8';
-import {Hashmap} from '../GenericInterfaces';
+import {Hashmap} from '../../GenericInterfaces';
+import {Direction8, Direction8Utils} from './Direction8';
 
 export enum PlayerAction {
 	MoveUpLeft = 0,
@@ -11,19 +11,6 @@ export enum PlayerAction {
 	MoveDownLeft = 6,
 	MoveDown = 7,
 	MoveDownRight = 8
-}
-
-export enum EntityType {
-	Protagonist = 0,
-	Pushable = 1,
-	Fireball = 2,
-	Iceblock = 3
-}
-
-export enum FloorType {
-	FloorTile = 0,
-	Wall = 1,
-	Water = 2
 }
 
 const directionToActionMap: Hashmap<PlayerAction> = {};

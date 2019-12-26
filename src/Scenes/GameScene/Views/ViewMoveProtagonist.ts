@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import {GameView, GameViewManager} from './GameViewManager';
-import {PlayerAction} from '../../../GameLogic/Enums';
+import {PlayerAction} from '../../../GameLogic/Enums/PlayerAction';
 import {SessionController} from '../SessionController';
 import {PlayerInputManager} from '../PlayerInputManager';
 

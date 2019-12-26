@@ -3,7 +3,7 @@ import {Effect} from './Effect';
 import {FastPool, Pool} from 'evidently-data-structures';
 import {Protagonist} from '../../../../GameLogic/Entities/Protagonist';
 import Constants from '../../../../Core/Constants';
-import {PlayerActionUtils} from '../../../../GameLogic/Enums';
+import {PlayerActionUtils} from '../../../../GameLogic/Enums/PlayerAction';
 import {Direction8Utils} from '../../../../GameLogic/Enums/Direction8';
 import {GfxConstants} from '../../../../Core/Constants/GfxConstants';
 import {TextureStore} from 'evidently-pixi';

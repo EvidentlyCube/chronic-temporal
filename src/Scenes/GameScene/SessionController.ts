@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 
 import {GameScene} from './GameScene';
-import {PlayerAction} from '../../GameLogic/Enums';
+import {PlayerAction} from '../../GameLogic/Enums/PlayerAction';
 import {GameSession} from '../../GameLogic/GameSession';
 import {ActionSequence} from '../../GameLogic/DataStructures/ActionSequence';
 import {SessionRenderer} from './Renderers/SessionRenderer';

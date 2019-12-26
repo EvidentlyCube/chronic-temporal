@@ -1,6 +1,6 @@
 import {Entity} from '../../../../GameLogic/Entity';
 import {EntitySprite} from './EntitySprite';
-import {EntityType} from '../../../../GameLogic/Enums';
+import {EntityType} from '../../../../GameLogic/Enums/EntityType';
 import {SingleTextureEntitySprite} from './SingleTextureEntitySprite';
 import {GfxConstants} from '../../../../Core/Constants/GfxConstants';
 import {IceblockEntitySprite} from './IceblockEntitySprite';

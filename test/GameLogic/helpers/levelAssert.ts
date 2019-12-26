@@ -1,5 +1,5 @@
 import {assert} from 'chai';
-import {EntityType} from '../../../src/GameLogic/Enums';
+import {EntityType} from '../../../src/GameLogic/Enums/EntityType';
 import {Level} from '../../../src/GameLogic/Level';
 
 export const levelAssert = {

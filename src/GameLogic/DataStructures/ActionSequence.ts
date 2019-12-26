@@ -1,4 +1,4 @@
-import {PlayerAction} from '../Enums';
+import {PlayerAction} from '../Enums/PlayerAction';
 
 export class ActionSequence {
 	private readonly _actionSequence: PlayerAction[];

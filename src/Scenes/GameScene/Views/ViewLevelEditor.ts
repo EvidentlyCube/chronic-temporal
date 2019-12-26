@@ -4,7 +4,7 @@ import {SessionController} from '../SessionController';
 import * as PIXI from 'pixi.js';
 import {SessionRenderer} from '../Renderers/SessionRenderer';
 import Constants from '../../../Core/Constants';
-import {FloorType} from '../../../GameLogic/Enums';
+import {FloorType} from '../../../GameLogic/Enums/FloorType';
 
 export class ViewLevelEditor extends PIXI.Container implements GameView {
 	private readonly _stateMachine: GameViewManager;

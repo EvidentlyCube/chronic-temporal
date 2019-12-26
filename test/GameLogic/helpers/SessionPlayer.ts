@@ -1,7 +1,7 @@
 import {Level} from '../../../src/GameLogic/Level';
 import {TestLevelBuilder} from './TestLevelBuilder';
 import {GameSession} from '../../../src/GameLogic/GameSession';
-import {PlayerAction} from '../../../src/GameLogic/Enums';
+import {PlayerAction} from '../../../src/GameLogic/Enums/PlayerAction';
 import {Hashmap} from '../../../src/GenericInterfaces';
 import {TurnState} from '../../../src/GameLogic/TurnState';
 

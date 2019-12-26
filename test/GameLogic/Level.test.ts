@@ -1,7 +1,8 @@
 import 'mocha';
 import {assert} from 'chai';
 import {Level, LevelConfig} from '../../src/GameLogic/Level';
-import {FloorType, PlayerAction} from '../../src/GameLogic/Enums';
+import {FloorType} from '../../src/GameLogic/Enums/FloorType';
+import {PlayerAction} from '../../src/GameLogic/Enums/PlayerAction';
 import {Protagonist} from '../../src/GameLogic/Entities/Protagonist';
 import {ActionSequence} from '../../src/GameLogic/DataStructures/ActionSequence';
 import * as levelJson from './helpers/level.json';

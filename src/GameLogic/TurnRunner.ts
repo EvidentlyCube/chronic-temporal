@@ -1,5 +1,6 @@
 import {GameSession} from './GameSession';
-import {PlayerAction, EntityType} from './Enums';
+import {PlayerAction} from './Enums/PlayerAction';
+import {EntityType} from './Enums/EntityType';
 import {Level} from './Level';
 import {Entity} from './Entity';
 import {TurnState} from './TurnState';

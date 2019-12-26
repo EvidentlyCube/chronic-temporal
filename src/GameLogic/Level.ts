@@ -1,5 +1,5 @@
 import {Entities} from './DataStructures/Entities';
-import {FloorType} from './Enums';
+import {FloorType} from './Enums/FloorType';
 import {Grid2D} from 'evidently-data-structures';
 
 export interface LevelConfig {

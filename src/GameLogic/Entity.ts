@@ -1,4 +1,4 @@
-import {EntityType} from './Enums';
+import {EntityType} from './Enums/EntityType';
 import {TurnState} from './TurnState';
 
 export interface Entity {

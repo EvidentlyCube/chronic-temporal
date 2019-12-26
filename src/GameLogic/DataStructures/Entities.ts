@@ -1,4 +1,4 @@
-import {EntityType} from '../Enums';
+import {EntityType} from '../Enums/EntityType';
 import {Entity} from '../Entity';
 import {Protagonist} from '../Entities/Protagonist';
 import {SpatialGrid2D} from 'evidently-data-structures';

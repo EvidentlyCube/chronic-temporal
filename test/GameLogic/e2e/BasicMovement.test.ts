@@ -1,6 +1,7 @@
 import 'mocha';
 import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
-import {EntityType, PlayerAction, PlayerActionUtils} from '../../../src/GameLogic/Enums';
+import {EntityType} from '../../../src/GameLogic/Enums/EntityType';
+import {PlayerAction, PlayerActionUtils} from '../../../src/GameLogic/Enums/PlayerAction';
 import {Direction8Utils} from '../../../src/GameLogic/Enums/Direction8';
 
 const {getX, getY} = Direction8Utils;

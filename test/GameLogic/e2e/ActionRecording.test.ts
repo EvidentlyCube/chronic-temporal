@@ -1,7 +1,8 @@
 import 'mocha';
 import {assert} from 'chai';
 import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
-import {FloorType, PlayerAction} from '../../../src/GameLogic/Enums';
+import {FloorType} from '../../../src/GameLogic/Enums/FloorType';
+import {PlayerAction} from '../../../src/GameLogic/Enums/PlayerAction';
 
 describe('GameLogic.e2e - action recording', () => {
 	it('Recording should return correct move sequence when recording ends', () => {

@@ -1,6 +1,6 @@
 import {Level} from '../Level';
 import {Entity} from '../Entity';
-import {EntityType} from '../Enums';
+import {EntityType} from '../Enums/EntityType';
 import {Protagonist} from '../Entities/Protagonist';
 import {ActionSequence} from '../DataStructures/ActionSequence';
 import {Pushable} from '../Entities/Pushable';
