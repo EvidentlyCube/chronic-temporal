@@ -52,7 +52,7 @@ export class LevelSerializer {
 			case EntityType.Iceblock:
 				const iceblock = entity as Iceblock;
 				base.direction = iceblock.direction;
-				base.containedEntity = LevelSerializer.serializeEntity(iceblock.containedEntity);
+				base.containedEntity = iceblock.containedEntity === undefined ? undefined : LevelSerializer.serializeEntity(iceblock.containedEntity);
 				base.melting = iceblock.melting;
 				base.justPushed = iceblock.justPushed;
 				return base;

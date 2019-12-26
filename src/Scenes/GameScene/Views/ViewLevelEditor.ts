@@ -45,10 +45,7 @@ export class ViewLevelEditor extends PIXI.Container implements GameView {
 		this._levelLayer.scale.y = this._sessionRenderer.levelRenderer.scale.y;
 
 		const hoveredTilePosition = controller.getTileUnderMouse();
-		const isInBounds = hoveredTilePosition.x >= 0 &&
-			hoveredTilePosition.y >= 0 &&
-			hoveredTilePosition.x < controller.currentLevel.width &&
-			hoveredTilePosition.y < controller.currentLevel.height;
+		const isInBounds = controller.currentLevel.isInBounds(hoveredTilePosition.x, hoveredTilePosition.y);
 
 		this._selectedTileHighlight.x = hoveredTilePosition.x * Constants.TileWidth;
 		this._selectedTileHighlight.y = hoveredTilePosition.y * Constants.TileHeight;

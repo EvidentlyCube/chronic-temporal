@@ -55,4 +55,22 @@ describe('GameLogic.Level', () => {
 			}
 		});
 	});
+
+	describe('isInBounds', () => {
+		it('Returns true when inputs are in bounds.', () => {
+			const level = new Level(levelConfig);
+
+			assert.isTrue(level.isInBounds(0, 19));
+			assert.isTrue(level.isInBounds(19, 0));
+		});
+
+		it('Returns false when an input is out of bounds.', () => {
+			const level = new Level(levelConfig);
+
+			assert.isFalse(level.isInBounds(-1, 10));
+			assert.isFalse(level.isInBounds(10, -1));
+			assert.isFalse(level.isInBounds(20, 10));
+			assert.isFalse(level.isInBounds(10, 20));
+		});
+	});
 });

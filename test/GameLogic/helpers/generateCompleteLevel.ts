@@ -40,6 +40,7 @@ function addEveryEntity(level: Level): void {
 				break;
 
 			case EntityType.Iceblock:
+				insertEntity(level, new Iceblock());
 				insertEntity(level, new Iceblock(new Pushable()));
 				insertEntity(level, new Iceblock(new Protagonist(false, new ActionSequence([PlayerAction.MoveDown, PlayerAction.MoveUpLeft], 1))));
 				break;

@@ -19,13 +19,13 @@ export class Iceblock implements Entity {
 
 	public direction: Direction8;
 
-	public containedEntity: Entity;
+	public containedEntity: Entity | undefined;
 
 	public melting: boolean;
 
 	public justPushed: boolean;
 
-	constructor(containedEntity: Entity) {
+	constructor(containedEntity: Entity | undefined = undefined) {
 		this.type = EntityType.Iceblock;
 		this.x = 0;
 		this.y = 0;
@@ -33,7 +33,9 @@ export class Iceblock implements Entity {
 		this.prevY = 0;
 		this.direction = Direction8.None;
 		this.containedEntity = containedEntity;
-		this.melting = containedEntity.type == EntityType.Fireball;
+		this.melting = containedEntity
+			? containedEntity.type === EntityType.Fireball
+			: false;
 		this.justPushed = false;
 	}
 
@@ -54,18 +56,21 @@ export class Iceblock implements Entity {
 		}
 
 		if (this.melting) {
-			this.containedEntity.x = this.x;
-			this.containedEntity.y = this.y;
-			this.containedEntity.prevX = this.x;
-			this.containedEntity.prevY = this.y;
+			if (this.containedEntity !== undefined) {
+				this.containedEntity.x = this.x;
+				this.containedEntity.y = this.y;
+				this.containedEntity.prevX = this.x;
+				this.containedEntity.prevY = this.y;
 
-			level.entities.addEntity(this.containedEntity);
+				level.entities.addEntity(this.containedEntity);
+				this.containedEntity = undefined;
+			}
 			turnState.killEntity(this, TurnEventType.EntityKilled);
 		}
 	}
 
 	public clone(): Iceblock {
-		const clone = new Iceblock(this.containedEntity.clone());
+		const clone = new Iceblock(this.containedEntity?.clone());
 		clone.x = this.x;
 		clone.y = this.y;
 		clone.prevX = this.prevX;
@@ -80,7 +85,7 @@ export class Iceblock implements Entity {
 		const newX = this.x + Direction8Utils.getX(direction);
 		const newY = this.y + Direction8Utils.getY(direction);
 
-		if (newX < 0 || newY < 0 || newX >= level.width || newY >= level.height) {
+		if (!level.isInBounds(newX, newY)) {
 			return false;
 		}
 

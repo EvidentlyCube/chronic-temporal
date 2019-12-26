@@ -12,7 +12,7 @@ const {getX, getY} = Direction8Utils;
 describe('GameLogic.e2e - Iceblock', () => {
 	it('Iceblock should not move initiially', () => {
 		TestLevelBuilder.newLevel()
-			.addEntity(new Iceblock(new Pushable()), 5, 5)
+			.addEntity(new Iceblock(), 5, 5)
 			.run(PlayerAction.Wait)
 
 			.assertEntityAt(EntityType.Iceblock, 5, 5);
@@ -22,7 +22,7 @@ describe('GameLogic.e2e - Iceblock', () => {
 		it(`Player should push the iceblock into empty floor with move ${PlayerAction[action]} and it should keep moving`, () => {
 			const moveDirection = PlayerActionUtils.actionToDirection(action);
 			TestLevelBuilder.newLevel()
-				.addEntity(new Iceblock(new Pushable()), 10 + getX(moveDirection), 10 + getY(moveDirection))
+				.addEntity(new Iceblock(), 10 + getX(moveDirection), 10 + getY(moveDirection))
 				.run(action, PlayerAction.Wait, PlayerAction.Wait)
 
 				.assertEntityAt(EntityType.Iceblock, 10 + getX(moveDirection) * 4, 10 + getY(moveDirection) * 4);
@@ -37,7 +37,7 @@ describe('GameLogic.e2e - Iceblock', () => {
 			TestLevelBuilder
 				.newLevel()
 				.plotFloor(wallX, wallY, FloorType.Wall)
-				.addEntity(new Iceblock(new Pushable()), iceblockX, iceblockY)
+				.addEntity(new Iceblock(), iceblockX, iceblockY)
 				.run(action)
 
 				.assertEntityAt(EntityType.Protagonist, 10, 10)
@@ -53,7 +53,7 @@ describe('GameLogic.e2e - Iceblock', () => {
 
 			TestLevelBuilder
 				.newLevel()
-				.addEntity(new Iceblock(new Pushable()), iceblockX, iceblockY)
+				.addEntity(new Iceblock(), iceblockX, iceblockY)
 				.addEntity(new Pushable(), pushableX, pushableY)
 				.run(action)
 
@@ -70,8 +70,8 @@ describe('GameLogic.e2e - Iceblock', () => {
 			const iceblock2Y = 10 + Direction8Utils.getY(moveDirection) * 2;
 			TestLevelBuilder
 				.newLevel()
-				.addEntity(new Iceblock(new Pushable()), iceblock1X, iceblock1Y)
-				.addEntity(new Iceblock(new Pushable()), iceblock2X, iceblock2Y)
+				.addEntity(new Iceblock(), iceblock1X, iceblock1Y)
+				.addEntity(new Iceblock(), iceblock2X, iceblock2Y)
 				.run(action)
 
 				.assertEntityAt(EntityType.Protagonist, 10, 10)
@@ -87,7 +87,7 @@ describe('GameLogic.e2e - Iceblock', () => {
 			TestLevelBuilder
 				.newLevel()
 				.plotFloor(wallX, wallY, FloorType.Wall)
-				.addEntity(new Iceblock(new Pushable()), 10 + getX(moveDirection), 10 + getY(moveDirection))
+				.addEntity(new Iceblock(), 10 + getX(moveDirection), 10 + getY(moveDirection))
 				.run(action, PlayerAction.Wait, PlayerAction.Wait, PlayerAction.Wait)
 
 				.assertEntityAt(EntityType.Iceblock, 10 + getX(moveDirection) * 3, 10 + getY(moveDirection) * 3)
@@ -101,7 +101,7 @@ describe('GameLogic.e2e - Iceblock', () => {
 			const moveDirection = PlayerActionUtils.actionToDirection(action);
 			TestLevelBuilder
 				.newLevel()
-				.addEntity(new Iceblock(new Pushable()), 10 + getX(moveDirection), 10 + getY(moveDirection))
+				.addEntity(new Iceblock(), 10 + getX(moveDirection), 10 + getY(moveDirection))
 				.addEntity(new Pushable(), 10 + getX(moveDirection) * 4, 10 + getY(moveDirection) * 4)
 				.run(action, PlayerAction.Wait, PlayerAction.Wait, PlayerAction.Wait)
 
@@ -116,8 +116,8 @@ describe('GameLogic.e2e - Iceblock', () => {
 			const moveDirection = PlayerActionUtils.actionToDirection(action);
 			TestLevelBuilder
 				.newLevel()
-				.addEntity(new Iceblock(new Pushable()), 10 + getX(moveDirection), 10 + getY(moveDirection))
-				.addEntity(new Iceblock(new Pushable()), 10 + getX(moveDirection) * 4, 10 + getY(moveDirection) * 4)
+				.addEntity(new Iceblock(), 10 + getX(moveDirection), 10 + getY(moveDirection))
+				.addEntity(new Iceblock(), 10 + getX(moveDirection) * 4, 10 + getY(moveDirection) * 4)
 				.run(action, PlayerAction.Wait, PlayerAction.Wait, PlayerAction.Wait)
 				.assertEntityAt(EntityType.Iceblock, 10 + getX(moveDirection) * 3, 10 + getY(moveDirection) * 3)
 				.assertLevel(level => {
@@ -144,7 +144,7 @@ describe('GameLogic.e2e - Iceblock', () => {
 			const iceblockX = x + Direction8Utils.getX(moveDirection);
 			const iceblockY = y + Direction8Utils.getY(moveDirection);
 			TestLevelBuilder.newLevel(x, y)
-				.addEntity(new Iceblock(new Pushable()), iceblockX, iceblockY)
+				.addEntity(new Iceblock(), iceblockX, iceblockY)
 				.run(action)
 
 				.assertEntityAt(EntityType.Protagonist, x, y)
@@ -167,7 +167,7 @@ describe('GameLogic.e2e - Iceblock', () => {
 		it(`Iceblock stops moving when it tries to move ${PlayerAction[action]} out of bounds`, () => {
 			const moveDirection = PlayerActionUtils.actionToDirection(action);
 			TestLevelBuilder.newLevel(x, y)
-				.addEntity(new Iceblock(new Pushable()), x + getX(moveDirection), y + getY(moveDirection))
+				.addEntity(new Iceblock(), x + getX(moveDirection), y + getY(moveDirection))
 				.run(action, PlayerAction.Wait, PlayerAction.Wait, PlayerAction.Wait)
 
 				.assertEntityAt(EntityType.Iceblock, expectedX, expectedY)

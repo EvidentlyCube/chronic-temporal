@@ -1,5 +1,4 @@
 import * as PIXI from 'pixi.js';
-import {Level} from '../../../GameLogic/Level';
 import {FloorTilesRenderer} from './FloorTilesRenderer';
 import {EntitiesRenderer} from './EntitiesRenderer';
 import {TextureStore} from 'evidently-pixi';
