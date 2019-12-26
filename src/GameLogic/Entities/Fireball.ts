@@ -12,12 +12,18 @@ export class Fireball implements Entity {
 
 	public y: number;
 
+	public prevX: number;
+
+	public prevY: number;
+
 	public direction: Direction8;
 
 	constructor(direction: Direction8) {
 		this.type = EntityType.Fireball;
 		this.x = 0;
 		this.y = 0;
+		this.prevX = 0;
+		this.prevY = 0;
 		this.direction = direction;
 	}
 
@@ -37,6 +43,8 @@ export class Fireball implements Entity {
 		const clone = new Fireball(this.direction);
 		clone.x = this.x;
 		clone.y = this.y;
+		clone.prevX = this.prevX;
+		clone.prevY = this.prevY;
 		return clone;
 	}
 

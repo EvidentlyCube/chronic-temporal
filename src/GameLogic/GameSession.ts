@@ -90,6 +90,8 @@ export class GameSession {
 		const protagonist = new Protagonist(isPlayerControlled, movesQueue);
 		protagonist.x = this.level.playerStartX;
 		protagonist.y = this.level.playerStartY;
+		protagonist.prevX = this.level.playerStartX;
+		protagonist.prevY = this.level.playerStartY;
 		this.level.entities.addEntity(protagonist);
 	}
 }

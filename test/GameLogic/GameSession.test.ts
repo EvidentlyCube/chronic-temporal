@@ -44,6 +44,8 @@ describe('GameLogic.GameSession', () => {
 
 			//Assert
 			assert.exists(session.level.entities.getPlayer());
+			assert.equal(session.level.entities.getPlayer()?.prevX, levelConfig.playerStartX);
+			assert.equal(session.level.entities.getPlayer()?.prevY, levelConfig.playerStartY);
 		});
 
 		it('Adds only one protagonist if _recordings is empty.', () => {

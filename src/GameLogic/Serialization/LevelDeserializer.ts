@@ -55,6 +55,8 @@ export class LevelDeserializer {
 		}
 		entity.x = data.x;
 		entity.y = data.y;
+		entity.prevX = data.prevX;
+		entity.prevY = data.prevY;
 		return entity;
 	}
 

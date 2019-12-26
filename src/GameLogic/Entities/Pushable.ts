@@ -11,10 +11,16 @@ export class Pushable implements Entity {
 
 	public y: number;
 
+	public prevX: number;
+
+	public prevY: number;
+
 	constructor() {
 		this.type = EntityType.Pushable;
 		this.x = 0;
 		this.y = 0;
+		this.prevX = 0;
+		this.prevY = 0;
 	}
 
 	public update(): void {
@@ -25,6 +31,8 @@ export class Pushable implements Entity {
 		const clone = new Pushable();
 		clone.x = this.x;
 		clone.y = this.y;
+		clone.prevX = this.prevX;
+		clone.prevY = this.prevY;
 		return clone;
 	}
 

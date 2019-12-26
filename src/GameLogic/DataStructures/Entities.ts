@@ -53,4 +53,8 @@ export class Entities {
 		entity.x = x;
 		entity.y = y;
 	}
+
+	public forEach(callback: { (entity: Entity): void }): void {
+		this._entities.forEach(callback);
+	}
 }
