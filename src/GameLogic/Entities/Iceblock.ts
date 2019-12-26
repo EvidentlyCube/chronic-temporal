@@ -25,7 +25,7 @@ export class Iceblock implements Entity {
 
 	public justPushed: boolean;
 
-	constructor(containedEntity: Entity | undefined) {
+	constructor(containedEntity: Entity | undefined = undefined) {
 		this.type = EntityType.Iceblock;
 		this.x = 0;
 		this.y = 0;
@@ -33,11 +33,9 @@ export class Iceblock implements Entity {
 		this.prevY = 0;
 		this.direction = Direction8.None;
 		this.containedEntity = containedEntity;
-		if (containedEntity === undefined) {
-			this.melting = false;
-		} else {
-			this.melting = containedEntity.type == EntityType.Fireball;
-		}
+		this.melting = containedEntity
+			? containedEntity.type === EntityType.Fireball
+			: false;
 		this.justPushed = false;
 	}
 
@@ -65,18 +63,14 @@ export class Iceblock implements Entity {
 				this.containedEntity.prevY = this.y;
 
 				level.entities.addEntity(this.containedEntity);
+				this.containedEntity = undefined;
 			}
 			turnState.killEntity(this, TurnEventType.EntityKilled);
 		}
 	}
 
 	public clone(): Iceblock {
-		let clone;
-		if (this.containedEntity === undefined) {
-			clone = new Iceblock(undefined);
-		} else {
-			clone = new Iceblock(this.containedEntity.clone());
-		}
+		const clone = new Iceblock(this.containedEntity?.clone());
 		clone.x = this.x;
 		clone.y = this.y;
 		clone.prevX = this.prevX;

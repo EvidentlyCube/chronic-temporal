@@ -44,11 +44,7 @@ export class LevelDeserializer {
 				break;
 
 			case EntityType.Iceblock:
-				if (data.containedEntity === undefined) {
-					entity = new Iceblock(undefined);
-				} else {
-					entity = new Iceblock(this.deserializeEntity(level, data.containedEntity));
-				}
+				entity = data.containedEntity  === undefined ? new Iceblock() : new Iceblock(this.deserializeEntity(level, data.containedEntity));
 				entity.melting = data.melting;
 				entity.direction = data.direction;
 				entity.justPushed = data.justPushed;
