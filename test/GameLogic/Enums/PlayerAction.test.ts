@@ -3,7 +3,7 @@ import {assert} from 'chai';
 import {Direction8, Direction8Utils} from '../../../src/GameLogic/Enums/Direction8';
 import {PlayerAction, PlayerActionUtils} from '../../../src/GameLogic/Enums/PlayerAction';
 
-describe('GameLogic.Enums', () => {
+describe('GameLogic.Enums.PlayerAction', () => {
 	const actionDirectionPairs: [Direction8, PlayerAction][] = [
 		[Direction8.UpLeft, PlayerAction.MoveUpLeft],
 		[Direction8.Up, PlayerAction.MoveUp],

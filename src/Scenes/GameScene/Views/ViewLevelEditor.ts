@@ -5,6 +5,8 @@ import * as PIXI from 'pixi.js';
 import {SessionRenderer} from '../Renderers/SessionRenderer';
 import Constants from '../../../Core/Constants';
 import {FloorType} from '../../../GameLogic/Enums/FloorType';
+import {TurnState} from '../../../GameLogic/TurnState';
+import {TurnEventType} from '../../../GameLogic/Enums/TurnEventType';
 
 export class ViewLevelEditor extends PIXI.Container implements GameView {
 	private readonly _stateMachine: GameViewManager;
@@ -39,6 +41,8 @@ export class ViewLevelEditor extends PIXI.Container implements GameView {
 	}
 
 	public update(passedTime: number, input: PlayerInputManager, controller: SessionController): void {
+		const turnState = new TurnState(controller.currentLevel);
+
 		this._levelLayer.x = this._sessionRenderer.levelRenderer.x;
 		this._levelLayer.y = this._sessionRenderer.levelRenderer.y;
 		this._levelLayer.scale.x = this._sessionRenderer.levelRenderer.scale.x;
@@ -55,10 +59,14 @@ export class ViewLevelEditor extends PIXI.Container implements GameView {
 		if (isInBounds) {
 			if (input.editorDraw()) {
 				controller.currentLevel.tilesFloor.set(hoveredTilePosition.x, hoveredTilePosition.y, FloorType.Wall);
+				turnState.addEvent(TurnEventType.TileChanged, [hoveredTilePosition.x, hoveredTilePosition.y]);
 			} else if (input.editorErase()) {
 				controller.currentLevel.tilesFloor.set(hoveredTilePosition.x, hoveredTilePosition.y, FloorType.FloorTile);
+				turnState.addEvent(TurnEventType.TileChanged, [hoveredTilePosition.x, hoveredTilePosition.y]);
 			}
 		}
+
+		controller.tryToSync(turnState);
 	}
 
 	public onBlur(): void {

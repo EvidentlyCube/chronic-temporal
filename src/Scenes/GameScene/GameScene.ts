@@ -5,6 +5,7 @@ import {PlayerInputManager} from './PlayerInputManager';
 import {SessionRenderer} from './Renderers/SessionRenderer';
 import {Game, Scene} from 'evidently-pixi';
 import {TurnState} from '../../GameLogic/TurnState';
+import {TurnEventType} from '../../GameLogic/Enums/TurnEventType';
 
 export class GameScene implements Scene {
 	public readonly sessionRenderer: SessionRenderer;
@@ -33,7 +34,9 @@ export class GameScene implements Scene {
 		this._layer.addChild(this.sessionRenderer);
 		this._layer.addChild(this._viewManager);
 
-		this.sessionRenderer.sync(new TurnState(this._session.level));
+		const turnState = new TurnState(this._session.level);
+		turnState.addEvent(TurnEventType.LevelLoaded);
+		this.sessionRenderer.sync(turnState);
 	}
 
 	public onStarted(): void {

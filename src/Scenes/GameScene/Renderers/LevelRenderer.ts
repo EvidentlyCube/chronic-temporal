@@ -33,8 +33,8 @@ export class LevelRenderer extends PIXI.Sprite {
 	}
 
 	public sync(turnState: TurnState): void {
-		this._floorTilesRenderer.sync(turnState.level);
-		this._entitiesRenderer.sync(turnState.level);
+		this._floorTilesRenderer.sync(turnState);
+		this._entitiesRenderer.sync(turnState);
 		this._effectsRenderer.sync(turnState);
 	}
 }
