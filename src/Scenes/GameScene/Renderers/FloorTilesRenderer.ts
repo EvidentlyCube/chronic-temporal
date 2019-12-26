@@ -5,6 +5,8 @@ import {GfxConstants} from '../../../Core/Constants/GfxConstants';
 import Constants from '../../../Core/Constants';
 import {Grid2D} from 'evidently-data-structures';
 import {TextureStore} from 'evidently-pixi';
+import {TurnState} from '../../../GameLogic/TurnState';
+import {TurnEventType} from '../../../GameLogic/Enums/TurnEventType';
 
 export class FloorTilesRenderer extends PIXI.Sprite {
 	private readonly _textureStore: TextureStore;
@@ -18,7 +20,19 @@ export class FloorTilesRenderer extends PIXI.Sprite {
 		this._floorTiles = new Grid2D<PIXI.Sprite | undefined>(20, 20, () => undefined);
 	}
 
-	public sync(level: Level): void {
+	public sync(turnState: TurnState): void {
+		const {level} = turnState;
+
+		if (turnState.hasEvent(TurnEventType.LevelLoaded)) {
+			this.syncAllTiles(level);
+		} else {
+			for (const coords of turnState.getEventData(TurnEventType.TileChanged)) {
+				this.syncTile(level, coords[0], coords[1]);
+			}
+		}
+	}
+
+	private syncAllTiles(level: Level): void {
 		if (this._floorTiles.width !== level.width || this._floorTiles.height !== level.height) {
 			this.removeChildren();
 
@@ -27,16 +41,20 @@ export class FloorTilesRenderer extends PIXI.Sprite {
 
 		for (let x = 0; x < level.width; x++) {
 			for (let y = 0; y < level.height; y++) {
-				const sprite = this._floorTiles.get(x, y) ?? new PIXI.Sprite();
-				sprite.texture = this.getFloorTypeTexture(level.tilesFloor.get(x, y));
-
-				if (!sprite.parent) {
-					this._floorTiles.set(x, y, sprite);
-					this.addChild(sprite);
-					sprite.x = x * Constants.TileWidth;
-					sprite.y = y * Constants.TileHeight;
-				}
+				this.syncTile(level, x, y);
 			}
+		}
+	}
+
+	private syncTile(level: Level, x: number, y: number): void {
+		const sprite = this._floorTiles.get(x, y) ?? new PIXI.Sprite();
+		sprite.texture = this.getFloorTypeTexture(level.tilesFloor.get(x, y));
+
+		if (!sprite.parent) {
+			this._floorTiles.set(x, y, sprite);
+			this.addChild(sprite);
+			sprite.x = x * Constants.TileWidth;
+			sprite.y = y * Constants.TileHeight;
 		}
 	}
 

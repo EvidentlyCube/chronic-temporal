@@ -9,6 +9,7 @@ import Constants from '../../Core/Constants';
 import {Level} from '../../GameLogic/Level';
 import {Game} from 'evidently-pixi';
 import {TurnState} from '../../GameLogic/TurnState';
+import {TurnEventType} from '../../GameLogic/Enums/TurnEventType';
 
 export class SessionController {
 	public lastTurnState: TurnState|undefined;
@@ -53,6 +54,7 @@ export class SessionController {
 		this._session.resetLevel();
 
 		this.lastTurnState = new TurnState(this._session.level);
+		this.lastTurnState.addEvent(TurnEventType.LevelLoaded);
 	}
 
 	public restartAndRemoveRecording(recording: ActionSequence): void {
@@ -60,9 +62,16 @@ export class SessionController {
 		this._session.resetLevel();
 
 		this.lastTurnState = new TurnState(this._session.level);
+		this.lastTurnState.addEvent(TurnEventType.LevelLoaded);
 	}
 
 	public getRecordings(): readonly ActionSequence[] {
 		return this._session.getRecordings();
+	}
+
+	public tryToSync(turnState: TurnState): void {
+		if (turnState.eventCount > 0) {
+			this.lastTurnState = turnState;
+		}
 	}
 }

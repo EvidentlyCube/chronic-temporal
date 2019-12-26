@@ -7,8 +7,14 @@ export class TurnState {
 
 	private readonly _events: Map<TurnEventType, any[]>;
 
+	private _eventCount = 0;
+
 	public get level(): Level {
 		return this._level;
+	}
+
+	public get eventCount(): number {
+		return this._eventCount;
 	}
 
 	constructor(level: Level) {
@@ -23,8 +29,9 @@ export class TurnState {
 		this._level.entities.removeEntity(entity);
 	}
 
-	public addEvent(event: TurnEventType, data: any | undefined): void {
+	public addEvent(event: TurnEventType, data: any | undefined = undefined): void {
 		this._events.get(event)!.push(data);
+		this._eventCount++;
 	}
 
 	public hasEvent(event: TurnEventType): boolean {

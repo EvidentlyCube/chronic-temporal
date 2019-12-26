@@ -4,6 +4,7 @@ import {EntityType} from './Enums/EntityType';
 import {Level} from './Level';
 import {Entity} from './Entity';
 import {TurnState} from './TurnState';
+import {TurnEventType} from './Enums/TurnEventType';
 
 export class TurnRunner {
 	private readonly _gameSession: GameSession;
@@ -14,6 +15,8 @@ export class TurnRunner {
 
 	public runTurn(playerInput: PlayerAction, level: Level): TurnState {
 		const turnState = new TurnState(level);
+		turnState.addEvent(TurnEventType.TurnPassed);
+
 		const player = level.entities.getPlayer();
 
 		if (player) {
