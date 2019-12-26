@@ -32,8 +32,6 @@ export class IceblockEntitySprite extends PIXI.Sprite implements EntitySprite {
 
 	private _timer = 0;
 
-	private _shakeDelay = 0;
-
 	private readonly _blockSprite: PIXI.Sprite;
 
 	private readonly _directionSprite: PIXI.Sprite;
@@ -59,7 +57,7 @@ export class IceblockEntitySprite extends PIXI.Sprite implements EntitySprite {
 		this.x = Math.round(this._fromX + (this._toX - this._fromX) * slideFraction);
 		this.y = Math.round(this._fromY + (this._toY - this._fromY) * slideFraction);
 
-		if (this._isMoving && this._shakeDelay-- < 0) {
+		if (this._isMoving) {
 			this._blockSprite.x = Math.round(Math.sin(this._timer / 100) * 2);
 			this._blockSprite.y = Math.round(Math.cos(this._timer / 50) * -1);
 		}
@@ -76,7 +74,6 @@ export class IceblockEntitySprite extends PIXI.Sprite implements EntitySprite {
 		this._blockSprite.texture = textureStore.getTile(GfxConstants.InitialTileset, 6, 3);
 		(this._directionSprite as any).texture = this.getDirectionTexture(entity.direction, textureStore);
 		this._timer = 0;
-		this._shakeDelay = 0;
 
 		this._fromX = entity.prevX * Constants.TileWidth;
 		this._fromY = entity.prevY * Constants.TileHeight;
