@@ -84,7 +84,7 @@ export class Protagonist implements Entity {
 		const newX = this.x + Direction8Utils.getX(direction);
 		const newY = this.y + Direction8Utils.getY(direction);
 
-		if (newX < 0 || newY < 0 || newX >= level.width || newY >= level.height) {
+		if (!level.isInBounds(newX, newY)) {
 			return false;
 		}
 
