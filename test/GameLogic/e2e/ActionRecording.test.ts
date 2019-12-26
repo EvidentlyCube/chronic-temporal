@@ -2,7 +2,7 @@ import 'mocha';
 import {assert} from 'chai';
 import {SessionPlayer} from '../helpers/SessionPlayer';
 import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
-import {PlayerAction, FloorType} from '../../../src/GameLogic/Enums';
+import {FloorType, PlayerAction} from '../../../src/GameLogic/Enums';
 
 describe('GameLogic.e2e - action recording', () => {
 	it('Recording should return correct move sequence when recording ends', () => {
@@ -16,10 +16,7 @@ describe('GameLogic.e2e - action recording', () => {
 		];
 
 		//Act
-		const [session, , ] = SessionPlayer.play(
-			TestLevelBuilder.newLevel(),
-			actions
-		);
+		const {session} = TestLevelBuilder.newLevel().run(actions);
 		const result = session.actionRecorder.end().actions;
 
 		//Assert
@@ -37,10 +34,9 @@ describe('GameLogic.e2e - action recording', () => {
 		];
 
 		//Act
-		const [session, , ] = SessionPlayer.play(
-			TestLevelBuilder.newLevel().plotFloor(10, 8, FloorType.Water),
-			actions
-		);
+		const {session} = TestLevelBuilder.newLevel()
+			.plotFloor(10, 8, FloorType.Water)
+			.run(actions);
 		const result = session.actionRecorder.end().actions;
 
 		//Assert

@@ -2,8 +2,8 @@ import {Level} from '../../../src/GameLogic/Level';
 import {TestLevelBuilder} from './TestLevelBuilder';
 import {GameSession} from '../../../src/GameLogic/GameSession';
 import {PlayerAction} from '../../../src/GameLogic/Enums';
-import {Protagonist} from '../../../src/GameLogic/Entities/Protagonist';
 import {Hashmap} from '../../../src/GenericInterfaces';
+import {TurnState} from '../../../src/GameLogic/TurnState';
 
 const charToActionMap: Hashmap<PlayerAction> = {
 	7: PlayerAction.MoveUpLeft,
@@ -25,7 +25,7 @@ export class SessionPlayer {
 	public static play(
 		levelOrBuilder: Level | TestLevelBuilder,
 		moves: PlayerAction | PlayerAction[] | string,
-	): [GameSession, Level, Protagonist] {
+	): [GameSession, TurnState[]] {
 		const level = levelOrBuilder instanceof TestLevelBuilder ? levelOrBuilder.toLevel() : levelOrBuilder;
 		const session = new GameSession(level);
 
@@ -41,8 +41,8 @@ export class SessionPlayer {
 			moves = [moves];
 		}
 
-		moves.forEach(move => session.runTurn(move));
+		const turnStates = moves.map(move => session.runTurn(move));
 
-		return [session, session.level, player];
+		return [session, turnStates];
 	}
 }
