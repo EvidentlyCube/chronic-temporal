@@ -50,5 +50,7 @@ export class Entities {
 
 	public updatePosition(entity: Entity, x: number, y: number): void {
 		this._entities.move(entity.x, entity.y, x, y, entity);
+		entity.x = x;
+		entity.y = y;
 	}
 }

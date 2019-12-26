@@ -68,8 +68,6 @@ export class Fireball implements Entity {
 		const newY = this.y + Direction8Utils.getY(direction);
 
 		level.entities.updatePosition(this, newX, newY);
-		this.x = newX;
-		this.y = newY;
 
 		const entities = level.entities.getEntitiesAt(this.x, this.y);
 		const protagonists = entities.filter(entity => entity.type === EntityType.Protagonist) as Protagonist[];

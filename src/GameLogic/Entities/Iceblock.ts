@@ -37,8 +37,6 @@ export class Iceblock implements Entity {
 			const newY = this.y + Direction8Utils.getY(this.direction);
 
 			level.entities.updatePosition(this, newX, newY);
-			this.x = newX;
-			this.y = newY;
 
 			this.postMoveProcessing(level);
 		} else {
@@ -96,8 +94,6 @@ export class Iceblock implements Entity {
 			const newY = this.y + Direction8Utils.getY(direction);
 
 			level.entities.updatePosition(this, newX, newY);
-			this.x = newX;
-			this.y = newY;
 			this.direction = direction;
 			this.justPushed = true;
 			this.postMoveProcessing(level);
