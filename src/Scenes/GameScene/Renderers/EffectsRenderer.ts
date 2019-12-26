@@ -4,6 +4,11 @@ import {Effect} from './Effects/Effect';
 import {Level} from '../../../GameLogic/Level';
 import {Protagonist} from '../../../GameLogic/Entities/Protagonist';
 import {NextProjectionMoveEffect} from './Effects/NextProjectionMoveEffect';
+import {TurnState} from '../../../GameLogic/TurnState';
+import {TurnEventType} from '../../../GameLogic/Enums/TurnEventType';
+import {DrownEffect} from './Effects/DrownEffect';
+import {Entity} from '../../../GameLogic/Entity';
+import {KillEffect} from './Effects/KillEffect';
 
 export class EffectsRenderer extends PIXI.Sprite {
 	private readonly _textureStore: TextureStore;
@@ -21,7 +26,7 @@ export class EffectsRenderer extends PIXI.Sprite {
 		this._effects.forEach(effect => effect.update(timePassed));
 	}
 
-	public sync(level: Level): void {
+	public sync(level: Level, turnState: TurnState): void {
 		this.removeChildren();
 		this._effects.forEach(effect => effect.release());
 		this._effects.length = 0;
@@ -31,6 +36,14 @@ export class EffectsRenderer extends PIXI.Sprite {
 				this.addEffect(NextProjectionMoveEffect.getOne(entity, this._textureStore));
 			}
 		});
+
+		for (const data of turnState.getEventData(TurnEventType.EntityDrowned)) {
+			this.addEffect(DrownEffect.getOne(data as Entity, this._textureStore));
+		}
+
+		for (const data of turnState.getEventData(TurnEventType.EntityKilled)) {
+			this.addEffect(KillEffect.getOne(data as Entity, this._textureStore));
+		}
 	}
 
 	public addEffect(effect: Effect): void {

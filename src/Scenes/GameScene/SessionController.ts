@@ -8,9 +8,10 @@ import {SessionRenderer} from './Renderers/SessionRenderer';
 import Constants from '../../Core/Constants';
 import {Level} from '../../GameLogic/Level';
 import {Game} from 'evidently-pixi';
+import {TurnState} from '../../GameLogic/TurnState';
 
 export class SessionController {
-	public turnPassed: boolean;
+	public lastTurnState: TurnState|undefined;
 
 	private readonly _game: Game;
 
@@ -25,7 +26,6 @@ export class SessionController {
 		this._gameScene = gameScene;
 		this._session = session;
 		this._sessionRenderer = sessionRenderer;
-		this.turnPassed = false;
 	}
 
 	public get currentLevel(): Level {
@@ -45,23 +45,21 @@ export class SessionController {
 	}
 
 	public executeAction(action: PlayerAction): void {
-		this._session.runTurn(action);
-
-		this.turnPassed = true;
+		this.lastTurnState = this._session.runTurn(action);
 	}
 
 	public restartAndSaveRecording(): void {
 		this._session.registerRecording(this._session.actionRecorder.end());
 		this._session.resetLevel();
 
-		this.turnPassed = true;
+		this.lastTurnState = new TurnState(this._session.level);
 	}
 
 	public restartAndRemoveRecording(recording: ActionSequence): void {
 		this._session.removeRecording(recording);
 		this._session.resetLevel();
 
-		this.turnPassed = true;
+		this.lastTurnState = new TurnState(this._session.level);
 	}
 
 	public getRecordings(): readonly ActionSequence[] {

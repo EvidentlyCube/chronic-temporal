@@ -50,23 +50,6 @@ export class IceblockEntitySprite extends PIXI.Sprite implements EntitySprite {
 		this.addChild(this._blockSprite, this._directionSprite);
 	}
 
-	public update(timePassed: number): void {
-		this._timer += timePassed;
-
-		const slideFraction = 1 - (1 - Math.min(this._timer / slideLength, 1)) ** 2;
-		this.x = Math.round(this._fromX + (this._toX - this._fromX) * slideFraction);
-		this.y = Math.round(this._fromY + (this._toY - this._fromY) * slideFraction);
-
-		if (this._isMoving) {
-			this._blockSprite.x = Math.round(Math.sin(this._timer / 100) * 2);
-			this._blockSprite.y = Math.round(Math.cos(this._timer / 50) * -1);
-		}
-	}
-
-	public release(): void {
-		IceblockEntitySprite._pool.release(this);
-	}
-
 	private init(entity: Iceblock, textureStore: TextureStore): void {
 		this._blockSprite.x = 0;
 		this._blockSprite.y = 0;
@@ -82,6 +65,23 @@ export class IceblockEntitySprite extends PIXI.Sprite implements EntitySprite {
 		this._isMoving = entity.direction !== Direction8.None;
 		this.x = this._fromX;
 		this.y = this._fromY;
+	}
+
+	public update(timePassed: number): void {
+		this._timer += timePassed;
+
+		const slideFraction = 1 - (1 - Math.min(this._timer / slideLength, 1)) ** 2;
+		this.x = Math.round(this._fromX + (this._toX - this._fromX) * slideFraction);
+		this.y = Math.round(this._fromY + (this._toY - this._fromY) * slideFraction);
+
+		if (this._isMoving) {
+			this._blockSprite.x = Math.round(Math.sin(this._timer / 100) * 2);
+			this._blockSprite.y = Math.round(Math.cos(this._timer / 50) * -1);
+		}
+	}
+
+	public release(): void {
+		IceblockEntitySprite._pool.release(this);
 	}
 
 	private getDirectionTexture(direction: Direction8, textureStore: TextureStore): PIXI.Texture | undefined {

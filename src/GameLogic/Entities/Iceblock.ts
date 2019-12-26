@@ -3,6 +3,8 @@ import {EntityType, FloorType} from '../Enums';
 import {Direction8, Direction8Utils} from '../Enums/Direction8';
 import {Level} from '../Level';
 import {Fireball} from './Fireball';
+import {TurnState} from '../TurnState';
+import {TurnEventType} from '../Enums/TurnEventType';
 
 export class Iceblock implements Entity {
 	public readonly type: EntityType;
@@ -35,7 +37,9 @@ export class Iceblock implements Entity {
 		this.justPushed = false;
 	}
 
-	public update(level: Level): void {
+	public update(turnState: TurnState): void {
+		const {level} = turnState;
+
 		if (this.justPushed) {
 			this.justPushed = false; //Don't update because we've just been moved via push()
 		} else if (this.isMoveAllowed(level, this.direction) && !this.melting) {
@@ -44,7 +48,7 @@ export class Iceblock implements Entity {
 
 			level.entities.updatePosition(this, newX, newY);
 
-			this.postMoveProcessing(level);
+			this.postMoveProcessing(turnState);
 		} else {
 			this.direction = Direction8.None;
 		}
@@ -52,8 +56,11 @@ export class Iceblock implements Entity {
 		if (this.melting) {
 			this.containedEntity.x = this.x;
 			this.containedEntity.y = this.y;
+			this.containedEntity.prevX = this.x;
+			this.containedEntity.prevY = this.y;
+
 			level.entities.addEntity(this.containedEntity);
-			level.entities.removeEntity(this);
+			turnState.killEntity(this, TurnEventType.EntityKilled);
 		}
 	}
 
@@ -96,7 +103,9 @@ export class Iceblock implements Entity {
 		return true;
 	}
 
-	public push(level: Level, direction: Direction8): void {
+	public push(turnState: TurnState, direction: Direction8): void {
+		const {level} = turnState;
+
 		if (this.isMoveAllowed(level, direction)) {
 			const newX = this.x + Direction8Utils.getX(direction);
 			const newY = this.y + Direction8Utils.getY(direction);
@@ -104,20 +113,23 @@ export class Iceblock implements Entity {
 			level.entities.updatePosition(this, newX, newY);
 			this.direction = direction;
 			this.justPushed = true;
-			this.postMoveProcessing(level);
+			this.postMoveProcessing(turnState);
 		}
 	}
 
-	private postMoveProcessing(level: Level): void {
+	private postMoveProcessing(turnState: TurnState): void {
+		const {level} = turnState;
+
 		const entities = level.entities.getEntitiesAt(this.x, this.y);
 		const fireballs = entities.filter(entity => entity.type === EntityType.Fireball) as Fireball[];
 		if (fireballs.length) {
 			this.melting = true;
 		}
-		fireballs.forEach(f => level.entities.removeEntity(f));
+
+		fireballs.forEach(f => turnState.killEntity(f, TurnEventType.EntityKilled));
 
 		if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
-			level.entities.removeEntity(this);
+			turnState.killEntity(this, TurnEventType.EntityDrowned);
 			this.melting = false; // Iceblock is sinking, so don't eject contents in any case
 		}
 	}

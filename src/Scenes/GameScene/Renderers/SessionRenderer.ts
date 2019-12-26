@@ -4,6 +4,7 @@ import {GameSession} from '../../../GameLogic/GameSession';
 import Constants from '../../../Core/Constants';
 import {TextureStore} from 'evidently-pixi';
 import {Level} from '../../../GameLogic/Level';
+import {TurnState} from '../../../GameLogic/TurnState';
 
 export class SessionRenderer extends PIXI.Sprite {
 	private readonly _session: GameSession;
@@ -29,7 +30,7 @@ export class SessionRenderer extends PIXI.Sprite {
 		this._levelRenderer.y = (Constants.VirtualHeight - this._levelRenderer.getLocalBounds().height) / 2 | 0;
 	}
 
-	public sync(level: Level): void {
-		this._levelRenderer.sync(level);
+	public sync(level: Level, turnState: TurnState): void {
+		this._levelRenderer.sync(level, turnState);
 	}
 }

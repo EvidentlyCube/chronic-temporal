@@ -4,6 +4,8 @@ import {Direction8, Direction8Utils} from '../Enums/Direction8';
 import {Level} from '../Level';
 import {Protagonist} from './Protagonist';
 import {Iceblock} from './Iceblock';
+import {TurnState} from '../TurnState';
+import {TurnEventType} from '../Enums/TurnEventType';
 
 export class Fireball implements Entity {
 	public readonly type: EntityType;
@@ -27,15 +29,15 @@ export class Fireball implements Entity {
 		this.direction = direction;
 	}
 
-	public update(level: Level): void {
-		if (this.isMoveAllowed(level, this.direction)) { // Try moving forward
-			this.move(level, this.direction);
-		} else if (this.isMoveAllowed(level, Direction8Utils.cw90(this.direction))) { // Try moving clockwise 90 degrees
-			this.move(level, Direction8Utils.cw90(this.direction));
-		} else if (this.isMoveAllowed(level, Direction8Utils.ccw90(this.direction))) { // Try moving counterclockwise 90 degrees
-			this.move(level, Direction8Utils.ccw90(this.direction));
-		} else if (this.isMoveAllowed(level, Direction8Utils.opposite(this.direction))) { // Try moving backwards
-			this.move(level, Direction8Utils.opposite(this.direction));
+	public update(turnState: TurnState): void {
+		if (this.isMoveAllowed(turnState.level, this.direction)) { // Try moving forward
+			this.move(turnState, this.direction);
+		} else if (this.isMoveAllowed(turnState.level, Direction8Utils.cw90(this.direction))) { // Try moving clockwise 90 degrees
+			this.move(turnState, Direction8Utils.cw90(this.direction));
+		} else if (this.isMoveAllowed(turnState.level, Direction8Utils.ccw90(this.direction))) { // Try moving counterclockwise 90 degrees
+			this.move(turnState, Direction8Utils.ccw90(this.direction));
+		} else if (this.isMoveAllowed(turnState.level, Direction8Utils.opposite(this.direction))) { // Try moving backwards
+			this.move(turnState, Direction8Utils.opposite(this.direction));
 		}
 	}
 
@@ -70,7 +72,9 @@ export class Fireball implements Entity {
 		return true;
 	}
 
-	private move(level: Level, direction: Direction8): void {
+	private move(turnState: TurnState, direction: Direction8): void {
+		const {level} = turnState;
+
 		this.direction = direction;
 		const newX = this.x + Direction8Utils.getX(direction);
 		const newY = this.y + Direction8Utils.getY(direction);
@@ -79,10 +83,11 @@ export class Fireball implements Entity {
 
 		const entities = level.entities.getEntitiesAt(this.x, this.y);
 		const protagonists = entities.filter(entity => entity.type === EntityType.Protagonist) as Protagonist[];
-		protagonists.forEach(p => level.entities.removeEntity(p));
+		protagonists.forEach(p => turnState.killEntity(p, TurnEventType.EntityKilled));
+
 		const iceblocks = entities.filter(entity => entity.type === EntityType.Iceblock) as Iceblock[];
 		if (iceblocks.length) {
-			level.entities.removeEntity(this);
+			turnState.killEntity(this, TurnEventType.EntityKilled);
 		}
 		iceblocks.forEach(i => i.melting = true);
 	}

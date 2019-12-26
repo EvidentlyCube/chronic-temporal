@@ -4,6 +4,7 @@ import {SessionController} from './SessionController';
 import {PlayerInputManager} from './PlayerInputManager';
 import {SessionRenderer} from './Renderers/SessionRenderer';
 import {Game, Scene} from 'evidently-pixi';
+import {TurnState} from '../../GameLogic/TurnState';
 
 export class GameScene implements Scene {
 	public readonly sessionRenderer: SessionRenderer;
@@ -32,7 +33,7 @@ export class GameScene implements Scene {
 		this._layer.addChild(this.sessionRenderer);
 		this._layer.addChild(this._viewManager);
 
-		this.sessionRenderer.sync(this._session.level);
+		this.sessionRenderer.sync(this._session.level, new TurnState(this._session.level));
 	}
 
 	public onStarted(): void {
@@ -47,9 +48,9 @@ export class GameScene implements Scene {
 		this._viewManager.update(timePassed, this._input, this._sessionController);
 
 		this.sessionRenderer.update(timePassed);
-		if (this._sessionController.turnPassed) {
-			this.sessionRenderer.sync(this._session.level);
-			this._sessionController.turnPassed = false;
+		if (this._sessionController.lastTurnState) {
+			this.sessionRenderer.sync(this._session.level, this._sessionController.lastTurnState);
+			this._sessionController.lastTurnState = undefined;
 		}
 	}
 }
