@@ -1,36 +1,34 @@
 import {EntityType} from '../Enums';
 import {Entity} from '../Entity';
 import {Protagonist} from '../Entities/Protagonist';
+import {SpatialGrid2D} from 'evidently-data-structures';
 
 export class Entities {
-	private readonly _entities: Entity[];
+	private readonly _entities: SpatialGrid2D<Entity>;
 
-	constructor(entities: Entity[] = []) {
-		this._entities = Array.from(entities);
+	constructor(width: number, height: number, entities: Entity[] = []) {
+		this._entities = new SpatialGrid2D<Entity>(width, height, 3, 3);
+		entities.forEach(entity => this._entities.insert(entity));
 	}
 
 	public addEntity(entity: Entity): void {
-		this._entities.push(entity);
+		this._entities.insert(entity);
 	}
 
 	public removeEntity(entity: Entity): void {
-		const index = this._entities.indexOf(entity);
-		if (index == -1) {
-			throw new Error('Could not remove entity.');
-		}
-		this._entities.splice(index, 1);
+		this._entities.remove(entity);
 	}
 
 	public getEntitiesOfType<T extends Entity = Entity>(type: EntityType): T[] {
-		return this._entities.filter(entity => entity.type === type) as T[];
+		return this._entities.getFiltered(entity => entity.type === type) as T[];
 	}
 
 	public getFirstEntityOfType<T extends Entity>(type: EntityType): T | undefined {
-		return this._entities.find(entity => entity.type === type) as T;
+		return this._entities.getFirst(entity => entity.type === type) as T;
 	}
 
 	public getEntitiesAt(x: number, y: number): Entity[] {
-		return this._entities.filter(entity => entity.x == x && entity.y == y);
+		return this._entities.getFiltered(entity => entity.x == x && entity.y == y);
 	}
 
 	public getPlayer(): Protagonist | undefined {
@@ -43,10 +41,16 @@ export class Entities {
 	}
 
 	public get entities(): readonly Entity[] {
-		return this._entities;
+		return this._entities.getAll();
 	}
 
-	public get length(): number {
-		return this._entities.length;
+	public get size(): number {
+		return this._entities.size;
+	}
+
+	public updatePosition(entity: Entity, x: number, y: number): void {
+		this._entities.move(entity.x, entity.y, x, y, entity);
+		entity.x = x;
+		entity.y = y;
 	}
 }

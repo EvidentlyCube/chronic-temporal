@@ -57,7 +57,7 @@ function addEveryFloorTile(level: Level): void {
 }
 
 function insertEntity(level: Level, entity: Entity): void {
-	entity.x = level.entities.length % level.width;
-	entity.y = Math.floor(level.entities.length / level.width);
+	entity.x = level.entities.size % level.width;
+	entity.y = Math.floor(level.entities.size / level.width);
 	level.entities.addEntity(entity);
 }

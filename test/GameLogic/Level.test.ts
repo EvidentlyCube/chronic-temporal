@@ -26,7 +26,7 @@ describe('GameLogic.Level', () => {
 	it('Level has not had new properties added', () => {
 		const level = createTestLevel(levelConfig);
 
-		// console.log(JSON.stringify(level));
+		console.log(JSON.stringify(level));
 		assertDeepJsonEqual(level, levelJson, 'Level has changed, make sure to update the clone method and tests!');
 	});
 
@@ -47,8 +47,8 @@ describe('GameLogic.Level', () => {
 			const level = createTestLevel(levelConfig);
 			const levelClone = level.clone();
 
-			assert.equal(level.entities.length, levelClone.entities.length);
-			for (let i = 0; i < level.entities.length; i++) {
+			assert.equal(level.entities.size, levelClone.entities.size);
+			for (let i = 0; i < level.entities.size; i++) {
 				assert.deepEqual(level.entities.entities[i], levelClone.entities.entities[i]);
 				const message = 'Entity ${i} is a reference to the original object';
 				assert.notStrictEqual(level.entities.entities[i], levelClone.entities.entities[i], message);

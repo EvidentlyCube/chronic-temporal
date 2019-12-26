@@ -11,7 +11,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 	describe('addEntity', () => {
 		it('addEntity adds new entities', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist1 = new Protagonist();
 			const protagonist2 = new Protagonist();
 
@@ -30,7 +30,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 			const protagonist1 = new Protagonist();
 			const protagonist2 = new Protagonist();
 			const protagonist3 = new Protagonist();
-			const entities = new Entities([protagonist1, protagonist2, protagonist3]);
+			const entities = new Entities(20, 20, [protagonist1, protagonist2, protagonist3]);
 
 			//Act
 			entities.removeEntity(protagonist2);
@@ -43,7 +43,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 			//Arrange
 			const protagonist1 = new Protagonist();
 			const protagonist2 = new Protagonist();
-			const entities = new Entities([protagonist1]);
+			const entities = new Entities(20, 20, [protagonist1]);
 
 			//Act & Assert
 			assert.throws(() => entities.removeEntity(protagonist2));
@@ -53,7 +53,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 	describe('getEntitiesOfType', () => {
 		it('Return empty collection when no entity found', () => {
 			//Arrange & Act
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 
 			//Assert
 			assert.isEmpty(entities.getEntitiesOfType(EntityType.Protagonist));
@@ -61,7 +61,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 		it('Return empty collection when no matching entity found', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 
 			//Act
 			entities.addEntity(new Pushable());
@@ -73,7 +73,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 		it('Return all matching entities (one match)', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist = new Protagonist();
 
 			//Act
@@ -87,7 +87,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 		it('Return all matching entities (many match)', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist1 = new Protagonist();
 			const protagonist2 = new Protagonist();
 			const protagonist3 = new Protagonist();
@@ -107,7 +107,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 	describe('getFirstEntityOfType', () => {
 		it('Return undefined when no entity in level', () => {
 			//Arrange & Act
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 
 			//Assert
 			assert.equal(entities.getFirstEntityOfType(EntityType.Protagonist), undefined);
@@ -115,7 +115,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 		it('Return undefined when no matching entity in level', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 
 			//Act
 			entities.addEntity(new Pushable());
@@ -126,7 +126,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 		it('Return first entity (only valid entity)', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist = new Protagonist();
 
 			//Act
@@ -138,7 +138,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 		it('Return first entity (wrong entity first)', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist = new Protagonist();
 
 			//Act
@@ -151,7 +151,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 		it('Return first entity (multiple valid entities order 1-2)', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist1 = new Protagonist();
 			const protagonist2 = new Protagonist();
 
@@ -167,7 +167,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 		it('Return first entity (multiple valid entities order 2-1)', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist1 = new Protagonist();
 			const protagonist2 = new Protagonist();
 
@@ -185,7 +185,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 	describe('getEntitiesAt', () => {
 		it('Returns empty array if no entities match the coordinates', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist1 = new Protagonist(false);
 			protagonist1.x = 1;
 			protagonist1.y = 1;
@@ -203,7 +203,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 		it('Returns all entities that match both coordinates', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist1 = new Protagonist(false);
 			protagonist1.x = 1;
 			protagonist1.y = 1;
@@ -235,7 +235,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 	describe('getPlayer', () => {
 		it('Returns undefined if no player-controlled Protagonist exists', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist1 = new Protagonist(false);
 			const protagonist2 = new Protagonist(false);
 
@@ -249,7 +249,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 		it('Returns the entity if exactly one player-controlled Protagonist exists', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist1 = new Protagonist(false);
 			const protagonist2 = new Protagonist(true);
 
@@ -263,7 +263,7 @@ describe('GameLogic.DataStructures.Entities', () => {
 
 		it('Throws an error if more than one player-controlled Protagonist exists', () => {
 			//Arrange
-			const entities = new Entities();
+			const entities = new Entities(20, 20);
 			const protagonist1 = new Protagonist(true);
 			const protagonist2 = new Protagonist(true);
 

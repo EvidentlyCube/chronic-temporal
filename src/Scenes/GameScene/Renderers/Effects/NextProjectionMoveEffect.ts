@@ -48,8 +48,8 @@ export class NextProjectionMoveEffect extends PIXI.Sprite implements Effect {
 		this._timer = (this._timer + timePassed) % cycleLength;
 
 		const slideFraction = 1 - (1 - Math.min(this._timer / slideLength, 1)) ** 2;
-		this.x = this._fromX + (this._toX - this._fromX) * slideFraction | 0;
-		this.y = this._fromY + (this._toY - this._fromY) * slideFraction | 0;
+		this.x = Math.round(this._fromX + (this._toX - this._fromX) * slideFraction);
+		this.y = Math.round(this._fromY + (this._toY - this._fromY) * slideFraction);
 		this.alpha = initialAlpha + (finalAlpha - initialAlpha) * slideFraction;
 	}
 

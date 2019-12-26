@@ -31,7 +31,7 @@ export class Level {
 		this.playerStartY = config.playerStartY;
 
 		this.tilesFloor = new Grid2D<FloorType>(this.width, this.height, () => FloorType.FloorTile);
-		this.entities = new Entities();
+		this.entities = new Entities(this.width, this.height);
 	}
 
 	public clone(): Level {
