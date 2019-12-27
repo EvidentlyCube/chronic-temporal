@@ -54,7 +54,7 @@ export class GameViewManager extends PIXI.Container {
 		this._activeState.onFocus(controller);
 	}
 
-	// @todo Replace this really bad hack with some sensible way of swapping states
+	// @todo Issue #68: Replace this really bad hack with some sensible way of swapping states
 	public setStateToIndex(index: number, controller: SessionController): void {
 		this.setState(this._states[index % this._states.length], controller);
 	}
