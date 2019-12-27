@@ -48,7 +48,7 @@ export class GameViewManager extends PIXI.Container {
 		this._activeState.update(passedTime, input, controller);
 	}
 
-	public setState(newState: GameView, controller: SessionController): void {
+	private setState(newState: GameView, controller: SessionController): void {
 		this._activeState.onBlur(controller);
 		this._activeState = newState;
 		this._activeState.onFocus(controller);

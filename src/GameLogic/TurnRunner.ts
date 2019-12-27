@@ -5,7 +5,7 @@ import {Level} from './Level';
 import {Entity} from './Entity';
 import {TurnState} from './TurnState';
 import {TurnEventType} from './Enums/TurnEventType';
-import { FloorType } from './Enums/FloorType';
+import {FloorType} from './Enums/FloorType';
 
 export class TurnRunner {
 	private readonly _gameSession: GameSession;
