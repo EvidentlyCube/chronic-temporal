@@ -35,6 +35,9 @@ export class GameViewManager extends PIXI.Container {
 
 	public update(passedTime: number, input: PlayerInputManager, controller: SessionController): void {
 		if (input.uiSwitchViews()) {
+			if (!this._states.includes(this._activeState)) {
+				return;
+			}
 			const activeStateIndex = this._states.indexOf(this._activeState);
 			if (activeStateIndex === -1) {
 				throw new Error('Active input state was not found in the list of states');

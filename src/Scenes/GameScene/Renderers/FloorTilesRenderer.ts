@@ -66,6 +66,8 @@ export class FloorTilesRenderer extends PIXI.Sprite {
 				return this._textureStore.getTile(GfxConstants.InitialTileset, 5, 7);
 			case FloorType.Water:
 				return this._textureStore.getTile(GfxConstants.InitialTileset, 6, 7);
+			case FloorType.Exit:
+				return this._textureStore.getTile(GfxConstants.InitialTileset, 0, 9);
 			default:
 				throw new Error(`Invalid floor type "${floorType}"`);
 		}

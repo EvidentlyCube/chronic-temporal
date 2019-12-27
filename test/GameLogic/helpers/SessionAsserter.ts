@@ -3,6 +3,7 @@ import {EntityType} from '../../../src/GameLogic/Enums/EntityType';
 import {assert} from 'chai';
 import {Level} from '../../../src/GameLogic/Level';
 import {TurnState} from '../../../src/GameLogic/TurnState';
+import {TurnEventType} from '../../../src/GameLogic/Enums/TurnEventType';
 
 export class SessionAsserter {
 	private readonly _session: GameSession;
@@ -57,6 +58,18 @@ export class SessionAsserter {
 
 	public assertLevel(callback: { (level: Level): void }): SessionAsserter {
 		callback(this.level);
+
+		return this;
+	}
+
+	public assertEventRaised(turnEventType: TurnEventType, onTurn: number = this._turnStates.length - 1): SessionAsserter {
+		assert.isTrue(this._turnStates[onTurn].hasEvent(turnEventType), `No event of type '${turnEventType}' was found on turn ${onTurn}`);
+
+		return this;
+	}
+
+	public assertEventNotRaised(turnEventType: TurnEventType, onTurn: number = this._turnStates.length - 1): SessionAsserter {
+		assert.isFalse(this._turnStates[onTurn].hasEvent(turnEventType), `Event of type '${turnEventType}' was found on turn ${onTurn}`);
 
 		return this;
 	}

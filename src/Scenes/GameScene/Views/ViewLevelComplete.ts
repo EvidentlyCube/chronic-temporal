@@ -33,7 +33,7 @@ export class ViewLevelComplete extends PIXI.Container implements GameView {
 	}
 
 	public update(): void {
-		// @todo Some way of leaving this screen when campaigns are implmented
+		// @todo Some way of leaving this screen when campaigns are implemented
 	}
 
 	public onBlur(): void {
