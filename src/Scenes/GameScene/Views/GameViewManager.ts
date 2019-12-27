@@ -5,6 +5,7 @@ import {SessionController} from '../SessionController';
 import {PlayerInputManager} from '../PlayerInputManager';
 import {ViewLevelEditor} from './ViewLevelEditor';
 import {GameScene} from '../GameScene';
+import {ViewLevelComplete} from './ViewLevelComplete';
 
 export interface GameView extends PIXI.Container {
 	update(passedTime: number, input: PlayerInputManager, controller: SessionController): void;
@@ -26,6 +27,7 @@ export class GameViewManager extends PIXI.Container {
 			new ViewMoveProtagonist(this),
 			new ViewEditRecordings(this),
 			new ViewLevelEditor(this, gameScene.sessionRenderer),
+			new ViewLevelComplete(this),
 		];
 
 		this.addChild(...this._states);
@@ -35,9 +37,6 @@ export class GameViewManager extends PIXI.Container {
 
 	public update(passedTime: number, input: PlayerInputManager, controller: SessionController): void {
 		if (input.uiSwitchViews()) {
-			if (!this._states.includes(this._activeState)) {
-				return;
-			}
 			const activeStateIndex = this._states.indexOf(this._activeState);
 			if (activeStateIndex === -1) {
 				throw new Error('Active input state was not found in the list of states');
@@ -53,5 +52,10 @@ export class GameViewManager extends PIXI.Container {
 		this._activeState.onBlur(controller);
 		this._activeState = newState;
 		this._activeState.onFocus(controller);
+	}
+
+	// @todo Replace this really bad hack with some sensible way of swapping states
+	public setStateToIndex(index: number, controller: SessionController): void {
+		this.setState(this._states[index % this._states.length], controller);
 	}
 }

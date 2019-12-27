@@ -6,7 +6,6 @@ import {SessionRenderer} from './Renderers/SessionRenderer';
 import {Game, Scene} from 'evidently-pixi';
 import {TurnState} from '../../GameLogic/TurnState';
 import {TurnEventType} from '../../GameLogic/Enums/TurnEventType';
-import {ViewLevelComplete} from './Views/ViewLevelComplete';
 
 export class GameScene implements Scene {
 	public readonly sessionRenderer: SessionRenderer;
@@ -55,7 +54,7 @@ export class GameScene implements Scene {
 		if (this._sessionController.lastTurnState) {
 			this.sessionRenderer.sync(this._sessionController.lastTurnState);
 			if (this._sessionController.lastTurnState.hasEvent(TurnEventType.LevelComplete)) {
-				this._viewManager.setState(new ViewLevelComplete(this._viewManager), this._sessionController);
+				this._viewManager.setStateToIndex(3, this._sessionController);
 			}
 			this._sessionController.lastTurnState = undefined;
 		}
