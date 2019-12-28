@@ -53,6 +53,9 @@ export class GameScene implements Scene {
 		this.sessionRenderer.update(timePassed);
 		if (this._sessionController.lastTurnState) {
 			this.sessionRenderer.sync(this._sessionController.lastTurnState);
+			if (this._sessionController.lastTurnState.hasEvent(TurnEventType.LevelComplete)) {
+				this._viewManager.setStateToIndex(3, this._sessionController);
+			}
 			this._sessionController.lastTurnState = undefined;
 		}
 	}
