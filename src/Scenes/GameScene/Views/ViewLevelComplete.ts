@@ -15,7 +15,7 @@ export class ViewLevelComplete extends PIXI.Container implements GameView {
 		this._stateMachine = stateMachine;
 		this._overlay = new PIXI.Sprite(PIXI.Texture.WHITE);
 		this._levelCompleteText = new PIXI.BitmapText('LEVEL COMPLETE!', {
-			font: {
+			font: { //@todo: Issue #70
 				name: 'Topaz-8',
 				size: 10,
 			},

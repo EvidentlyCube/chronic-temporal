@@ -30,11 +30,13 @@ export class TurnRunner {
 		level.entities.getEntitiesOfType(EntityType.Fireball).forEach(entity => entity.update(turnState));
 		level.entities.getEntitiesOfType(EntityType.Iceblock).forEach(entity => entity.update(turnState));
 
+		// @todo Issue #69: Cache exit floor tyle coordinates
 		for (let i = 0; i < level.width; i++) {
 			for (let j = 0; j < level.height; j++) {
 				if (level.tilesFloor.get(i, j) == FloorType.Exit) {
-					if (level.entities.getEntitiesAt(i, j).some(entity => entity.type === EntityType.Protagonist)) {
-						turnState.addEvent(TurnEventType.LevelComplete);
+					const winningProtagonist = level.entities.getEntitiesAt(i, j).find(entity => entity.type === EntityType.Protagonist);
+					if (winningProtagonist) {
+						turnState.addEvent(TurnEventType.LevelComplete, winningProtagonist);
 						// @todo When campaigns are implement, implement a way to return that this level has been completed
 					}
 				}
