@@ -6,6 +6,7 @@ import {PlayerInputManager} from '../PlayerInputManager';
 import {ViewLevelEditor} from './ViewLevelEditor';
 import {GameScene} from '../GameScene';
 import {ViewLevelComplete} from './ViewLevelComplete';
+import {TextureStore} from 'evidently-pixi';
 
 export interface GameView extends PIXI.Container {
 	update(passedTime: number, input: PlayerInputManager, controller: SessionController): void;
@@ -20,13 +21,13 @@ export class GameViewManager extends PIXI.Container {
 
 	private readonly _states: GameView[];
 
-	constructor(gameScene: GameScene) {
+	constructor(gameScene: GameScene, textureStore: TextureStore) {
 		super();
 
 		this._states = [
 			new ViewMoveProtagonist(this),
 			new ViewEditRecordings(this),
-			new ViewLevelEditor(this, gameScene.sessionRenderer),
+			new ViewLevelEditor(this, gameScene.sessionRenderer, textureStore),
 			new ViewLevelComplete(this),
 		];
 
@@ -36,13 +37,13 @@ export class GameViewManager extends PIXI.Container {
 	}
 
 	public update(passedTime: number, input: PlayerInputManager, controller: SessionController): void {
-		if (input.uiSwitchViews()) {
+		if (input.uiSwitchViews() && this._activeState !== this._states[3]) {
 			const activeStateIndex = this._states.indexOf(this._activeState);
 			if (activeStateIndex === -1) {
 				throw new Error('Active input state was not found in the list of states');
 			}
 
-			this.setState(this._states[(activeStateIndex + 1) % this._states.length], controller);
+			this.setState(this._states[(activeStateIndex + 1) % (this._states.length - 1)], controller);
 		}
 
 		this._activeState.update(passedTime, input, controller);

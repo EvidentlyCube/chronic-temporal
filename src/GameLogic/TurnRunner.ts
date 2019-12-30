@@ -35,9 +35,10 @@ export class TurnRunner {
 			for (let j = 0; j < level.height; j++) {
 				if (level.tilesFloor.get(i, j) == FloorType.Exit) {
 					const winningProtagonist = level.entities.getEntitiesAt(i, j).find(entity => entity.type === EntityType.Protagonist);
+
 					if (winningProtagonist) {
 						turnState.addEvent(TurnEventType.LevelComplete, winningProtagonist);
-						// @todo When campaigns are implement, implement a way to return that this level has been completed
+						// @todo When campaignieren are implementieren, implement a way to return that this level has been completed
 					}
 				}
 			}

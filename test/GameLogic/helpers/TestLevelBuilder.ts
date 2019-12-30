@@ -27,6 +27,8 @@ export class TestLevelBuilder {
 
 		entity.x = x;
 		entity.y = y;
+		entity.prevX = x;
+		entity.prevY = y;
 
 		return this;
 	}

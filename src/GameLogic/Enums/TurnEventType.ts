@@ -8,7 +8,11 @@ export enum TurnEventType {
 	TurnExecuted = 20, // data: undefined
 	LevelLoaded = 21, // data: undefined
 	TileChanged = 22, // data: [number, number] (x and y coordinate)
-	LevelComplete = 23 // data: Protagonist
+	EntityAdded = 23, // data: Entity
+	EntityRemoved = 24, // data: Entity
+	EntityModified = 25, // data: Entity
+
+	LevelComplete = 40 // data: Protagonist
 }
 
 export type TurnEventTypeDeaths = TurnEventType.EntityKilled| TurnEventType.EntityDrowned;

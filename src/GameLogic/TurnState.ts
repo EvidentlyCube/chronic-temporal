@@ -26,7 +26,7 @@ export class TurnState {
 
 	public killEntity(entity: Entity, deathType: TurnEventTypeDeaths): void {
 		this.addEvent(deathType, entity);
-		this._level.entities.removeEntity(entity);
+		this._level.entities.removeEntity(entity, this);
 	}
 
 	public addEvent(event: TurnEventType, data: any | undefined = undefined): void {
