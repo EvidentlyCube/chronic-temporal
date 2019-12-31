@@ -4,6 +4,7 @@ import {assert} from 'chai';
 import {Level} from '../../../src/GameLogic/Level';
 import {TurnState} from '../../../src/GameLogic/TurnState';
 import {TurnEventType} from '../../../src/GameLogic/Enums/TurnEventType';
+import {FloorType} from '../../../src/GameLogic/Enums/FloorType';
 
 export class SessionAsserter {
 	private readonly _session: GameSession;
@@ -70,6 +71,12 @@ export class SessionAsserter {
 
 	public assertEventNotRaised(turnEventType: TurnEventType, onTurn: number = this._turnStates.length - 1): SessionAsserter {
 		assert.isFalse(this._turnStates[onTurn].hasEvent(turnEventType), `Event of type '${turnEventType}' was found on turn ${onTurn}`);
+
+		return this;
+	}
+
+	public assertFloorTileAt(floorType: FloorType, x: number, y: number): SessionAsserter {
+		assert.equal(this._session.level.tilesFloor.get(x, y), floorType, `Expected to find floorType '${floorType}' at ${x}x${y}`);
 
 		return this;
 	}

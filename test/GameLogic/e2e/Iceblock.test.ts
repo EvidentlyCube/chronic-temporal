@@ -225,4 +225,21 @@ describe('GameLogic.e2e - Iceblock', () => {
 			.assertEntityCount(EntityType.Iceblock, 0)
 			.assertEntityAt(EntityType.Pushable, 10, 7);
 	});
+
+	it('Iceblock containing iceblock should melt one layer but keep moving when struck by a fireball', () => {
+		TestLevelBuilder
+			.newLevel()
+			.addEntity(new Iceblock(new Iceblock(new Pushable())), 10, 9)
+			.addEntity(new Fireball(Direction8.Left), 13, 7)
+			.run(PlayerAction.MoveUp, PlayerAction.Wait, PlayerAction.Wait)
+
+			.assertEntityCount(EntityType.Fireball, 0)
+			.assertEntityCount(EntityType.Iceblock, 1)
+			.assertEntityAt(EntityType.Iceblock, 10, 6)
+			.assertLevel(level => {
+				const iceblock = level.entities.getFirstEntityOfType<Iceblock>(EntityType.Iceblock);
+				assert.equal(iceblock?.containedEntity?.type, EntityType.Pushable);
+				assert.equal(iceblock?.direction, Direction8.Up);
+			});
+	});
 });

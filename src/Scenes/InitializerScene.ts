@@ -58,6 +58,8 @@ export class InitializerScene implements Scene {
 		level.tilesFloor.set(8, 12, FloorType.Water);
 		level.tilesFloor.set(15, 4, FloorType.Water);
 		level.tilesFloor.set(17, 18, FloorType.Exit);
+		level.tilesFloor.set(13, 14, FloorType.IceTrap);
+		level.tilesFloor.set(8, 14, FloorType.IceTrap);
 
 		addEntity(new Pushable(), 9, 9);
 		addEntity(new Fireball(Direction8.DownRight), 4, 5);
