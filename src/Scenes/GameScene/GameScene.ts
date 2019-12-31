@@ -28,7 +28,7 @@ export class GameScene implements Scene {
 		this._input = new PlayerInputManager(game.keyboard, game.mouse);
 		this.sessionRenderer = new SessionRenderer(this._session, game.textureStore);
 		this._sessionController = new SessionController(game, this, this._session, this.sessionRenderer);
-		this._viewManager = new GameViewManager(this);
+		this._viewManager = new GameViewManager(this, game.textureStore);
 		this._layer = game.createContainer();
 
 		this._layer.addChild(this.sessionRenderer);
