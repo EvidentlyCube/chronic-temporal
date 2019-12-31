@@ -36,6 +36,8 @@ export class FloorPlotter implements Plotter {
 				return textureStore.getTile(GfxConstants.InitialTileset, 5, 7);
 			case FloorType.Water:
 				return textureStore.getTile(GfxConstants.InitialTileset, 6, 7);
+			case FloorType.Exit:
+				return textureStore.getTile(GfxConstants.InitialTileset, 0, 9);
 			default:
 				throw new Error(`Invalid floor type "${this.floorType}"`);
 		}

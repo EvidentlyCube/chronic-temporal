@@ -9,7 +9,12 @@ import {EditorConfig} from './EditorConfig';
 import Constants from '../../../../Core/Constants';
 
 const plotters: Plotter[][] = [
-	[new FloorPlotter(FloorType.FloorTile), new FloorPlotter(FloorType.Wall), new FloorPlotter(FloorType.Water)],
+	[
+		new FloorPlotter(FloorType.FloorTile),
+		new FloorPlotter(FloorType.Wall),
+		new FloorPlotter(FloorType.Water),
+		new FloorPlotter(FloorType.Exit),
+	],
 	[],
 	[new EntityPlotter(EntityType.Pushable), new EntityPlotter(EntityType.Iceblock), new EntityPlotter(EntityType.Fireball)],
 ];

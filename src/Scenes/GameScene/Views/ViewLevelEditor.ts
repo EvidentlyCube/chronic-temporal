@@ -77,9 +77,7 @@ export class ViewLevelEditor extends PIXI.Container implements GameView {
 			this._editorConfig.direction = Direction8.None;
 		}
 
-		if (input.editorViewItemSelection()) {
-			this._itemSelector.update();
-		} else {
+		if (!input.editorViewItemSelection()) {
 			this._cursor.update(passedTime, input, controller, turnState);
 		}
 
