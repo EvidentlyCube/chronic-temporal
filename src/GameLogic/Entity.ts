@@ -19,8 +19,13 @@ export class EntityUtils {
 		const newIceBlock = new Iceblock(entity);
 		newIceBlock.x = entity.x;
 		newIceBlock.y = entity.y;
+		newIceBlock.prevX = entity.x;
+		newIceBlock.prevY = entity.y;
 		turnState.level.entities.addEntity(newIceBlock);
-		turnState.level.entities.removeEntity(entity); // update this to trigger an event
+		turnState.level.entities.removeEntity(entity);
+		turnState.addEvent(TurnEventType.EntityFrozen, entity);
+		turnState.addEvent(TurnEventType.EntityRemoved, entity);
+		turnState.addEvent(TurnEventType.EntityAdded, newIceBlock);
 		return newIceBlock;
 	}
 }

@@ -1,6 +1,7 @@
 import {Level} from './Level';
 import {TurnEventTypeDeaths, TurnEventType, TurnEventTypeUtils} from './Enums/TurnEventType';
 import {Entity} from './Entity';
+import {FloorType} from './Enums/FloorType';
 
 export class TurnState {
 	private readonly _level: Level;
@@ -27,6 +28,11 @@ export class TurnState {
 	public killEntity(entity: Entity, deathType: TurnEventTypeDeaths): void {
 		this.addEvent(deathType, entity);
 		this._level.entities.removeEntity(entity, this);
+	}
+
+	public changeFloor(floorType: FloorType, x: number, y: number): void {
+		this.addEvent(TurnEventType.TileChanged, [x, y]);
+		this.level.tilesFloor.set(x, y, floorType);
 	}
 
 	public addEvent(event: TurnEventType, data: any | undefined = undefined): void {

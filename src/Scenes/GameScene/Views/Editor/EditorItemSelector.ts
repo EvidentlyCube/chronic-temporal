@@ -14,6 +14,7 @@ const plotters: Plotter[][] = [
 		new FloorPlotter(FloorType.Wall),
 		new FloorPlotter(FloorType.Water),
 		new FloorPlotter(FloorType.Exit),
+		new FloorPlotter(FloorType.IceTrap),
 	],
 	[],
 	[new EntityPlotter(EntityType.Pushable), new EntityPlotter(EntityType.Iceblock), new EntityPlotter(EntityType.Fireball)],

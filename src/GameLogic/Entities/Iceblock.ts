@@ -155,8 +155,7 @@ export class Iceblock implements Entity {
 					this.direction = Direction8.None;
 					this.justPushed = false;
 				}
-				level.tilesFloor.set(this.x, this.y, FloorType.FloorTile);
-				turnState.addEvent(TurnEventType.TileChanged, [this.x, this.y]);
+				turnState.changeFloor(FloorType.FloorTile, this.x, this.y);
 				break;
 		}
 	}

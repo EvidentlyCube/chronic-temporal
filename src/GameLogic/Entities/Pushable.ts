@@ -84,8 +84,7 @@ export class Pushable implements Entity {
 					break;
 				case FloorType.IceTrap:
 					EntityUtils.freeze(this, turnState);
-					level.tilesFloor.set(this.x, this.y, FloorType.FloorTile);
-					turnState.addEvent(TurnEventType.TileChanged, [this.x, this.y]);
+					turnState.changeFloor(FloorType.FloorTile, this.x, this.y);
 					break;
 			}
 		}

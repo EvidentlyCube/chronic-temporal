@@ -38,6 +38,8 @@ export class FloorPlotter implements Plotter {
 				return textureStore.getTile(GfxConstants.InitialTileset, 6, 7);
 			case FloorType.Exit:
 				return textureStore.getTile(GfxConstants.InitialTileset, 0, 9);
+			case FloorType.IceTrap:
+				return textureStore.getTile(GfxConstants.InitialTileset, 1, 9);
 			default:
 				throw new Error(`Invalid floor type "${this.floorType}"`);
 		}
