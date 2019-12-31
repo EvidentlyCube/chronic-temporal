@@ -7,6 +7,7 @@ import {TextureStore} from 'evidently-pixi';
 import {GfxConstants} from '../../../../Core/Constants/GfxConstants';
 import {Direction8} from '../../../../GameLogic/Enums/Direction8';
 import {entitySpriteFactory} from './entitySpriteFactory';
+import {directionTextureFactory} from './directionTextureFactory';
 
 const slideLength = 250;
 
@@ -63,7 +64,7 @@ export class IceblockEntitySprite extends PIXI.Sprite implements EntitySprite {
 			? entitySpriteFactory(entity.containedEntity, textureStore)
 			: undefined;
 		this._blockSprite.texture = textureStore.getTile(GfxConstants.InitialTileset, 8, 8);
-		(this._directionSprite as any).texture = this.getDirectionTexture(entity.direction, textureStore);
+		(this._directionSprite as any).texture = directionTextureFactory(entity.direction, textureStore);
 		this._timer = 0;
 
 		this._fromX = entity.prevX * Constants.TileWidth;

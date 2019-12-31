@@ -31,27 +31,38 @@ export class EntitiesRenderer extends PIXI.Sprite {
 			this.removeChildren();
 			this._entitiesMap.forEach(entity => entity.release());
 			this._entitiesMap.clear();
-		}
 
-		const spritesToRemoveMap: Map<Entity, EntitySprite> = new Map();
-		this._entitiesMap.forEach((value, key) => spritesToRemoveMap.set(key, value));
-
-		level.entities.entities.forEach(entity => {
-			if (!this._entitiesMap.has(entity)) {
-				const sprite = entitySpriteFactory(entity, this._textureStore);
-
-				this._entitiesMap.set(entity, sprite);
-				this.addChild(sprite);
-			} else {
-				spritesToRemoveMap.delete(entity);
+			level.entities.entities.forEach(entity => this.syncAddEntity(entity));
+		} else {
+			for (const entity of turnState.getEventData(TurnEventType.EntityAdded)) {
+				this.syncAddEntity(entity);
 			}
-		});
+			for (const entity of turnState.getEventData(TurnEventType.EntityRemoved)) {
+				this.syncRemoveEntity(entity);
+			}
+			for (const entity of turnState.getEventData(TurnEventType.EntityModified)) {
+				this.syncRemoveEntity(entity);
+				this.syncAddEntity(entity);
+			}
+		}
+	}
 
-		for (const entity of spritesToRemoveMap.keys()) {
-			const sprite = spritesToRemoveMap.get(entity)!;
+	private syncAddEntity(entity: Entity): void {
+		const sprite = entitySpriteFactory(entity, this._textureStore);
 
-			sprite.removeChild();
+		this._entitiesMap.set(entity, sprite);
+		this.addChild(sprite);
+	}
+
+	private syncRemoveEntity(entity: Entity): void {
+		const sprite = this._entitiesMap.get(entity);
+
+		console.log(sprite);
+		if (sprite) {
+			this.removeChild(sprite);
+
 			sprite.release();
+
 			this._entitiesMap.delete(entity);
 		}
 	}

@@ -29,7 +29,9 @@ describe('GameLogic.e2e - Fireball', () => {
 				.newLevel()
 				.addEntity(new Fireball(direction), 5, 5)
 				.plotFloor(5 + getX(direction), 5 + getY(direction), FloorType.Wall)
+
 				.run(PlayerAction.Wait)
+
 				.assertEntityAt(EntityType.Fireball, expectedX, expectedY);
 		});
 

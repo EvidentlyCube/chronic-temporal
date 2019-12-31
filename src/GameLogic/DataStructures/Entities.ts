@@ -2,6 +2,8 @@ import {EntityType} from '../Enums/EntityType';
 import {Entity} from '../Entity';
 import {Protagonist} from '../Entities/Protagonist';
 import {SpatialGrid2D} from 'evidently-data-structures';
+import {TurnState} from '../TurnState';
+import {TurnEventType} from '../Enums/TurnEventType';
 
 export class Entities {
 	private readonly _entities: SpatialGrid2D<Entity>;
@@ -11,11 +13,13 @@ export class Entities {
 		entities.forEach(entity => this._entities.insert(entity));
 	}
 
-	public addEntity(entity: Entity): void {
+	public addEntity(entity: Entity, turnState?: TurnState): void {
+		turnState?.addEvent(TurnEventType.EntityAdded, entity);
 		this._entities.insert(entity);
 	}
 
-	public removeEntity(entity: Entity): void {
+	public removeEntity(entity: Entity, turnState?: TurnState): void {
+		turnState?.addEvent(TurnEventType.EntityRemoved, entity);
 		this._entities.remove(entity);
 	}
 
@@ -28,7 +32,11 @@ export class Entities {
 	}
 
 	public getEntitiesAt(x: number, y: number): Entity[] {
-		return this._entities.getFiltered(entity => entity.x == x && entity.y == y);
+		return this._entities.get(x, y);
+	}
+
+	public hasEntityAt(x: number, y: number, type: EntityType): boolean {
+		return this.getEntitiesAt(x, y).some(entity => entity.type === type);
 	}
 
 	public getPlayer(): Protagonist | undefined {

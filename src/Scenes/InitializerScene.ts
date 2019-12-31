@@ -29,6 +29,13 @@ export class InitializerScene implements Scene {
 	}
 
 	private initializeTestSession(): void {
+		// const session = new GameSession(this.getTestLevel());
+		const session = new GameSession(this.getEmptyLevel());
+
+		this._game.sceneManager.changeScene(new GameScene(this._game, session));
+	}
+
+	private getTestLevel(): Level {
 		const level = new Level({
 			width: 20,
 			height: 20,
@@ -65,8 +72,17 @@ export class InitializerScene implements Scene {
 		addEntity(new Fireball(Direction8.DownRight), 4, 5);
 		addEntity(new Iceblock(new Pushable()), 15, 7);
 
-		const session = new GameSession(level);
+		return level;
+	}
 
-		this._game.sceneManager.changeScene(new GameScene(this._game, session));
+	private getEmptyLevel(): Level {
+		const level = new Level({
+			width: 30,
+			height: 22,
+			playerStartX: 10,
+			playerStartY: 10,
+		});
+
+		return level;
 	}
 }
