@@ -49,49 +49,34 @@ describe('GameLogic.e2e - Ice Trap floor', () => {
 				.assertFloorTileAt(FloorType.IceTrap, 10, 9);
 		});
 
-		it('Protagonist moving onto ice trap at the same time as a fireball should trigger the trap then immediately melt the iceblock', () => {
+		it('Protagonist moving onto ice trap at the same time as a fireball should kill the protagonist and not trigger the ice trap', () => {
 			TestLevelBuilder.newLevel()
 				.plotFloor(10, 9, FloorType.IceTrap)
 				.addEntity(new Fireball(Direction8.Right), 9, 9)
 				.run(PlayerAction.MoveUp)
 
-				.assertEntityCount(EntityType.Protagonist, 1)
+				.assertEntityCount(EntityType.Protagonist, 0)
 				.assertEntityCount(EntityType.Iceblock, 0)
-				.assertEntityCount(EntityType.Fireball, 0)
-				.assertFloorTileAt(FloorType.FloorTile, 10, 9);
+				.assertEntityCount(EntityType.Fireball, 1)
+				.assertFloorTileAt(FloorType.IceTrap, 10, 9);
 		});
 
-		it('Pushable pushed onto ice trap at the same time as a fireball should trigger the trap then immediately melt the iceblock', () => {
+		it('Pushable pushed onto ice trap at the same time as a fireball should redirect the fireball then freeze the pushable', () => {
 			TestLevelBuilder.newLevel()
 				.plotFloor(10, 8, FloorType.IceTrap)
 				.addEntity(new Fireball(Direction8.Right), 9, 8)
 				.addEntity(new Pushable(), 10, 9)
 				.run(PlayerAction.MoveUp)
 
-				.assertEntityCount(EntityType.Pushable, 1)
-				.assertEntityCount(EntityType.Iceblock, 0)
-				.assertEntityCount(EntityType.Fireball, 0)
+				.assertEntityCount(EntityType.Pushable, 0)
+				.assertEntityCount(EntityType.Iceblock, 1)
+				.assertEntityAt(EntityType.Fireball, 9, 9)
 				.assertFloorTileAt(FloorType.FloorTile, 10, 8);
 		});
 	});
 
 	describe('Iceblock interactions', () => {
-		it('Iceblock moved onto ice trap recursively stores old iceblock inside new one', () => {
-			TestLevelBuilder.newLevel()
-				.plotFloor(10, 8, FloorType.IceTrap)
-				.addEntity(new Iceblock(new Pushable()), 10, 9)
-				.run(PlayerAction.MoveUp)
-
-				.assertLevel(level => {
-					const iceblock = level.entities.getFirstEntityOfType<Iceblock>(EntityType.Iceblock);
-					assert.equal(iceblock?.containedEntity?.type, EntityType.Iceblock);
-
-					const iceblock2 = iceblock?.containedEntity as Iceblock | undefined;
-					assert.equal(iceblock2?.containedEntity?.type, EntityType.Pushable);
-				});
-		});
-
-		it('Iceblock pushed onto ice trap triggers trap and keeps moving', () => {
+		it('Iceblock pushed onto ice trap destroys trap and keeps moving', () => {
 			TestLevelBuilder.newLevel()
 				.plotFloor(10, 8, FloorType.IceTrap)
 				.addEntity(new Iceblock(), 10, 9)
@@ -101,7 +86,7 @@ describe('GameLogic.e2e - Ice Trap floor', () => {
 				.assertFloorTileAt(FloorType.FloorTile, 10, 8);
 		});
 
-		it('Iceblock moving onto ice trap triggers trap and keeps moving', () => {
+		it('Iceblock moving onto ice trap destroys trap and keeps moving', () => {
 			TestLevelBuilder.newLevel()
 				.plotFloor(10, 7, FloorType.IceTrap)
 				.addEntity(new Iceblock(), 10, 9)
@@ -111,7 +96,7 @@ describe('GameLogic.e2e - Ice Trap floor', () => {
 				.assertFloorTileAt(FloorType.FloorTile, 10, 7);
 		});
 
-		it('Iceblock pushed onto ice trap with fireball already on it should trigger the trap and leave original iceblock in original state', () => {
+		it('Iceblock pushed onto ice trap with fireball already on it should melt, then re-freeze the contents, iceblock should stop moving', () => {
 			TestLevelBuilder.newLevel()
 				.plotFloor(10, 8, FloorType.IceTrap)
 				.addEntity(new Fireball(Direction8.Right), 10, 8)
@@ -123,13 +108,13 @@ describe('GameLogic.e2e - Ice Trap floor', () => {
 				.assertEntityCount(EntityType.Fireball, 0)
 				.assertFloorTileAt(FloorType.FloorTile, 10, 8)
 				.assertLevel(level => {
-					const iceblock = level.entities.getFirstEntityOfType<Iceblock>(EntityType.Iceblock);
+					const iceblock = level.entities.getFirstEntityOfType(EntityType.Iceblock) as Iceblock | undefined;
+					assert.equal(iceblock?.direction, Direction8.None);
 					assert.equal(iceblock?.containedEntity?.type, EntityType.Pushable);
-					assert.equal(iceblock?.direction, Direction8.Up);
 				});
 		});
 
-		it('Iceblock pushed onto ice trap at the same time as a fireball should trigger the trap and leave original iceblock in original state', () => {
+		it('Iceblock pushed onto ice trap at the same time as a fireball should melt, then re-freeze the contents, iceblock should stop moving', () => {
 			TestLevelBuilder.newLevel()
 				.plotFloor(10, 8, FloorType.IceTrap)
 				.addEntity(new Fireball(Direction8.Right), 9, 8)
@@ -141,9 +126,9 @@ describe('GameLogic.e2e - Ice Trap floor', () => {
 				.assertEntityCount(EntityType.Fireball, 0)
 				.assertFloorTileAt(FloorType.FloorTile, 10, 8)
 				.assertLevel(level => {
-					const iceblock = level.entities.getFirstEntityOfType<Iceblock>(EntityType.Iceblock);
+					const iceblock = level.entities.getFirstEntityOfType(EntityType.Iceblock) as Iceblock | undefined;
+					assert.equal(iceblock?.direction, Direction8.None);
 					assert.equal(iceblock?.containedEntity?.type, EntityType.Pushable);
-					assert.equal(iceblock?.direction, Direction8.Up);
 				});
 		});
 	});

@@ -1,4 +1,4 @@
-import {Entity, EntityUtils} from '../Entity';
+import {Entity} from '../Entity';
 import {EntityType} from '../Enums/EntityType';
 import {FloorType} from '../Enums/FloorType';
 import {Direction8, Direction8Utils} from '../Enums/Direction8';
@@ -45,15 +45,13 @@ export class Iceblock implements Entity {
 
 		if (this.justPushed) {
 			this.justPushed = false; //Don't update because we've just been moved via push()
-		} else if (this.isMoveAllowed(level, this.direction)) {
-			if (!this.melting || this.containedEntity?.type == EntityType.Iceblock) {
-				const newX = this.x + Direction8Utils.getX(this.direction);
-				const newY = this.y + Direction8Utils.getY(this.direction);
+		} else if (this.isMoveAllowed(level, this.direction) && !this.melting) {
+			const newX = this.x + Direction8Utils.getX(this.direction);
+			const newY = this.y + Direction8Utils.getY(this.direction);
 
-				level.entities.updatePosition(this, newX, newY);
+			level.entities.updatePosition(this, newX, newY);
 
-				this.postMoveProcessing(turnState);
-			}
+			this.postMoveProcessing(turnState);
 		} else {
 			this.direction = Direction8.None;
 		}
@@ -64,10 +62,6 @@ export class Iceblock implements Entity {
 				this.containedEntity.y = this.y;
 				this.containedEntity.prevX = this.x;
 				this.containedEntity.prevY = this.y;
-
-				if (this.containedEntity.type == EntityType.Iceblock) {
-					(this.containedEntity as Iceblock).direction = this.direction;
-				}
 
 				level.entities.addEntity(this.containedEntity);
 				this.containedEntity = undefined;
@@ -140,23 +134,10 @@ export class Iceblock implements Entity {
 
 		fireballs.forEach(f => turnState.killEntity(f, TurnEventType.EntityKilled));
 
-		switch (level.tilesFloor.get(this.x, this.y)) {
-			case FloorType.Water:
-				turnState.killEntity(this, TurnEventType.EntityDrowned);
-				this.melting = false; // Iceblock is sinking, so don't eject contents in any case
-				break;
-			case FloorType.IceTrap:
-				if (this.melting) { // If the iceblock is already melting, then the same block refreezes
-					this.melting = false;
-				} else {
-					const newIceBlock = EntityUtils.freeze(this, turnState);
-					newIceBlock.direction = this.direction;
-					newIceBlock.justPushed = this.justPushed;
-					this.direction = Direction8.None;
-					this.justPushed = false;
-				}
-				turnState.changeFloor(FloorType.FloorTile, this.x, this.y);
-				break;
+		if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
+			this.containedEntity = undefined;
+			turnState.killEntity(this, TurnEventType.EntityDrowned);
+			this.melting = false; // Iceblock is sinking, so don't eject contents in any case
 		}
 	}
 }

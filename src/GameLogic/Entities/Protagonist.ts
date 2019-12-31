@@ -1,4 +1,4 @@
-import {Entity, EntityUtils} from '../Entity';
+import {Entity} from '../Entity';
 import {EntityType} from '../Enums/EntityType';
 import {FloorType} from '../Enums/FloorType';
 import {PlayerActionUtils} from '../Enums/PlayerAction';
@@ -69,14 +69,8 @@ export class Protagonist implements Entity {
 			}
 		}
 
-		switch (level.tilesFloor.get(this.x, this.y)) {
-			case FloorType.Water:
-				turnState.killEntity(this, TurnEventType.EntityDrowned);
-				break;
-			case FloorType.IceTrap:
-				EntityUtils.freeze(this, turnState);
-				turnState.changeFloor(FloorType.FloorTile, this.x, this.y);
-				break;
+		if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
+			turnState.killEntity(this, TurnEventType.EntityDrowned);
 		}
 	}
 

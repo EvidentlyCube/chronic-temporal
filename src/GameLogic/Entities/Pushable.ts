@@ -1,4 +1,4 @@
-import {Entity, EntityUtils} from '../Entity';
+import {Entity} from '../Entity';
 import {EntityType} from '../Enums/EntityType';
 import {FloorType} from '../Enums/FloorType';
 import {Direction8, Direction8Utils} from '../Enums/Direction8';
@@ -78,14 +78,8 @@ export class Pushable implements Entity {
 			const fireballs = entities.filter(entity => entity.type === EntityType.Fireball) as Fireball[];
 			fireballs.forEach(f => turnState.killEntity(f, TurnEventType.EntityKilled));
 
-			switch (level.tilesFloor.get(this.x, this.y)) {
-				case FloorType.Water:
-					turnState.killEntity(this, TurnEventType.EntityDrowned);
-					break;
-				case FloorType.IceTrap:
-					EntityUtils.freeze(this, turnState);
-					turnState.changeFloor(FloorType.FloorTile, this.x, this.y);
-					break;
+			if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
+				turnState.killEntity(this, TurnEventType.EntityDrowned);
 			}
 		}
 	}
