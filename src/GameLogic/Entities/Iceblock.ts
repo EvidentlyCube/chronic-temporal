@@ -135,7 +135,6 @@ export class Iceblock implements Entity {
 		fireballs.forEach(f => turnState.killEntity(f, TurnEventType.EntityKilled));
 
 		if (level.tilesFloor.get(this.x, this.y) == FloorType.Water) {
-			this.containedEntity = undefined;
 			turnState.killEntity(this, TurnEventType.EntityDrowned);
 			this.melting = false; // Iceblock is sinking, so don't eject contents in any case
 		}

@@ -59,7 +59,7 @@ export class FloorTilesRenderer extends PIXI.Sprite {
 	}
 
 	private getFloorTypeTexture(floorType: FloorType): PIXI.Texture {
-		switch (floorType) {
+		switch (floorType) {  // @todo Issue 73: Single source of truth for textures
 			case FloorType.FloorTile:
 				return this._textureStore.getTile(GfxConstants.InitialTileset, 9, 5);
 			case FloorType.Wall:
