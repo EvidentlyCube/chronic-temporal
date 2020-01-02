@@ -29,7 +29,7 @@ export class FloorPlotter implements Plotter {
 	}
 
 	public getTexture(editorConfig: EditorConfig, textureStore: TextureStore): PIXI.Texture {
-		switch (this.floorType) {
+		switch (this.floorType) { // @todo Issue 73: Single source of truth for textures
 			case FloorType.FloorTile:
 				return textureStore.getTile(GfxConstants.InitialTileset, 9, 5);
 			case FloorType.Wall:
@@ -38,6 +38,8 @@ export class FloorPlotter implements Plotter {
 				return textureStore.getTile(GfxConstants.InitialTileset, 6, 7);
 			case FloorType.Exit:
 				return textureStore.getTile(GfxConstants.InitialTileset, 0, 9);
+			case FloorType.IceTrap:
+				return textureStore.getTile(GfxConstants.InitialTileset, 1, 9);
 			default:
 				throw new Error(`Invalid floor type "${this.floorType}"`);
 		}

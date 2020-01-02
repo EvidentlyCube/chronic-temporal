@@ -65,6 +65,7 @@ export class Protagonist implements Entity {
 
 			if (entities.some(entity => entity.type === EntityType.Fireball)) {
 				turnState.killEntity(this, TurnEventType.EntityKilled);
+				return;
 			}
 		}
 

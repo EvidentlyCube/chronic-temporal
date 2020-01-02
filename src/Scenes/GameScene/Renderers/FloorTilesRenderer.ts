@@ -59,7 +59,7 @@ export class FloorTilesRenderer extends PIXI.Sprite {
 	}
 
 	private getFloorTypeTexture(floorType: FloorType): PIXI.Texture {
-		switch (floorType) {
+		switch (floorType) {  // @todo Issue 73: Single source of truth for textures
 			case FloorType.FloorTile:
 				return this._textureStore.getTile(GfxConstants.InitialTileset, 9, 5);
 			case FloorType.Wall:
@@ -68,6 +68,8 @@ export class FloorTilesRenderer extends PIXI.Sprite {
 				return this._textureStore.getTile(GfxConstants.InitialTileset, 6, 7);
 			case FloorType.Exit:
 				return this._textureStore.getTile(GfxConstants.InitialTileset, 0, 9);
+			case FloorType.IceTrap:
+				return this._textureStore.getTile(GfxConstants.InitialTileset, 1, 9);
 			default:
 				throw new Error(`Invalid floor type "${floorType}"`);
 		}
