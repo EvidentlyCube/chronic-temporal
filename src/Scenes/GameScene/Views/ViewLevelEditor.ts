@@ -84,7 +84,8 @@ export class ViewLevelEditor extends PIXI.Container implements GameView {
 		controller.tryToSync(turnState);
 	}
 
-	public onBlur(): void {
+	public onBlur(controller: SessionController): void {
+		controller.session.turnRunner;
 		this.visible = false;
 	}
 

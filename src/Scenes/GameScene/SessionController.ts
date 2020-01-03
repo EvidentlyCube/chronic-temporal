@@ -29,6 +29,10 @@ export class SessionController {
 		this._sessionRenderer = sessionRenderer;
 	}
 
+	public get session(): GameSession {
+		return this._session;
+	}
+
 	public get currentLevel(): Level {
 		return this._session.level;
 	}

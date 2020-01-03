@@ -63,6 +63,12 @@ export class SessionAsserter {
 		return this;
 	}
 
+	public assertSession(callback: { (session: GameSession): void }): SessionAsserter {
+		callback(this.session);
+
+		return this;
+	}
+
 	public assertEventRaised(turnEventType: TurnEventType, onTurn: number = this._turnStates.length - 1): SessionAsserter {
 		assert.isTrue(this._turnStates[onTurn].hasEvent(turnEventType), `No event of type '${turnEventType}' was found on turn ${onTurn}`);
 
