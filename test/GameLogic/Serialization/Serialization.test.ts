@@ -44,10 +44,7 @@ describe('GameLogic.Serialization', () => {
 		const serializedCampaign = CampaignSerializer.serializeCampaign(campaign);
 		const deserializedCampaign = CampaignDeserializer.deserializeCampaign(serializedCampaign);
 
-		assert.deepEqual(
-			JSON.parse(JSON.stringify(deserializedCampaign)),
-			JSON.parse(JSON.stringify(campaign)),
-		);
+		assertDeepJsonEqual(deserializedCampaign, campaign);
 	});
 	it('Should serialize and deserialize campaign metadata', () => {
 		const campaign = new Campaign(IdGenerator.generateId());
@@ -57,9 +54,6 @@ describe('GameLogic.Serialization', () => {
 		const serializedCampaignMetadata = CampaignSerializer.serializeMetadata(campaign.metadata);
 		const deserializedCampaignMetadata = CampaignDeserializer.deserializeMetadata(serializedCampaignMetadata);
 
-		assert.deepEqual(
-			JSON.parse(JSON.stringify(deserializedCampaignMetadata)),
-			JSON.parse(JSON.stringify(campaign.metadata)),
-		);
+		assertDeepJsonEqual(deserializedCampaignMetadata, campaign.metadata);
 	});
 });
