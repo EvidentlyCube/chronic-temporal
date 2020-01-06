@@ -69,6 +69,7 @@ export class GameSession {
 		}
 
 		this.level = this.levelBlueprint.clone();
+		this.turnNumber = 0;
 		this._recordings.forEach(recording => recording.reset());
 
 		this._addProtagonist(true);

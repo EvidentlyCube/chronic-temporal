@@ -85,7 +85,10 @@ export class ViewLevelEditor extends PIXI.Container implements GameView {
 	}
 
 	public onBlur(controller: SessionController): void {
-		controller.session.turnRunner;
+		if (controller.session.turnNumber === 0) {
+			controller.commitLevelToBlueprint();
+		}
+
 		this.visible = false;
 	}
 

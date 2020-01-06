@@ -10,6 +10,7 @@ import {Level} from '../../GameLogic/Level';
 import {Game} from 'evidently-pixi';
 import {TurnState} from '../../GameLogic/TurnState';
 import {TurnEventType} from '../../GameLogic/Enums/TurnEventType';
+import {EntityType} from '../../GameLogic/Enums/EntityType';
 
 export class SessionController {
 	public lastTurnState: TurnState|undefined;
@@ -77,5 +78,11 @@ export class SessionController {
 		if (turnState.eventCount > 0) {
 			this.lastTurnState = turnState;
 		}
+	}
+
+	public commitLevelToBlueprint(): void {
+		this.session.levelBlueprint = this.session.level.clone();
+		const protagonists = this.session.levelBlueprint.entities.getEntitiesOfType(EntityType.Protagonist);
+		protagonists.forEach(protagonist => this.session.levelBlueprint.entities.removeEntity(protagonist));
 	}
 }
