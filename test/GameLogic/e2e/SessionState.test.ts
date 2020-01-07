@@ -32,4 +32,14 @@ describe('GameLogic.e2e - Session State', () => {
 				});
 		});
 	});
+	describe('ActionRecorder', () => {
+		it('Reset level should clear action queue', () => {
+			TestLevelBuilder.newLevel()
+				.run('55555')
+				.assertSession(session => {
+					session.resetLevel();
+					assert.equal(session.actionRecorder.end().length, 0);
+				});
+		});
+	});
 });

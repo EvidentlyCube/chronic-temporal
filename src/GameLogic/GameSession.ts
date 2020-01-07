@@ -70,6 +70,7 @@ export class GameSession {
 
 		this.level = this.levelBlueprint.clone();
 		this.turnNumber = 0;
+		this.actionRecorder.end();
 		this._recordings.forEach(recording => recording.reset());
 
 		this._addProtagonist(true);
