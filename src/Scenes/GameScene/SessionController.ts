@@ -70,6 +70,13 @@ export class SessionController {
 		this.lastTurnState.addEvent(TurnEventType.LevelLoaded);
 	}
 
+	public restartAndDiscardRecording(): void {
+		this._session.resetLevel();
+
+		this.lastTurnState = new TurnState(this._session.level);
+		this.lastTurnState.addEvent(TurnEventType.LevelLoaded);
+	}
+
 	public getRecordings(): readonly ActionSequence[] {
 		return this._session.getRecordings();
 	}

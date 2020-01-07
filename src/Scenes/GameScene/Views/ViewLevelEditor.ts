@@ -75,6 +75,8 @@ export class ViewLevelEditor extends PIXI.Container implements GameView {
 			this._editorConfig.direction = Direction8.DownRight;
 		} else if (input.actionWait()) {
 			this._editorConfig.direction = Direction8.None;
+		} else if (input.actionRestartAndRecord()) {
+			controller.restartAndDiscardRecording();
 		}
 
 		if (!input.editorViewItemSelection()) {
@@ -82,6 +84,12 @@ export class ViewLevelEditor extends PIXI.Container implements GameView {
 		}
 
 		controller.tryToSync(turnState);
+
+		if (controller.session.turnNumber) {
+			this._header.text = `Editor, Turn #${controller.session.turnNumber}\nChanges will be lost, "R" to reset and allow storing changes.`;
+		} else {
+			this._header.text = 'Editor, changes will be saved.';
+		}
 	}
 
 	public onBlur(controller: SessionController): void {
