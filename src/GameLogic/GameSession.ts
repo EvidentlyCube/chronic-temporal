@@ -92,7 +92,7 @@ export class GameSession {
 			@todo figure out if we pass the input to TurnRunner and it knows which entity is the protagonist or we set the
 				  next move on the protagonist here, then just run the turn
 		 */
-		return this.turnRunner.runTurn(playerInput, this, this.level);
+		return this.turnRunner.runTurn(playerInput, this);
 	}
 
 	private _addProtagonist(isPlayerControlled: boolean, movesQueue: ActionSequence = new ActionSequence()): void {

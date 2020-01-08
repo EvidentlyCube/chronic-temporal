@@ -15,7 +15,9 @@ export class TurnRunner {
 		this._gameSession = gameSession;
 	}
 
-	public runTurn(playerInput: PlayerAction, session: GameSession, level: Level): TurnState {
+	public runTurn(playerInput: PlayerAction, session: GameSession): TurnState {
+		const {level} = session;
+
 		const turnState = new TurnState(level);
 		turnState.addEvent(TurnEventType.TurnExecuted);
 
