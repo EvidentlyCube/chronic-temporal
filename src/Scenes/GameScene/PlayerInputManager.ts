@@ -42,6 +42,8 @@ export class PlayerInputManager {
 
 	public readonly editorErase = (): boolean => this._mouse.isMouseDown(MouseButtons.Right);
 
+	public readonly editorRestart = (): boolean => this.actionRestartAndRecord();
+
 	public readonly editorViewItemSelection = (): boolean => this._keyboard.isKeyDown(' ');
 
 	// public readonly editorMousePosition = (): PIXI.Point => new PIXI.Point(this._mouse)

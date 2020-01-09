@@ -10,6 +10,7 @@ import {Level} from '../../GameLogic/Level';
 import {Game} from 'evidently-pixi';
 import {TurnState} from '../../GameLogic/TurnState';
 import {TurnEventType} from '../../GameLogic/Enums/TurnEventType';
+import {EntityType} from '../../GameLogic/Enums/EntityType';
 
 export class SessionController {
 	public lastTurnState: TurnState|undefined;
@@ -27,6 +28,10 @@ export class SessionController {
 		this._gameScene = gameScene;
 		this._session = session;
 		this._sessionRenderer = sessionRenderer;
+	}
+
+	public get session(): GameSession {
+		return this._session;
 	}
 
 	public get currentLevel(): Level {
@@ -65,6 +70,13 @@ export class SessionController {
 		this.lastTurnState.addEvent(TurnEventType.LevelLoaded);
 	}
 
+	public restartAndDiscardRecording(): void {
+		this._session.resetLevel();
+
+		this.lastTurnState = new TurnState(this._session.level);
+		this.lastTurnState.addEvent(TurnEventType.LevelLoaded);
+	}
+
 	public getRecordings(): readonly ActionSequence[] {
 		return this._session.getRecordings();
 	}
@@ -73,5 +85,11 @@ export class SessionController {
 		if (turnState.eventCount > 0) {
 			this.lastTurnState = turnState;
 		}
+	}
+
+	public commitLevelToBlueprint(): void {
+		this.session.levelBlueprint = this.session.level.clone();
+		const protagonists = this.session.levelBlueprint.entities.getEntitiesOfType(EntityType.Protagonist);
+		protagonists.forEach(protagonist => this.session.levelBlueprint.entities.removeEntity(protagonist));
 	}
 }
