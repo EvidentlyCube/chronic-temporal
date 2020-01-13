@@ -91,8 +91,8 @@ export class Protagonist implements Entity {
 
 		if (action === undefined) {
 			// @todo figure out what should happen when there are no moves left
-			entityMovement.NewX = this.x;
-			entityMovement.NewY = this.y;
+			entityMovement.newX = this.x;
+			entityMovement.newY = this.y;
 			return entityMovement;
 		}
 
@@ -102,12 +102,12 @@ export class Protagonist implements Entity {
 			const newX = this.x + Direction8Utils.getX(direction);
 			const newY = this.y + Direction8Utils.getY(direction);
 
-			entityMovement.NewX = newX;
-			entityMovement.NewY = newY;
+			entityMovement.newX = newX;
+			entityMovement.newY = newY;
 
 			const entities = level.entities.getEntitiesAt(newX, newY);
 			const pushables = entities.filter(entity => entity.type === EntityType.Pushable) as Pushable[];
-			pushables.forEach(pushable => entityMovement.Others.push(new EntityMovement(
+			pushables.forEach(pushable => entityMovement.others.push(new EntityMovement(
 				pushable,
 				newX,
 				newY,
@@ -117,7 +117,7 @@ export class Protagonist implements Entity {
 			)));
 
 			const iceblocks = entities.filter(entity => entity.type === EntityType.Iceblock) as Iceblock[];
-			iceblocks.forEach(iceblock => entityMovement.Others.push(new EntityMovement(
+			iceblocks.forEach(iceblock => entityMovement.others.push(new EntityMovement(
 				iceblock,
 				newX,
 				newY,
@@ -125,8 +125,8 @@ export class Protagonist implements Entity {
 				newY + Direction8Utils.getY(direction)
 			)));
 		} else {
-			entityMovement.NewX = this.x;
-			entityMovement.NewY = this.y;
+			entityMovement.newX = this.x;
+			entityMovement.newY = this.y;
 		}
 
 		return entityMovement;

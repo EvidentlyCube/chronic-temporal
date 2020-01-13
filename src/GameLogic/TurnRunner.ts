@@ -32,7 +32,7 @@ export class TurnRunner {
 		const protagonistMovements: EntityMovement[] = [];
 		protagonists.forEach(entity => protagonistMovements.push(entity.getNextMoveDetails(turnState)));
 		protagonistMovements.forEach(movement => protagonistMovements.forEach(pairedMovement => {
-			if (movement.Entity !== pairedMovement.Entity) {
+			if (movement.entity !== pairedMovement.entity) {
 				// @todo Cross-examine each movement with each other
 			}
 		}));
@@ -44,7 +44,7 @@ export class TurnRunner {
 		const iceblockMovements: EntityMovement[] = [];
 		iceblocks.forEach(entity => iceblockMovements.push(entity.getNextMoveDetails(turnState)));
 		iceblockMovements.forEach(movement => iceblockMovements.forEach(pairedMovement => {
-			if (movement.Entity !== pairedMovement.Entity) {
+			if (movement.entity !== pairedMovement.entity) {
 				// @todo Cross-examine each movement with each other
 			}
 		}));

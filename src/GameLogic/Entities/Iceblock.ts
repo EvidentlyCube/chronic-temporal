@@ -92,8 +92,8 @@ export class Iceblock implements Entity {
 		this.isMoveAllowed(level, this.direction) &&
 		!this.melting &&
 		this.direction != Direction8.None) {
-			entityMovement.NewX = this.x + Direction8Utils.getX(this.direction);
-			entityMovement.NewY = this.y + Direction8Utils.getY(this.direction);
+			entityMovement.newX = this.x + Direction8Utils.getX(this.direction);
+			entityMovement.newY = this.y + Direction8Utils.getY(this.direction);
 		}
 
 		return entityMovement;
