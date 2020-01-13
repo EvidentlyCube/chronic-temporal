@@ -7,6 +7,7 @@ import {TurnState} from './TurnState';
 import {TurnEventType} from './Enums/TurnEventType';
 import {FloorType} from './Enums/FloorType';
 import {Iceblock} from './Entities/Iceblock';
+import {EntityMovement} from './DataStructures/EntityMovement';
 
 export class TurnRunner {
 	private readonly _gameSession: GameSession;
@@ -27,9 +28,27 @@ export class TurnRunner {
 
 		level.entities.forEach(this.beforeUpdate);
 
-		level.entities.getEntitiesOfType(EntityType.Protagonist).forEach(entity => entity.update(turnState));
+		const protagonists = level.entities.getEntitiesOfType(EntityType.Protagonist);
+		const protagonistMovements: EntityMovement[] = [];
+		protagonists.forEach(entity => protagonistMovements.push(entity.getNextMoveDetails(turnState)));
+		protagonistMovements.forEach(movement => protagonistMovements.forEach(pairedMovement => {
+			if (movement.Entity !== pairedMovement.Entity) {
+				// @todo Cross-examine each movement with each other
+			}
+		}));
+		protagonists.forEach(entity => entity.update(turnState));
+
 		level.entities.getEntitiesOfType(EntityType.Fireball).forEach(entity => entity.update(turnState));
-		level.entities.getEntitiesOfType(EntityType.Iceblock).forEach(entity => entity.update(turnState));
+
+		const iceblocks = level.entities.getEntitiesOfType(EntityType.Iceblock);
+		const iceblockMovements: EntityMovement[] = [];
+		iceblocks.forEach(entity => iceblockMovements.push(entity.getNextMoveDetails(turnState)));
+		iceblockMovements.forEach(movement => iceblockMovements.forEach(pairedMovement => {
+			if (movement.Entity !== pairedMovement.Entity) {
+				// @todo Cross-examine each movement with each other
+			}
+		}));
+		iceblocks.forEach(entity => entity.update(turnState));
 
 		// @todo Issue #69: Cache floor tile coordinates for certain types
 		for (let i = 0; i < level.width; i++) {

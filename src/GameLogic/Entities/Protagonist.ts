@@ -9,6 +9,7 @@ import {Pushable} from './Pushable';
 import {Iceblock} from './Iceblock';
 import {TurnState} from '../TurnState';
 import {TurnEventType} from '../Enums/TurnEventType';
+import {EntityMovement} from '../DataStructures/EntityMovement';
 
 export class Protagonist implements Entity {
 	public readonly type: EntityType;
@@ -81,6 +82,54 @@ export class Protagonist implements Entity {
 		clone.prevX = this.prevX;
 		clone.prevY = this.prevY;
 		return clone;
+	}
+
+	public getNextMoveDetails(turnState: TurnState): EntityMovement {
+		const entityMovement = new EntityMovement(this, this.x, this.y);
+		const {level} = turnState;
+		const action = this.movesQueue.peek();
+
+		if (action === undefined) {
+			// @todo figure out what should happen when there are no moves left
+			entityMovement.NewX = this.x;
+			entityMovement.NewY = this.y;
+			return entityMovement;
+		}
+
+		const direction = PlayerActionUtils.actionToDirection(action);
+
+		if (this.isMoveAllowed(level, direction)) {
+			const newX = this.x + Direction8Utils.getX(direction);
+			const newY = this.y + Direction8Utils.getY(direction);
+
+			entityMovement.NewX = newX;
+			entityMovement.NewY = newY;
+
+			const entities = level.entities.getEntitiesAt(newX, newY);
+			const pushables = entities.filter(entity => entity.type === EntityType.Pushable) as Pushable[];
+			pushables.forEach(pushable => entityMovement.Others.push(new EntityMovement(
+				pushable,
+				newX,
+				newY,
+				newX + Direction8Utils.getX(direction),
+				newY + Direction8Utils.getY(direction)
+
+			)));
+
+			const iceblocks = entities.filter(entity => entity.type === EntityType.Iceblock) as Iceblock[];
+			iceblocks.forEach(iceblock => entityMovement.Others.push(new EntityMovement(
+				iceblock,
+				newX,
+				newY,
+				newX + Direction8Utils.getX(direction),
+				newY + Direction8Utils.getY(direction)
+			)));
+		} else {
+			entityMovement.NewX = this.x;
+			entityMovement.NewY = this.y;
+		}
+
+		return entityMovement;
 	}
 
 	public isMoveAllowed(level: Level, direction: Direction8): boolean {
