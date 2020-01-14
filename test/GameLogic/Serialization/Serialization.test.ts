@@ -36,4 +36,24 @@ describe('GameLogic.Serialization', () => {
 
 		assertDeepJsonEqual(deserializedCampaignMetadata, campaign.metadata);
 	});
+	it('Should serialize and deserialize campaign', () => {
+		const campaign = new Campaign(IdGenerator.generateId());
+		campaign.name = `Test #${campaign.id}`;
+		campaign.levels.push(generateCompleteLevel(), generateCompleteLevel(), generateCompleteLevel());
+
+		const serializedCampaign = CampaignSerializer.serializeCampaign(campaign);
+		const deserializedCampaign = CampaignDeserializer.deserializeCampaign(serializedCampaign);
+
+		assertDeepJsonEqual(deserializedCampaign, campaign);
+	});
+	it('Should serialize and deserialize campaign metadata', () => {
+		const campaign = new Campaign(IdGenerator.generateId());
+		campaign.name = `Test #${campaign.id}`;
+		campaign.levels.push(generateCompleteLevel(), generateCompleteLevel(), generateCompleteLevel());
+
+		const serializedCampaignMetadata = CampaignSerializer.serializeMetadata(campaign.metadata);
+		const deserializedCampaignMetadata = CampaignDeserializer.deserializeMetadata(serializedCampaignMetadata);
+
+		assertDeepJsonEqual(deserializedCampaignMetadata, campaign.metadata);
+	});
 });

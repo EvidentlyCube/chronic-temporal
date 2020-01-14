@@ -12,7 +12,7 @@ export interface GameSessionConfig {
 }
 
 export class GameSession {
-	private readonly _levelBlueprint: Level;
+	private _levelBlueprint: Level;
 
 	public level!: Level;
 
@@ -22,10 +22,13 @@ export class GameSession {
 
 	public actionRecorder: ActionRecorder;
 
+	public turnNumber: number;
+
 	private readonly _recordings: ActionSequence[];
 
 	constructor(levelBlueprint: Level, config: GameSessionConfig = {}) {
 		this._levelBlueprint = levelBlueprint;
+		this.turnNumber = 0;
 
 		this.turnRunner = new TurnRunner(this);
 		this.eventStore = new EventStore(this);
@@ -37,6 +40,10 @@ export class GameSession {
 
 	public get levelBlueprint(): Level {
 		return this._levelBlueprint;
+	}
+
+	public set levelBlueprint(value: Level) {
+		this._levelBlueprint = value.clone();
 	}
 
 	public registerRecording(actionSequence: ActionSequence): void {
@@ -62,6 +69,8 @@ export class GameSession {
 		}
 
 		this.level = this.levelBlueprint.clone();
+		this.turnNumber = 0;
+		this.actionRecorder.end();
 		this._recordings.forEach(recording => recording.reset());
 
 		this._addProtagonist(true);
@@ -73,6 +82,8 @@ export class GameSession {
 			throw new Error('Tried to runTurn on a session that does not have a level attached');
 		}
 
+		this.turnNumber++;
+
 		if (this.level.entities.getPlayer()) {
 			this.actionRecorder.record(playerInput);
 		}
@@ -81,7 +92,7 @@ export class GameSession {
 			@todo figure out if we pass the input to TurnRunner and it knows which entity is the protagonist or we set the
 				  next move on the protagonist here, then just run the turn
 		 */
-		return this.turnRunner.runTurn(playerInput, this.level);
+		return this.turnRunner.runTurn(playerInput, this);
 	}
 
 	private _addProtagonist(isPlayerControlled: boolean, movesQueue: ActionSequence = new ActionSequence()): void {
