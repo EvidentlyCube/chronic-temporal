@@ -1,5 +1,5 @@
 import {Level} from './Level';
-import {TurnRunner} from './TurnRunner';
+import {TurnRunner} from './Runners/TurnRunner';
 import {EventStore} from './EventStore';
 import {PlayerAction} from './Enums/PlayerAction';
 import {Protagonist} from './Entities/Protagonist';

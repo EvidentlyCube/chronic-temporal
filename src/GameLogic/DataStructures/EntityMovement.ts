@@ -7,13 +7,13 @@ export class EntityMovement {
 
 	public oldY: number;
 
-	public newX: number | undefined;
+	public newX: number;
 
-	public newY: number | undefined;
+	public newY: number;
 
 	public others: EntityMovement[];
 
-	constructor(entity: Entity, oldX: number, oldY: number, newX: number | undefined = undefined, newY: number | undefined = undefined) {
+	constructor(entity: Entity, oldX: number, oldY: number, newX: number = oldX, newY: number = oldY) {
 		this.entity = entity;
 		this.oldX = oldX;
 		this.oldY = oldY;

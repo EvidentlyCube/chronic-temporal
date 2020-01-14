@@ -1,13 +1,15 @@
-import {GameSession} from './GameSession';
-import {PlayerAction} from './Enums/PlayerAction';
-import {EntityType} from './Enums/EntityType';
-import {Level} from './Level';
-import {Entity} from './Entity';
-import {TurnState} from './TurnState';
-import {TurnEventType} from './Enums/TurnEventType';
-import {FloorType} from './Enums/FloorType';
-import {Iceblock} from './Entities/Iceblock';
-import {EntityMovement} from './DataStructures/EntityMovement';
+import {GameSession} from '../GameSession';
+import {PlayerAction} from '../Enums/PlayerAction';
+import {EntityType} from '../Enums/EntityType';
+import {Level} from '../Level';
+import {Entity} from '../Entity';
+import {TurnState} from '../TurnState';
+import {TurnEventType} from '../Enums/TurnEventType';
+import {FloorType} from '../Enums/FloorType';
+import {Iceblock} from '../Entities/Iceblock';
+import {ProtagonistRunner} from './ProtagonistRunner';
+import {FireballRunner} from './FireballRunner';
+import {IceblockRunner} from './IceblockRunner';
 
 export class TurnRunner {
 	private readonly _gameSession: GameSession;
@@ -28,27 +30,9 @@ export class TurnRunner {
 
 		level.entities.forEach(this.beforeUpdate);
 
-		const protagonists = level.entities.getEntitiesOfType(EntityType.Protagonist);
-		const protagonistMovements: EntityMovement[] = [];
-		protagonists.forEach(entity => protagonistMovements.push(entity.getNextMoveDetails(turnState)));
-		protagonistMovements.forEach(movement => protagonistMovements.forEach(pairedMovement => {
-			if (movement.entity !== pairedMovement.entity) {
-				// @todo Cross-examine each movement with each other
-			}
-		}));
-		protagonists.forEach(entity => entity.update(turnState));
-
-		level.entities.getEntitiesOfType(EntityType.Fireball).forEach(entity => entity.update(turnState));
-
-		const iceblocks = level.entities.getEntitiesOfType(EntityType.Iceblock);
-		const iceblockMovements: EntityMovement[] = [];
-		iceblocks.forEach(entity => iceblockMovements.push(entity.getNextMoveDetails(turnState)));
-		iceblockMovements.forEach(movement => iceblockMovements.forEach(pairedMovement => {
-			if (movement.entity !== pairedMovement.entity) {
-				// @todo Cross-examine each movement with each other
-			}
-		}));
-		iceblocks.forEach(entity => entity.update(turnState));
+		ProtagonistRunner.run(turnState);
+		FireballRunner.run(turnState);
+		IceblockRunner.run(turnState);
 
 		// @todo Issue #69: Cache floor tile coordinates for certain types
 		for (let i = 0; i < level.width; i++) {

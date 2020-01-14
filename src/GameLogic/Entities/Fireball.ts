@@ -54,7 +54,7 @@ export class Fireball implements Entity {
 
 	public getNextMoveDetails(): EntityMovement {
 		// Do nothing
-		return new EntityMovement(this, -1, -1);
+		return new EntityMovement(this, this.x, this.y);
 	}
 
 	public isMoveAllowed(level: Level, direction: Direction8): boolean {
