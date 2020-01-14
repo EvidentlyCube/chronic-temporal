@@ -1,5 +1,6 @@
 import {EntityType} from './Enums/EntityType';
 import {TurnState} from './TurnState';
+import {EntityMovement} from './DataStructures/EntityMovement';
 
 export interface Entity {
 	readonly type: EntityType;
@@ -10,4 +11,5 @@ export interface Entity {
 
 	update(turnState: TurnState): void;
 	clone(): Entity;
+	getNextMoveDetails(turnState: TurnState): EntityMovement;
 }

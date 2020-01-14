@@ -6,6 +6,7 @@ import {Level} from '../Level';
 import {Fireball} from './Fireball';
 import {TurnState} from '../TurnState';
 import {TurnEventType} from '../Enums/TurnEventType';
+import {EntityMovement} from '../DataStructures/EntityMovement';
 
 export class Iceblock implements Entity {
 	public readonly type: EntityType;
@@ -80,6 +81,22 @@ export class Iceblock implements Entity {
 		clone.melting = this.melting;
 		clone.justPushed = this.justPushed;
 		return clone;
+	}
+
+	public getNextMoveDetails(turnState: TurnState): EntityMovement {
+		const {level} = turnState;
+
+		const entityMovement = new EntityMovement(this, this.x, this.y);
+
+		if (!this.justPushed &&
+		this.isMoveAllowed(level, this.direction) &&
+		!this.melting &&
+		this.direction != Direction8.None) {
+			entityMovement.newX = this.x + Direction8Utils.getX(this.direction);
+			entityMovement.newY = this.y + Direction8Utils.getY(this.direction);
+		}
+
+		return entityMovement;
 	}
 
 	public isMoveAllowed(level: Level, direction: Direction8): boolean {

@@ -1,12 +1,15 @@
-import {GameSession} from './GameSession';
-import {PlayerAction} from './Enums/PlayerAction';
-import {EntityType} from './Enums/EntityType';
-import {Level} from './Level';
-import {Entity} from './Entity';
-import {TurnState} from './TurnState';
-import {TurnEventType} from './Enums/TurnEventType';
-import {FloorType} from './Enums/FloorType';
-import {Iceblock} from './Entities/Iceblock';
+import {GameSession} from '../GameSession';
+import {PlayerAction} from '../Enums/PlayerAction';
+import {EntityType} from '../Enums/EntityType';
+import {Level} from '../Level';
+import {Entity} from '../Entity';
+import {TurnState} from '../TurnState';
+import {TurnEventType} from '../Enums/TurnEventType';
+import {FloorType} from '../Enums/FloorType';
+import {Iceblock} from '../Entities/Iceblock';
+import {ProtagonistRunner} from './ProtagonistRunner';
+import {FireballRunner} from './FireballRunner';
+import {IceblockRunner} from './IceblockRunner';
 
 export class TurnRunner {
 	private readonly _gameSession: GameSession;
@@ -29,9 +32,9 @@ export class TurnRunner {
 
 		level.entities.forEach(this.beforeUpdate);
 
-		level.entities.getEntitiesOfType(EntityType.Protagonist).forEach(entity => entity.update(turnState));
-		level.entities.getEntitiesOfType(EntityType.Fireball).forEach(entity => entity.update(turnState));
-		level.entities.getEntitiesOfType(EntityType.Iceblock).forEach(entity => entity.update(turnState));
+		ProtagonistRunner.run(turnState);
+		FireballRunner.run(turnState);
+		IceblockRunner.run(turnState);
 
 		// @todo Issue #69: Cache floor tile coordinates for certain types
 		for (let i = 0; i < level.width; i++) {

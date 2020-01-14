@@ -7,6 +7,7 @@ import {Protagonist} from './Protagonist';
 import {Iceblock} from './Iceblock';
 import {TurnState} from '../TurnState';
 import {TurnEventType} from '../Enums/TurnEventType';
+import {EntityMovement} from '../DataStructures/EntityMovement';
 
 export class Fireball implements Entity {
 	public readonly type: EntityType;
@@ -49,6 +50,11 @@ export class Fireball implements Entity {
 		clone.prevX = this.prevX;
 		clone.prevY = this.prevY;
 		return clone;
+	}
+
+	public getNextMoveDetails(): EntityMovement {
+		// Do nothing
+		return new EntityMovement(this, this.x, this.y);
 	}
 
 	public isMoveAllowed(level: Level, direction: Direction8): boolean {

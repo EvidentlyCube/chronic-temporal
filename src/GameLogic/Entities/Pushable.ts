@@ -6,6 +6,7 @@ import {Level} from '../Level';
 import {Fireball} from './Fireball';
 import {TurnState} from '../TurnState';
 import {TurnEventType} from '../Enums/TurnEventType';
+import {EntityMovement} from '../DataStructures/EntityMovement';
 
 export class Pushable implements Entity {
 	public readonly type: EntityType;
@@ -37,6 +38,11 @@ export class Pushable implements Entity {
 		clone.prevX = this.prevX;
 		clone.prevY = this.prevY;
 		return clone;
+	}
+
+	public getNextMoveDetails(): EntityMovement {
+		// Do nothing
+		return new EntityMovement(this, this.x, this.y, this.x, this.y);
 	}
 
 	public isMoveAllowed(level: Level, direction: Direction8): boolean {
