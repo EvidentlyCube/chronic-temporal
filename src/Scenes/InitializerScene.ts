@@ -8,6 +8,9 @@ import {Direction8} from '../GameLogic/Enums/Direction8';
 import {Game, Scene} from 'evidently-pixi';
 import {Iceblock} from '../GameLogic/Entities/Iceblock';
 import {Entity} from '../GameLogic/Entity';
+import {Config} from '../../config/config';
+import {Campaign} from '../GameLogic/Campaign';
+import Constants from '../Core/Constants';
 
 export class InitializerScene implements Scene {
 	private readonly _game: Game;
@@ -17,7 +20,10 @@ export class InitializerScene implements Scene {
 	}
 
 	public onStarted(): void {
-		this.initializeTestSession();
+		this.getInitialCampaign()
+			.then(campaign => {
+				this.initializeTestSession(campaign.levels[0]);
+			});
 	}
 
 	public onEnded(): void {
@@ -28,11 +34,26 @@ export class InitializerScene implements Scene {
 		// Intentionally left blank
 	}
 
-	private initializeTestSession(): void {
-		// const session = new GameSession(this.getTestLevel());
-		const session = new GameSession(this.getEmptyLevel());
+	private initializeTestSession(level: Level): void {
+		const session = new GameSession(level);
 
 		this._game.sceneManager.changeScene(new GameScene(this._game, session));
+	}
+
+	private async getInitialCampaign(): Promise<Campaign> {
+		const campaign = await Config.campaignStore.getCampaign(Constants.DefaultScenarioId);
+
+		if (campaign) {
+			return campaign;
+		} else {
+			const campaign = new Campaign(Constants.DefaultScenarioId);
+			campaign.name = 'Default';
+			campaign.levels.push(this.getTestLevel());
+
+			await Config.campaignStore.addCampaign(campaign);
+
+			return campaign;
+		}
 	}
 
 	private getTestLevel(): Level {
