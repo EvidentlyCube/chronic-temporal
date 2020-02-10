@@ -5,6 +5,7 @@ export enum TurnEventType {
 	EntityKilled = 1, // data: Entity
 	EntityDrowned = 2, // data: Entity
 	EntityFrozen = 3, // data: Entity (the one just frozen, not the new Iceblock)
+	EntityParadoxed = 4, // data: Entity
 
 	TurnExecuted = 20, // data: undefined
 	LevelLoaded = 21, // data: undefined

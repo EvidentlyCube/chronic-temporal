@@ -1,17 +1,17 @@
 import 'mocha';
 import {assert} from 'chai';
-import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
-import {EntityType} from '../../../src/GameLogic/Enums/EntityType';
-import {FloorType} from '../../../src/GameLogic/Enums/FloorType';
-import {PlayerAction, PlayerActionUtils} from '../../../src/GameLogic/Enums/PlayerAction';
-import {Pushable} from '../../../src/GameLogic/Entities/Pushable';
-import {Direction8, Direction8Utils} from '../../../src/GameLogic/Enums/Direction8';
-import {Fireball} from '../../../src/GameLogic/Entities/Fireball';
-import {Iceblock} from '../../../src/GameLogic/Entities/Iceblock';
+import {TestLevelBuilder} from '../../helpers/TestLevelBuilder';
+import {EntityType} from '../../../../src/GameLogic/Enums/EntityType';
+import {FloorType} from '../../../../src/GameLogic/Enums/FloorType';
+import {PlayerAction, PlayerActionUtils} from '../../../../src/GameLogic/Enums/PlayerAction';
+import {Pushable} from '../../../../src/GameLogic/Entities/Pushable';
+import {Direction8, Direction8Utils} from '../../../../src/GameLogic/Enums/Direction8';
+import {Fireball} from '../../../../src/GameLogic/Entities/Fireball';
+import {Iceblock} from '../../../../src/GameLogic/Entities/Iceblock';
 
 const {getX, getY} = Direction8Utils;
 
-describe('GameLogic.e2e - Iceblock', () => {
+describe('GameLogic.e2e.Entities - Iceblock', () => {
 	it('Iceblock should not move initiially', () => {
 		TestLevelBuilder.newLevel()
 			.addEntity(new Iceblock(), 5, 5)

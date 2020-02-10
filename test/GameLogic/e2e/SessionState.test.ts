@@ -1,7 +1,6 @@
 import 'mocha';
 import {assert} from 'chai';
 import {TestLevelBuilder} from '../helpers/TestLevelBuilder';
-import {PlayerAction} from '../../../src/GameLogic/Enums/PlayerAction';
 
 describe('GameLogic.e2e - Session State', () => {
 	describe('Turn number', () => {
