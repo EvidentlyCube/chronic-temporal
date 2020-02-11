@@ -16,6 +16,7 @@ export default {
 	TileWidth,
 	TileHeight,
 	DisplayRatio,
+	DefaultScenarioId: '__default-scenario',
 	Random: {
 		double: function(from: number, to: number) {
 			if (from > to) {

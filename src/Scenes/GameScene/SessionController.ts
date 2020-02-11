@@ -11,6 +11,8 @@ import {Game} from 'evidently-pixi';
 import {TurnState} from '../../GameLogic/TurnState';
 import {TurnEventType} from '../../GameLogic/Enums/TurnEventType';
 import {EntityType} from '../../GameLogic/Enums/EntityType';
+import {Config} from '../../../config/config';
+import {Campaign} from '../../GameLogic/Campaign';
 
 export class SessionController {
 	public lastTurnState: TurnState|undefined;
@@ -89,7 +91,37 @@ export class SessionController {
 
 	public commitLevelToBlueprint(): void {
 		this.session.levelBlueprint = this.session.level.clone();
+
+		this.storeLevelInDefaultCampaign(this.session.levelBlueprint);
+
 		const protagonists = this.session.levelBlueprint.entities.getEntitiesOfType(EntityType.Protagonist);
 		protagonists.forEach(protagonist => this.session.levelBlueprint.entities.removeEntity(protagonist));
+	}
+
+	private async storeLevelInDefaultCampaign(level: Level): void {
+		const campaign = await Config.campaignStore.getCampaign(Constants.DefaultScenarioId);
+
+		if (campaign) {
+			campaign.levels[0] = level;
+			await Config.campaignStore.addCampaign(campaign);
+		} else {
+			const campaign = new Campaign(Constants.DefaultScenarioId);
+
+			campaign.name = 'Default';
+			campaign.levels.push(level);
+
+			await Config.campaignStore.addCampaign(campaign);
+		}
+
+		if (campaign) {
+			campaign.levels[0] = level;
+			await Config.campaignStore.addCampaign(campaign);
+		} else {
+			const campaign = new Campaign(Constants.DefaultScenarioId);
+			campaign.name = 'Default';
+			campaign.levels.push(level);
+
+			await Config.campaignStore.addCampaign(campaign);
+		}
 	}
 }
