@@ -54,7 +54,7 @@ export class GameScene implements Scene {
 		if (this._sessionController.lastTurnState) {
 			this.sessionRenderer.sync(this._sessionController.lastTurnState);
 			if (this._sessionController.lastTurnState.hasEvent(TurnEventType.LevelComplete)) {
-				this._viewManager.setStateToIndex(3, this._sessionController);
+				this._viewManager.setView(ViewLevelComplete, this._sessionController);
 			}
 			this._sessionController.lastTurnState = undefined;
 		}
