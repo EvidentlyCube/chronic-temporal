@@ -98,7 +98,7 @@ export class SessionController {
 		protagonists.forEach(protagonist => this.session.levelBlueprint.entities.removeEntity(protagonist));
 	}
 
-	private async storeLevelInDefaultCampaign(level: Level): void {
+	private async storeLevelInDefaultCampaign(level: Level): Promise<void> {
 		const campaign = await Config.campaignStore.getCampaign(Constants.DefaultScenarioId);
 
 		if (campaign) {
