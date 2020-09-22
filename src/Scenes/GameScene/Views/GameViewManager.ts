@@ -7,6 +7,7 @@ import {ViewLevelEditor} from './ViewLevelEditor';
 import {GameScene} from '../GameScene';
 import {ViewLevelComplete} from './ViewLevelComplete';
 import {TextureStore} from 'evidently-pixi';
+import {Constructor} from '../../../GenericInterfaces';
 
 export interface GameView extends PIXI.Container {
 	update(passedTime: number, input: PlayerInputManager, controller: SessionController): void;
@@ -17,46 +18,51 @@ export interface GameView extends PIXI.Container {
 }
 
 export class GameViewManager extends PIXI.Container {
-	private _activeState: GameView;
+	private _activeView: GameView;
 
-	private readonly _states: GameView[];
+	private readonly _views: GameView[];
 
 	constructor(gameScene: GameScene, textureStore: TextureStore) {
 		super();
 
-		this._states = [
+		this._views = [
 			new ViewMoveProtagonist(this),
 			new ViewEditRecordings(this),
 			new ViewLevelEditor(this, gameScene.sessionRenderer, textureStore),
 			new ViewLevelComplete(this),
 		];
 
-		this.addChild(...this._states);
+		this.addChild(...this._views);
 
-		this._activeState = this._states[0];
+		this._activeView = this._views[0];
 	}
 
 	public update(passedTime: number, input: PlayerInputManager, controller: SessionController): void {
-		if (input.uiSwitchViews() && this._activeState !== this._states[3]) {
-			const activeStateIndex = this._states.indexOf(this._activeState);
-			if (activeStateIndex === -1) {
-				throw new Error('Active input state was not found in the list of states');
+		if (input.uiSwitchViews() && this._activeView !== this._views[3]) {
+			const activeViewIndex = this._views.indexOf(this._activeView);
+			if (activeViewIndex === -1) {
+				throw new Error('Active input view was not found in the list of views');
 			}
 
-			this.setState(this._states[(activeStateIndex + 1) % (this._states.length - 1)], controller);
+			this.changeView(this._views[(activeViewIndex + 1) % (this._views.length - 1)], controller);
 		}
 
-		this._activeState.update(passedTime, input, controller);
+		this._activeView.update(passedTime, input, controller);
 	}
 
-	private setState(newState: GameView, controller: SessionController): void {
-		this._activeState.onBlur(controller);
-		this._activeState = newState;
-		this._activeState.onFocus(controller);
+	private changeView(newView: GameView, controller: SessionController): void {
+		this._activeView.onBlur(controller);
+		this._activeView = newView;
+		this._activeView.onFocus(controller);
 	}
 
-	// @todo Issue #68: Replace this really bad hack with some sensible way of swapping states
-	public setStateToIndex(index: number, controller: SessionController): void {
-		this.setState(this._states[index % this._states.length], controller);
+	public setView(type: Constructor<GameView>, controller: SessionController): void {
+		const view = this._views.find(view => view instanceof type);
+
+		if (!view) {
+			throw new Error('View not found!');
+		}
+
+		this.changeView(view, controller);
 	}
 }
